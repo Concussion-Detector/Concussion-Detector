@@ -9,7 +9,6 @@ class SplashScreen(App):
     def build(self):
         self.window = GridLayout()
         self.window.cols = 1
-        print("Building")
         Window.clearcolor = (1, 1, 1, 1)
         #add widgets to window
         self.window.add_widget(Image(source="logo.jpg"))
