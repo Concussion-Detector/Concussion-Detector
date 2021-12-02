@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
+from numpy.core.fromnumeric import _ptp_dispatcher
 
 
 # init part
@@ -44,10 +46,10 @@ def detect_eyes(img, cascade):
             left_eye = img[y:y + h, x:x + w]
         else:
             right_eye = img[y:y + h, x:x + w]
-        if left_eye is None:
-            print("left eye not detected")
-        if right_eye is None:
-            print("right eye not detected")
+        #if left_eye is None:
+            #print("left eye not detected")
+        #if right_eye is None:
+            #print("right eye not detected")
 
     return left_eye, right_eye
 
@@ -67,18 +69,25 @@ def blob_process(img, threshold, detector):
     img = cv2.dilate(img, None, iterations=4)
     img = cv2.medianBlur(img, 5)
     keypoints = detector.detect(img)
-    print(keypoints)
+    #print(keypoints)
     return keypoints
 
 
 def nothing(x):
     pass
 
+x = []
+y = []
+
+points = []
+
+num = np.zeros(shape=(5000,1))
 
 def main():
     cap = cv2.VideoCapture(0)
     cv2.namedWindow('image')
     cv2.createTrackbar('threshold', 'image', 0, 255, nothing)
+
     while True:
         _, frame = cap.read()
         face_frame = detect_faces(frame, face_cascade)
@@ -90,11 +99,18 @@ def main():
                     eye = cut_eyebrows(eye)
                     keypoints = blob_process(eye, threshold, detector)
                     eye = cv2.drawKeypoints(eye, keypoints, eye, (0, 0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+                    kp = cv2.KeyPoint_convert(keypoints)
+                    if keypoints:
+                        x.append(kp.flat[0])
+                        y.append(kp.flat[1])
         cv2.imshow('image', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     cap.release()
-    cv2.destroyAllWindows()
+    #cv2.destroyAllWindows()
+    i = 0
+    plt.scatter(x, y)
+    plt.show()
 
 
 if __name__ == "__main__":
