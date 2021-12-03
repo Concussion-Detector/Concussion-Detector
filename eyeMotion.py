@@ -1,12 +1,11 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from numpy.core.fromnumeric import _ptp_dispatcher
 
-
-# init part
+# Face and Eyes Classifiers
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+#Blob detection
 detector_params = cv2.SimpleBlobDetector_Params()
 detector_params.filterByArea = True
 detector_params.maxArea = 1500
@@ -79,10 +78,6 @@ def nothing(x):
 x = []
 y = []
 
-points = []
-
-num = np.zeros(shape=(5000,1))
-
 def main():
     cap = cv2.VideoCapture(0)
     cv2.namedWindow('image')
@@ -99,17 +94,17 @@ def main():
                     eye = cut_eyebrows(eye)
                     keypoints = blob_process(eye, threshold, detector)
                     eye = cv2.drawKeypoints(eye, keypoints, eye, (0, 0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-                    kp = cv2.KeyPoint_convert(keypoints)
-                    if keypoints:
-                        x.append(kp.flat[0])
-                        y.append(kp.flat[1])
+                    kp = cv2.KeyPoint_convert(keypoints) # converts keypoints to ndarray 
+                    if keypoints: #if the keypoint is null it skips it
+                        x.append(kp.flat[0]) #adds the x coords
+                        y.append(kp.flat[1]) #1d iterator over the array
         cv2.imshow('image', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     cap.release()
     #cv2.destroyAllWindows()
     i = 0
-    plt.scatter(x, y)
+    plt.scatter(x, y) #plot the points
     plt.show()
 
 
