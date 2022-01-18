@@ -21,9 +21,9 @@ public class infinitesign : MonoBehaviour
         }
     }
 
-    void MoveDot()
+    public void SetBool()
     {
-        startPos = transform.position;
-        moveDot = true;
+        transform.position = new Vector3(0f, 0f, 0f);
+        moveDot = !moveDot;
     }
 }
