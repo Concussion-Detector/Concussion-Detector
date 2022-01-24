@@ -53,6 +53,7 @@ def detect_eyes(img, cascade):
     return left_eye, right_eye
 
 
+# Cut out unnecessary space to increase a precision
 def cut_eyebrows(img):
     height, width = img.shape[:2]
     eyebrow_h = int(height / 4)
@@ -64,6 +65,7 @@ def cut_eyebrows(img):
 def blob_process(img, threshold, detector):
     gray_frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     _, img = cv2.threshold(gray_frame, threshold, 255, cv2.THRESH_BINARY)
+    # Erosions and dialtions to reduce a noise
     img = cv2.erode(img, None, iterations=2)
     img = cv2.dilate(img, None, iterations=4)
     img = cv2.medianBlur(img, 5)
@@ -75,6 +77,7 @@ def blob_process(img, threshold, detector):
 def nothing(x):
     pass
 
+# Coordinates of an eye
 x = []
 y = []
 
@@ -88,7 +91,7 @@ def main():
         face_frame = detect_faces(frame, face_cascade)
         if face_frame is not None:
             eyes = detect_eyes(face_frame, eye_cascade)
-            for eye in eyes:
+            for eye in eyes:               
                 if eye is not None:
                     threshold = r = cv2.getTrackbarPos('threshold', 'image')
                     eye = cut_eyebrows(eye)
@@ -98,6 +101,10 @@ def main():
                     if keypoints: #if the keypoint is null it skips it
                         x.append(kp.flat[0]) #adds the x coords
                         y.append(kp.flat[1]) #1d iterator over the array
+                        print('x: {x}, y: {y}'.format( x=kp.flat[0], y=kp.flat[1]))
+                        # Drawing the points where an eye is currently look at
+                        cv2.circle(eye,(int(kp.flat[0]), int(kp.flat[1])), 2,1)
+        
         cv2.imshow('image', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
