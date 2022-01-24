@@ -15,7 +15,7 @@ public class infinitesign : MonoBehaviour
     }
 
     void Update () {
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
         if(moveDot) {
             transform.position = startPos + (Vector3.right * Mathf.Sin(Time.timeSinceLevelLoad/2*speed)*xScale - Vector3.up * Mathf.Sin(Time.timeSinceLevelLoad * speed)*yScale);
         }
