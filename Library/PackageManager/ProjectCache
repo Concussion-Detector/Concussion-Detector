@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637787181523462351
+      ticks: 637787463946333819
     m_Hash: 994917931
   m_LockFileStatus:
     m_FilePath: C:/College/Concussion-Detector/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637787181523472283
+      ticks: 637787463946343713
     m_Hash: 2169045942
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
