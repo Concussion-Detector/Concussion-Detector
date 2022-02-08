@@ -1,10 +1,15 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from cv2.data import haarcascades
 
 # Face and Eyes Classifiers
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+#face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+#eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+
+face_detector = cv2.CascadeClassifier(haarcascades + "haarcascade_frontalface_default.xml")
+eye_detector = cv2.CascadeClassifier(haarcascades + "haarcascade_eye.xml")
+
 #Blob detection
 detector_params = cv2.SimpleBlobDetector_Params()
 detector_params.filterByArea = True
@@ -27,6 +32,7 @@ def detect_faces(img, cascade):
         return None
     for (x, y, w, h) in biggest:
         frame = img[y:y + h, x:x + w]
+        cv2.rectangle(img,(x,y),(x+w,y+h),(255,255,0),2)
     return frame
 
 
@@ -99,9 +105,9 @@ def main():
     i = 0
     while True:
         _, frame = cap.read()
-        face_frame = detect_faces(frame, face_cascade)
+        face_frame = detect_faces(frame, face_detector)
         if face_frame is not None:
-            eyes = detect_eyes(face_frame, eye_cascade)
+            eyes = detect_eyes(face_frame, eye_detector)
             for eye in eyes:     
                 #if i == 2:
                     #i = 0 
@@ -124,9 +130,14 @@ def main():
                        
                             #cv2.circle(eye,(int(kp.flat[0]), int(kp.flat[1])), 2,1)
         
+    #    # width = eye.shape[1]
+    #     #height = eye.shape[0]
+
+        
         cv2.imshow('image', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+    print('height {h} width {w}'.format(h=height, w= width))
     cap.release()
     #cv2.destroyAllWindows()
     i = 0
