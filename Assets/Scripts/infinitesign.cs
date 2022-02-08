@@ -9,6 +9,7 @@ public class infinitesign : MonoBehaviour
     public float yScale = 2;
     private Vector3 startPos;
     private bool moveDot = true;
+    public Camera cam;
 
     void Start () {
         //Invoke("MoveDot", 3f);
@@ -18,6 +19,8 @@ public class infinitesign : MonoBehaviour
         //Debug.Log(transform.position);
         if(moveDot) {
             transform.position = startPos + (Vector3.right * Mathf.Sin(Time.timeSinceLevelLoad/2*speed)*xScale - Vector3.up * Mathf.Sin(Time.timeSinceLevelLoad * speed)*yScale);
+            Vector3 screenPos = cam.WorldToScreenPoint(transform.position);
+            //Debug.Log(screenPos);
         }
     }
 
