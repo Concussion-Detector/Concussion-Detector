@@ -68,7 +68,7 @@ def cut_eyebrows(img):
     return img
 
 
-def blob_process(img, threshold, detector):
+def blob_process(img, threshold, detector, prev_area):
     gray_frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     _, img = cv2.threshold(gray_frame, threshold, 255, cv2.THRESH_BINARY)
     # Erosions and dialtions to reduce a noise
@@ -76,6 +76,14 @@ def blob_process(img, threshold, detector):
     img = cv2.dilate(img, None, iterations=4)
     img = cv2.medianBlur(img, 5)
     keypoints = detector.detect(img)
+    if keypoints and len(keypoints) > 1:
+        tmp = 1000
+        for kp in keypoints: # filtering odd blobs
+            if abs(kp.size - prev_area) < tmp:
+                ans = kp
+                tmp = abs(kp.size - prev_area)
+        
+        keypoints = (ans,)
     #print(keypoints)
     return keypoints
 
@@ -116,7 +124,7 @@ def main():
                     threshold = r = cv2.getTrackbarPos('threshold', 'image')
                     eye = cut_eyebrows(eye)
                     #print('an eyes {eyes}'.format(eyes=eyes))
-                    keypoints = blob_process(eye, threshold, detector)
+                    keypoints = blob_process(eye, threshold, detector,1)
                     #eye = cv2.drawKeypoints(eye, keypoints, eye, (0, 0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
                     eye = draw_custom_KeyPoints(eye,keypoints,(0,255,0),1)
                     kp = cv2.KeyPoint_convert(keypoints) # converts keypoints to ndarray 
