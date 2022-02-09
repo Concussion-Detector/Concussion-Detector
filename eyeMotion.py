@@ -100,6 +100,10 @@ y = []
 
 def main():
     cap = cv2.VideoCapture(0)
+
+    if not cap.isOpened():
+        raise IOError("Cannot open a webcam.")
+        
     cv2.namedWindow('image')
     cv2.createTrackbar('threshold', 'image', 0, 255, nothing)
     i = 0
