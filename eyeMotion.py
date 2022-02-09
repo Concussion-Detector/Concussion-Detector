@@ -4,9 +4,6 @@ import matplotlib.pyplot as plt
 from cv2.data import haarcascades
 
 # Face and Eyes Classifiers
-#face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-#eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
-
 face_detector = cv2.CascadeClassifier(haarcascades + "haarcascade_frontalface_default.xml")
 eye_detector = cv2.CascadeClassifier(haarcascades + "haarcascade_eye.xml")
 
@@ -15,7 +12,6 @@ detector_params = cv2.SimpleBlobDetector_Params()
 detector_params.filterByArea = True
 detector_params.maxArea = 1500
 detector = cv2.SimpleBlobDetector_create(detector_params)
-
 
 def detect_faces(img, cascade):
     gray_frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -34,7 +30,6 @@ def detect_faces(img, cascade):
         frame = img[y:y + h, x:x + w]
         cv2.rectangle(img,(x,y),(x+w,y+h),(255,255,0),2)
     return frame
-
 
 def detect_eyes(img, cascade):
     gray_frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -58,7 +53,6 @@ def detect_eyes(img, cascade):
 
     return left_eye, right_eye
 
-
 # Cut out unnecessary space to increase a precision
 def cut_eyebrows(img):
     height, width = img.shape[:2]
@@ -66,7 +60,6 @@ def cut_eyebrows(img):
     img = img[eyebrow_h:height, 0:width]  # cut eyebrows out (15 px)
 
     return img
-
 
 def blob_process(img, threshold, detector, prev_area):
     gray_frame = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -90,7 +83,6 @@ def blob_process(img, threshold, detector, prev_area):
 
 def nothing(x):
     pass
-
 
 # Custom draw keyPoints method
 def draw_custom_KeyPoints(img,keypoints, col, thickness):
