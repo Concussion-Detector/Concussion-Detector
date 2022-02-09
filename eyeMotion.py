@@ -46,7 +46,7 @@ def detect_eyes(img, cascade):
     for (x, y, w, h) in eyes:
         if y > height / 2: # skip if eye is at the bottom
             pass
-        eyecenter = x + w / 2  # get the eye center
+        eyecenter = int(float(x) + (float(w) / float(2)))  # get the eye center
         if eyecenter < width * 0.5:
             left_eye = img[y:y + h, x:x + w]
         else:
