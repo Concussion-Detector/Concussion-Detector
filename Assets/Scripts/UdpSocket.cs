@@ -16,6 +16,13 @@ public class UdpSocket : MonoBehaviour
     [SerializeField] string IP = "127.0.0.1"; // local host
     [SerializeField] int rxPort = 8000; // port to receive data from Python on
     [SerializeField] int txPort = 8001; // port to send data to Python on
+    [SerializeField] private GameObject leftDot;
+    [SerializeField] private GameObject rightDot;
+    public Camera cam;
+
+    private float x, y;
+    private Boolean leftEyeDetected = false;
+    private Boolean rightEyeDetected = false;
 
     // Create necessary UdpClient objects
     UdpClient client;
@@ -38,7 +45,24 @@ public class UdpSocket : MonoBehaviour
 
         // Initialize (seen in comments window)
         print("UDP Comms Initialised");
+        print(Screen.height + " " + Screen.width);
     }
+
+    void Update()
+    {
+        if(leftEyeDetected)
+        {
+            Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(x, y, 10f));
+            Instantiate(leftDot, worldPos, Quaternion.identity);
+            leftEyeDetected = false;
+        } else if (rightEyeDetected)
+        {
+            Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(x, y, 10f));
+            Instantiate(rightDot, worldPos, Quaternion.identity);
+            rightEyeDetected = false;
+        }
+    }
+
 
     // Receive data, update packets received
     private void ReceiveData()
@@ -64,9 +88,20 @@ public class UdpSocket : MonoBehaviour
                 {
                     eye = "r";
                 }
-                float x = float.Parse(coords[1]);
-                float y = float.Parse(coords[2]);
-                print(eye + "=> x:" + x + ", y: " + y);
+                x = float.Parse(coords[1]);
+                y = float.Parse(coords[2]);
+                //print(eye + "=> x:" + x + ", y: " + y);
+                x = x / 50;
+                y = y / 50;
+                x *= Screen.width;
+                y *= Screen.height;
+                if(eye == "l")
+                {
+                    leftEyeDetected = true;
+                } else if(eye == "r") {
+                    rightEyeDetected = true;
+                }
+                //print(eye + "=> x:" + x + ", y: " + y);
 
                 ProcessInput(text);
             }

@@ -299,7 +299,6 @@ GameObject:
   - component: {fileID: 1413999906}
   - component: {fileID: 1413999905}
   - component: {fileID: 1413999907}
-  - component: {fileID: 1413999908}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -388,22 +387,6 @@ MonoBehaviour:
   xScale: 7
   yScale: 2
   cam: {fileID: 519420031}
---- !u!114 &1413999908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1413999904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3013d6c99c4581e44aedb909c85a615d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTxStarted: 0
-  IP: 127.0.0.1
-  rxPort: 8000
-  txPort: 8001
 --- !u!1 &1602519403
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +396,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1602519404}
+  - component: {fileID: 1602519405}
   m_Layer: 0
   m_Name: Scene Manager
   m_TagString: Untagged
@@ -434,3 +418,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1602519405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602519403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3013d6c99c4581e44aedb909c85a615d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTxStarted: 0
+  IP: 127.0.0.1
+  rxPort: 8000
+  txPort: 8001
+  leftDot: {fileID: 2649425651718824936, guid: 62b40f89bef748d469768d2c85f1b21b, type: 3}
+  rightDot: {fileID: 2649425651718824936, guid: 05ea51cf8f25b054f8fd3dc107a36393, type: 3}
+  cam: {fileID: 519420031}

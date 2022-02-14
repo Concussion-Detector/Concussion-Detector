@@ -58,7 +58,8 @@ def detect_eyes(img):
             left_eye = img[y:y + h, x:x + w]
         else:
             right_eye = img[y:y + h, x:x + w]
-
+    #print('left: height {h} width {w}'.format(h=np.size(left_eye, 0), w= np.size(left_eye, 1)))
+    #print('right: height {h} width {w}'.format(h=right_eye.shape[0], w= right_eye.shape[1]))
     return left_eye, right_eye
 
 # Cut out unnecessary space to increase a precision
@@ -174,7 +175,7 @@ def main():
                 #print("left eye not detected")
             
             if right_eye is not None:
-                #r_eye = cut_eyebrows(right_eye)
+                r_eye = cut_eyebrows(right_eye)
                 right_eye_kp = blob_process(right_eye, threshold, detector, 1)
 
                 kp = right_eye_kp or previous_right_kp
@@ -221,13 +222,13 @@ def main():
                        
                             #cv2.circle(eye,(int(kp.flat[0]), int(kp.flat[1])), 2,1)
         
-    #    # width = eye.shape[1]
-    #     #height = eye.shape[0]
+        
 
         
         cv2.imshow('image', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+        
     #print('height {h} width {w}'.format(h=height, w= width))
     cap.release()
     #cv2.destroyAllWindows()
