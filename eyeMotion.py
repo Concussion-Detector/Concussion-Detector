@@ -2,6 +2,14 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from cv2.data import haarcascades
+import UdpComms as U
+import time
+import logging
+
+# Create UDP socket to use for sending (and receiving)
+sock = U.UdpComms(udpIP="127.0.0.1", portTX=8000, portRX=8001, enableRX=True, suppressWarnings=True)
+
+logger = logging.getLogger(__name__)
 
 # Face and Eyes Classifiers
 face_detector = cv2.CascadeClassifier(haarcascades + "haarcascade_frontalface_default.xml")
@@ -153,8 +161,13 @@ def main():
                 if left_eye_kp:
                     x = str(p.flat[0])
                     y = str(p.flat[1])
-                    coords = x + ',' + y
+                    coords = 'l' + ',' + x + ',' + y
                     print('left eye {xy}'.format(xy=coords))
+
+                    sock.SendData(coords) # Send this string to other application
+
+                    data = sock.ReadReceivedData() # read data
+
                 left_eye = draw(left_eye, kp,frame)
                 previous_left_kp = kp
             #else:
@@ -169,8 +182,12 @@ def main():
                 if right_eye_kp:
                     x = str(p.flat[0])
                     y = str(p.flat[1])
-                    coords = x + ',' + y
+                    coords = 'r' + ',' + x + ',' + y
                     print('right eye {xy}'.format(xy=coords))
+
+                    sock.SendData(coords) # Send this string to other application
+
+                    data = sock.ReadReceivedData() # read data
 
                 right_eye = draw(right_eye, kp,frame)
                 previous_right_kp = kp
