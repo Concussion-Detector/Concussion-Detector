@@ -52,13 +52,21 @@ public class UdpSocket : MonoBehaviour
                 string text = Encoding.UTF8.GetString(data);
                 // Split the received text by a comma
                 string[] coords = text.Split(',');
-
-                // The x coord is the first string after split
-                // y coord is second. Parse both of these to floats
-                float x = float.Parse(coords[0]);
-                float y = float.Parse(coords[1]);
-                
-                print("x:" + x + ", y: " + y);
+                string eye = "";
+                // The first string is 'l' or 'r' to distinguish
+                // the left from the right eye
+                // The x coord is the second string after split
+                // y coord is third. Parse both of these to floats
+                if(coords[0] == "l")
+                {
+                    eye = "l";
+                } else if(coords[0] == "r")
+                {
+                    eye = "r";
+                }
+                float x = float.Parse(coords[1]);
+                float y = float.Parse(coords[2]);
+                print(eye + "=> x:" + x + ", y: " + y);
 
                 ProcessInput(text);
             }

@@ -51,7 +51,6 @@
      <Compile Include="Assets\Scripts\FirebaseManager.cs" />
      <Compile Include="Assets\Scripts\MainManager.cs" />
      <Compile Include="Assets\Scripts\infinitesign.cs" />
-     <Compile Include="Assets\Scripts\StartPython.cs" />
      <Compile Include="Assets\Scripts\SceneController.cs" />
      <Compile Include="Assets\Scripts\DropdownHandler.cs" />
      <Compile Include="Assets\Scripts\UdpSocket.cs" />
