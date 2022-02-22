@@ -26,3 +26,29 @@ class Eye(object):
         x = int((p1.x + p2.x) / 2)
         y = int((p1.y + p2.y) / 2)
         return (x, y)
+
+    def _isolate(self, frame, landmarks, points):
+        # Isolate an eye, so we have an eye frame without any other part of the face
+        region = np.array([(landmarks.part(point).x, landmarks.part(point).y) for point in points])
+        region = region.astype(np.int32)
+        self.landmark_points = region
+
+        # Applying a mask to get only the eye
+        height, width = frame.shape[:2]
+        black_frame = np.zeros((height, width), np.uint8)
+        mask = np.full((height, width), 255, np.uint8)
+        cv2.fillPoly(mask, [region], (0, 0, 0))
+        eye = cv2.bitwise_not(black_frame, frame.copy(), mask=mask)
+
+        # Cropping on the eye
+        margin = 5
+        min_x = np.min(region[:, 0]) - margin
+        max_x = np.max(region[:, 0]) + margin
+        min_y = np.min(region[:, 1]) - margin
+        max_y = np.max(region[:, 1]) + margin
+
+        self.frame = eye[min_y:max_y, min_x:max_x]
+        self.origin = (min_x, min_y)
+
+        height, width = self.frame.shape[:2]
+        self.center = (width / 2, height / 2)

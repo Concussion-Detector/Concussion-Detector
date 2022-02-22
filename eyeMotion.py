@@ -7,11 +7,6 @@ cap = cv2.VideoCapture(0)
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("shape_68.dat")
 
-# returns the midpoint of 2 points
-# cast to int cos it is in the pixels (pixels cannot be halfs eg. 501px / 2 = 250.5)
-def midpoint(p1,p2):
-    return int((p1.x + p2.x) / 2), int((p1.y + p2.y) /2)
-
 def pupil_left_coords():
     if self.pupils_located:
         x = self.eye_left.origin[0] + self.eye_left.pupil.x
