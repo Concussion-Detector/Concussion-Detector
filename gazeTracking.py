@@ -108,7 +108,7 @@ class GazeTracking(object):
         if self.pupils_located:
             return self.is_right() is not True and self.is_left() is not True
 
-     def draw(self):
+    def draw(self):
         """Returns the main frame and draws coords of the pupils"""
         frame = self.frame.copy()
 
