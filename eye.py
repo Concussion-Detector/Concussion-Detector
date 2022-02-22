@@ -18,3 +18,11 @@ class Eye(object):
         self.center = None
         self.pupil = None
         self.landmark_points = None
+    
+    @staticmethod
+    def _middle_point(p1, p2):
+        # returns the midpoint of 2 points
+        # cast to int cos it is in the pixels (pixels cannot be halfs eg. 501px / 2 = 250.5)
+        x = int((p1.x + p2.x) / 2)
+        y = int((p1.y + p2.y) / 2)
+        return (x, y)
