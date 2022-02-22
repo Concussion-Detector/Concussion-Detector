@@ -4,20 +4,20 @@ import dlib
 
 cap = cv2.VideoCapture(0)
 
-detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("shape_68.dat")
+#detector = dlib.get_frontal_face_detector()
+#predictor = dlib.shape_predictor("shape_68.dat")
 
-def pupil_left_coords():
-    if self.pupils_located:
-        x = self.eye_left.origin[0] + self.eye_left.pupil.x
-        y = self.eye_left.origin[1] + self.eye_left.pupil.y
-        return (x, y)
+# def pupil_left_coords():
+#     if self.pupils_located:
+#         x = self.eye_left.origin[0] + self.eye_left.pupil.x
+#         y = self.eye_left.origin[1] + self.eye_left.pupil.y
+#         return (x, y)
 
-def pupil_right_coords():
-    if self.pupils_located:
-        x = self.eye_right.origin[0] + self.eye_right.pupil.x
-        y = self.eye_right.origin[1] + self.eye_right.pupil.y
-        return (x, y)
+# def pupil_right_coords():
+#     if self.pupils_located:
+#         x = self.eye_right.origin[0] + self.eye_right.pupil.x
+#         y = self.eye_right.origin[1] + self.eye_right.pupil.y
+#         return (x, y)
 
 while True:
     _, frame = cap.read()
