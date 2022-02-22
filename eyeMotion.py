@@ -1,4 +1,4 @@
-import cv
+import cv2
 import numpy as np
 import dlib
 
@@ -6,11 +6,6 @@ cap = cv2.VideoCapture(0)
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("shape_68.dat")
-
-# see 68_face landmarks for more info
-LEFT_EYE_POINTS = [36, 37, 38, 39, 40, 41]
-RIGHT_EYE_POINTS = [42, 43, 44, 45, 46, 47]
-
 
 # returns the midpoint of 2 points
 # cast to int cos it is in the pixels (pixels cannot be halfs eg. 501px / 2 = 250.5)
