@@ -36,3 +36,30 @@ class Calibration(object):
         nb_blacks = nb_pixels - cv2.countNonZero(frame)
         return nb_blacks / nb_pixels
     
+
+    @staticmethod
+    def find_optimal_threshold(eye_frame):
+        """Calculates the optimal threshold to binarize the
+        frame for the given eye.
+        """
+        average_iris_size = 0.48
+        trials = {}
+
+        for threshold in range(5, 100, 5):
+            iris_frame = Pupil.image_processing(eye_frame, threshold)
+            trials[threshold] = Calibration.iris_size(iris_frame)
+
+        optimalthreshold, iris_size = min(trials.items(), key=(lambda p: abs(p[1] - average_iris_size)))
+        return optimalthreshold
+
+    def evaluate(self, eye_frame, side):
+        """Improves calibration."""
+        
+        threshold = self.find_optimal_threshold(eye_frame)
+
+        if side == 0:
+            self.thresholds_left.append(threshold)
+        elif side == 1:
+            self.thresholds_right.append(threshold)
+    
+    
