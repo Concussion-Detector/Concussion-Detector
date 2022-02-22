@@ -66,4 +66,9 @@ class Eye(object):
 
         self._isolate(original_frame, landmarks, points)
 
+        if not calibration.is_complete():
+            calibration.evaluate(self.frame, side)
+
+        threshold = calibration.threshold(side)
+
         self.pupil = Pupil(self.frame, threshold)
