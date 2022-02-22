@@ -20,8 +20,10 @@ class GazeTracking(object):
 
         # _face_detector is used to detect faces
         self._detector = dlib.get_frontal_face_detector()
+        cwd = os.path.abspath(os.path.dirname(__file__))
+        model_path = os.path.abspath(os.path.join(cwd, "shape_68.dat"))
         # _predictor is used to get facial landmarks of a given face
-        self._predictor = dlib.shape_predictor("shape_68.dat")
+        self._predictor = dlib.shape_predictor(model_path)
 
     
     @property
@@ -41,7 +43,7 @@ class GazeTracking(object):
 
         # change the frame to grayscale for quicker computations
         frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
-        faces = self._face_detector(frame)
+        faces = self._detector(frame)
 
         try:
             landmarks = self._predictor(frame, faces[0])

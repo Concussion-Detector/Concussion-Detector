@@ -1,5 +1,5 @@
 import cv2
-from .gazeTracking import GazeTracking
+from eye_tracking import GazeTracking
 
 gaze = GazeTracking()
 cap = cv2.VideoCapture(0)
@@ -10,7 +10,7 @@ while True:
     # Analyze frame
     gaze.refresh(frame)
 
-    frame = gaze.annotated_frame()
+    frame = gaze.draw()
     text = ""
 
     if gaze.is_center():
