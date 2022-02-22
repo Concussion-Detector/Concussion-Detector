@@ -52,3 +52,14 @@ class Eye(object):
 
         height, width = self.frame.shape[:2]
         self.center = (width / 2, height / 2)
+    
+    def _analyze(self, original_frame, landmarks, side, calibration):
+        # Detects and isolates the eye in a new frame
+        if side == 0:
+            points = self.LEFT_EYE_POINTS
+        elif side == 1:
+            points = self.RIGHT_EYE_POINTS
+        else:
+            return
+
+        self._isolate(original_frame, landmarks, points)
