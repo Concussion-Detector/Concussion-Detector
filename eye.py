@@ -18,6 +18,8 @@ class Eye(object):
         self.center = None
         self.pupil = None
         self.landmark_points = None
+
+        self._analyze(original_frame, landmarks, side, calibration)
     
     @staticmethod
     def _middle_point(p1, p2):
@@ -63,3 +65,5 @@ class Eye(object):
             return
 
         self._isolate(original_frame, landmarks, points)
+
+        self.pupil = Pupil(self.frame, threshold)
