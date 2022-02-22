@@ -67,7 +67,6 @@ class Eye(object):
         else:
             return
 
-        #self.blinking = self._blinking_ratio(landmarks, points)
         self._isolate(original_frame, landmarks, points)
 
         if not calibration.is_complete():
