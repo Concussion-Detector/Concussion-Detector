@@ -14,6 +14,8 @@ cap = cv2.VideoCapture(0)
 xpupil = []
 ypupil = []
 
+data = ""
+
 while True:
     _, frame = cap.read()
 
@@ -42,7 +44,7 @@ while True:
 
     
 
-    if left_pupil and right_pupil:
+    if left_pupil and right_pupil and data == "false":
         x = int((left_pupil[0] + right_pupil[0]) / 2)
         y = int((left_pupil[1] + right_pupil[1]) / 2)
 
@@ -60,11 +62,14 @@ while True:
     #     right_y = right_pupil[1]
     #     sock.SendData("r,"+str(right_x)+","+str(right_y))
     
-    #data = sock.ReadReceivedData() # read data
+
+    tempData = sock.ReadReceivedData() # read data
+    if tempData == "true" or tempData == "false":
+        data = tempData
 
     cv2.imshow("Frame",frame)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord('q') or data == "true":
         break
         
 cap.release()

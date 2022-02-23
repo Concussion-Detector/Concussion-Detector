@@ -63,6 +63,19 @@ public class UdpSocket : MonoBehaviour
         }
     }
 
+    public void SendData(string message) // Use to send data to Python
+    {
+        try
+        {
+            byte[] data = Encoding.UTF8.GetBytes(message);
+            client.Send(data, data.Length, remoteEndPoint);
+        }
+        catch (Exception err)
+        {
+            print(err.ToString());
+        }
+    }
+
 
     // Receive data, update packets received
     private void ReceiveData()

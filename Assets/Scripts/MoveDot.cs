@@ -5,24 +5,42 @@ using UnityEngine;
 public class MoveDot : MonoBehaviour
 {
     [SerializeField]
+    private GameObject sceneManager;
+
+    [SerializeField]
     private Transform[] waypoints;
 
     [SerializeField]
     private float moveSpeed = 2f;
 
     private int waypointIndex = 0;
+    private bool dotMoving = false;
+
+    private UdpSocket udpSocket;
 
     // Start is called before the first frame update
     void Start()
     {
+        udpSocket = sceneManager.GetComponent<UdpSocket>();
         transform.position = waypoints[waypointIndex].transform.position;
+        StartCoroutine(StartMovingDot());
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if(dotMoving)
+        {
+            Move();
+        }
+    }
+
+    private IEnumerator StartMovingDot()
+    {
+        yield return new WaitForSeconds(2);
+        udpSocket.SendData("false");
+        dotMoving = true;
     }
 
     private void Move()
@@ -37,6 +55,11 @@ public class MoveDot : MonoBehaviour
             {
                 waypointIndex += 1;
             }
+        }
+        else if (waypointIndex == waypoints.Length)
+        {
+            // Stop reading data from python
+            udpSocket.SendData("true");
         }
     }
 }
