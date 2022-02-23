@@ -1,5 +1,11 @@
 import cv2
 from eye_tracking import GazeTracking
+import UdpComms as U
+import time
+import logging
+
+# Create UDP socket to use for sending (and receiving)
+sock = U.UdpComms(udpIP="127.0.0.1", portTX=8000, portRX=8001, enableRX=True, suppressWarnings=True)
 
 gaze = GazeTracking()
 cap = cv2.VideoCapture(0)
@@ -28,6 +34,11 @@ while True:
     # print out the pupil coords
     cv2.putText(frame, "Left pupil:  " + str(left_pupil), (90, 130), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
     cv2.putText(frame, "Right pupil: " + str(right_pupil), (90, 165), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
+
+    sock.SendData(left_pupil) # Send this string to other application
+    sock.SendData(right_pupil)
+    
+    data = sock.ReadReceivedData() # read data
 
     cv2.imshow("Frame",frame)
 
