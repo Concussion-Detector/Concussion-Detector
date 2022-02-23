@@ -74,6 +74,7 @@ public class UdpSocket : MonoBehaviour
                 IPEndPoint anyIP = new IPEndPoint(IPAddress.Any, 0);
                 byte[] data = client.Receive(ref anyIP);
                 string text = Encoding.UTF8.GetString(data);
+                print(text);
                 // Split the received text by a comma
                 string[] coords = text.Split(',');
                 string eye = "";
@@ -90,9 +91,10 @@ public class UdpSocket : MonoBehaviour
                 }
                 x = float.Parse(coords[1]);
                 y = float.Parse(coords[2]);
-                //print(eye + "=> x:" + x + ", y: " + y);
-                x = x / 50;
-                y = y / 50;
+        //         //print(eye + "=> x:" + x + ", y: " + y);
+                x = x / 640;
+                y = y / 480;
+
                 x *= Screen.width;
                 y *= Screen.height;
                 if(eye == "l")
@@ -109,7 +111,7 @@ public class UdpSocket : MonoBehaviour
             {
                 print(err.ToString());
             }
-        }
+            }
     }
 
     private void ProcessInput(string input)

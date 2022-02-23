@@ -31,12 +31,22 @@ while True:
 
     left_pupil = gaze.pupil_left_coords()
     right_pupil = gaze.pupil_right_coords()
+    #print(type(left_pupil))
     # print out the pupil coords
     cv2.putText(frame, "Left pupil:  " + str(left_pupil), (90, 130), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
     cv2.putText(frame, "Right pupil: " + str(right_pupil), (90, 165), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
 
-    sock.SendData(left_pupil) # Send this string to other application
-    sock.SendData(right_pupil)
+    if left_pupil:
+        left_x = left_pupil[0]
+        left_y = left_pupil[1]
+        sock.SendData("l,"+str(left_x)+","+str(left_y)) # Send this string to other application
+
+        #print(left_x,left_y)
+
+    if right_pupil:
+        right_x = right_pupil[0]
+        right_y = right_pupil[1]
+        sock.SendData("r,"+str(right_x)+","+str(right_y))
     
     data = sock.ReadReceivedData() # read data
 
