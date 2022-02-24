@@ -17,7 +17,7 @@ client = MongoClient(
 db = client.concussionDB
 
 # Baseline data
-colBaseline = db.Baseline
+colBaseline = db.baseline
 
 # Concussion data
 colConcussionTests = db.concussionTests
@@ -29,6 +29,11 @@ xpupil = []
 ypupil = []
 
 data = ""
+
+writeToFileCSV = open("./files/eye-coordinatesCSV.csv", "w")
+
+def save_to_file(x, y, fileName):
+    fileName.write(str(x) + ", " + str(y) + "\n")
 
 while True:
     _, frame = cap.read()
@@ -47,12 +52,14 @@ while True:
 
     
 
-    if left_pupil and right_pupil and data == "false":
+    if left_pupil and right_pupil: #and data == "false":
         x = int((left_pupil[0] + right_pupil[0]) / 2)
         y = int((left_pupil[1] + right_pupil[1]) / 2)
 
         xpupil.append(x)
         ypupil.append(y)
+
+        save_to_file(x, y, writeToFileCSV)
     
 
     tempData = sock.ReadReceivedData() # read data
@@ -62,15 +69,7 @@ while True:
     cv2.imshow("Frame",frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'): #or data == "true":
-        # Send xpupil and ypupil to mongodb
-        test = {
-            'user_id' : '001'
-
-            'x' : xpupil
-            'y' : ypupil
-        }
-
-        result = db.baseline.insert_one(test)
+        writeToFileCSV.close()
         break
         
 cap.release()
@@ -78,3 +77,15 @@ cv2.destroyAllWindows()
 
 plt.scatter(xpupil, ypupil, zorder=2)
 plt.show()
+
+f = open('./files/eye-coordinatesCSV.csv')
+
+coords = f.read()
+
+test = {
+    "user_id": "001",
+    "test_data": coords
+}
+
+result = db.colBaseline.insert_one(test)
+print(result)
