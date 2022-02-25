@@ -23,6 +23,8 @@ writeToFileCSV = open("./files/eye-coordinatesCSV.csv", "w")
 def save_to_file(x, y, fileName):
      fileName.write(str(x) + ", " + str(y) + "\n")
 
+
+
 while True:
     _, frame = cap.read()
 
@@ -40,7 +42,7 @@ while True:
 
     
 
-    if left_pupil and right_pupil: #and data == "false":
+    if left_pupil and right_pupil: #and record == "true":
         x = int((left_pupil[0] + right_pupil[0]) / 2)
         y = int((left_pupil[1] + right_pupil[1]) / 2)
 
@@ -52,13 +54,16 @@ while True:
 
     tempData = sock.ReadReceivedData() # read data
 
+    if tempData is not None:
+        print(tempData)
+        
     if tempData == "true" or tempData == "false":
-        data = tempData
+        record = tempData
 
     if tempData == "baseline":
-        print("Baseline Test")
+        option = 1
     elif tempData == "concdata":
-        print("Concussion Test")
+        option = 2
 
     cv2.imshow("Frame",frame)
 
@@ -81,4 +86,4 @@ test = {
     "test_data": coords
 }
 
-db.SaveToDatabase('001', coords)
+db.SaveToDatabase(option, '001', coords)

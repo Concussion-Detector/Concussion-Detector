@@ -18,13 +18,18 @@ class Database(object):
         # Concussion data
         self.colConcussionTests = self.db.concussionTests
     
-    def SaveToDatabase(self, id, coords):
+    def SaveToDatabase(self, option, id, coords):
         test = {
             "user_id": id,
             "coords": coords
         }
+        
+        if option == 1:
+            self.db.colBaseline.insert_one(test)
+        elif option == 2:
+            self.db.colBaseline.insert_one(test)
 
-        self.db.colBaseline.insert_one(test)
+        
 
     
 
