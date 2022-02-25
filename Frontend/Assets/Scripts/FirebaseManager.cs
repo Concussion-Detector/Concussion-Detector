@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,14 +16,20 @@ public class FirebaseManager : MonoBehaviour
     public TMP_InputField firstName;
     public TMP_InputField lastName;
 
+    public GameObject sceneManager;
+
+    private DataManager dataManager;
+
     void Start()
     {
         reference = FirebaseDatabase.DefaultInstance.RootReference;
+        dataManager = sceneManager.GetComponent<DataManager>();
     }
 
     public void SaveData()
     {
         Patient patient = new Patient();
+        patient.uuid = GetUUID();
         patient.firstName = firstName.text;
         patient.lastName = lastName.text;
         string fullName = firstName.text + " " + lastName.text;
@@ -32,6 +39,7 @@ public class FirebaseManager : MonoBehaviour
             if(task.IsCompleted)
             {
                 Debug.Log("Successfully added to firebase");
+                dataManager.SendPatientData(patient.uuid);
             }
             else
             {
@@ -39,5 +47,13 @@ public class FirebaseManager : MonoBehaviour
             }
         });
 
+    }
+
+    private string GetUUID()
+    {
+        Guid myuuid = Guid.NewGuid();
+        string uuid = myuuid.ToString();
+
+        return uuid;
     }
 }

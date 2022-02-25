@@ -23,7 +23,7 @@ public class MoveDot : MonoBehaviour
     {
         udpSocket = sceneManager.GetComponent<UdpSocket>();
         transform.position = waypoints[waypointIndex].transform.position;
-        StartCoroutine(StartMovingDot());
+        //StartCoroutine(StartMovingDot());
 
     }
 
@@ -39,7 +39,7 @@ public class MoveDot : MonoBehaviour
     private IEnumerator StartMovingDot()
     {
         yield return new WaitForSeconds(2);
-        udpSocket.SendData("false");
+        udpSocket.SendData("true");
         dotMoving = true;
     }
 
@@ -59,7 +59,7 @@ public class MoveDot : MonoBehaviour
         else if (waypointIndex == waypoints.Length)
         {
             // Stop reading data from python
-            udpSocket.SendData("true");
+            udpSocket.SendData("false");
         }
     }
 }

@@ -19,8 +19,6 @@ public class UdpSocket : MonoBehaviour
     [SerializeField] int txPort = 8001; // port to send data to Python on
     [SerializeField] private GameObject leftDot;
     [SerializeField] private GameObject rightDot;
-    [SerializeField] private GameObject baselineToggle;
-    [SerializeField] private GameObject concussionToggle;
 
     public Camera cam;
 
@@ -32,14 +30,6 @@ public class UdpSocket : MonoBehaviour
     UdpClient client;
     IPEndPoint remoteEndPoint;
     Thread receiveThread; // Receiving Thread
-
-    ToggleGroup toggleGroup;
-
-
-    void Start()
-    {
-        toggleGroup = GetComponent<ToggleGroup>();
-    }
 
     void Awake()
     {
@@ -156,18 +146,5 @@ public class UdpSocket : MonoBehaviour
             receiveThread.Abort();
 
         client.Close();
-    }
-
-    public void SendPatientData()
-    {
-        //Toggle toggle = toggleGroup.ActiveToggles().FirstOrDefault();
-        
-        //Debug.Log(toggle.name + " "+toggle.GetComponentInChildren<Text>());
-        //print(baselineToggle.GetComponent<Toggle>());
-        if(baselineToggle.GetComponent<Toggle>().isOn) {
-            SendData("baseline");
-        } else {
-            SendData("concdata");
-        }
     }
 }

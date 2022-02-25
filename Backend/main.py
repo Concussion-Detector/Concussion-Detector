@@ -52,18 +52,15 @@ while True:
         save_to_file(x, y, writeToFileCSV)
     
 
-    tempData = sock.ReadReceivedData() # read data
+    data = sock.ReadReceivedData() # read data
 
-    if tempData is not None:
-        print(tempData)
-        
-    if tempData == "true" or tempData == "false":
-        record = tempData
-
-    if tempData == "baseline":
-        option = 1
-    elif tempData == "concdata":
-        option = 2
+    if data is not None:
+        if data == "true" or data == "false":
+            record = data
+        else:
+            tempData = data.split()
+            option = tempData[0]
+            uuid = tempData[1]
 
     cv2.imshow("Frame",frame)
 

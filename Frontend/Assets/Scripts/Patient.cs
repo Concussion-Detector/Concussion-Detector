@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Patient
 {
+    public string uuid;
     public string firstName;
     public string lastName;
 }

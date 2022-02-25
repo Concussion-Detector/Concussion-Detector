@@ -1653,7 +1653,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -38.654938, y: -10.3977}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 249.3968, y: 120.8014}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &584897809
@@ -2563,7 +2563,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &937839666
 MonoBehaviour:
@@ -2881,7 +2881,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1019921718
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3612,8 +3612,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1602519404}
-  - component: {fileID: 1602519406}
   - component: {fileID: 1602519405}
+  - component: {fileID: 1602519406}
+  - component: {fileID: 1602519407}
   m_Layer: 0
   m_Name: Scene Manager
   m_TagString: Untagged
@@ -3665,10 +3666,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1602519403}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ffb99ee455695e47ac436749a2bc084, type: 3}
+  m_Script: {fileID: 11500000, guid: e011c3d2a616f8d4884bdefba1b46967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   patientDetails: {fileID: 1019921717}
+--- !u!114 &1602519407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602519403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4ae7f372fa1184a8104019f8efd8c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baselineToggle: {fileID: 1785862905}
 --- !u!1 &1613845175
 GameObject:
   m_ObjectHideFlags: 0
@@ -4308,7 +4322,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1744594068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aafd768557e9fc4083f5d453293dacc, type: 3}
+  m_Script: {fileID: 11500000, guid: 9765beb0742356e4c861420f016c8085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 1115067027}
@@ -4493,8 +4507,20 @@ MonoBehaviour:
   m_Group: {fileID: 1077378050}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 0
+      m_Calls:
+      - m_Target: {fileID: 1602519407}
+        m_TargetAssemblyTypeName: DataManager, Assembly-CSharp
+        m_MethodName: GetToggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 1
 --- !u!1 &1789594451
 GameObject:
   m_ObjectHideFlags: 0
@@ -4924,11 +4950,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1883261434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e32e6bd0c91ebf43bf9f020371cb611, type: 3}
+  m_Script: {fileID: 11500000, guid: 594c1342f0aee7043bfada2b17e9adb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   firstName: {fileID: 5250326}
   lastName: {fileID: 210918597}
+  sceneManager: {fileID: 1602519403}
 --- !u!1 &1917747684
 GameObject:
   m_ObjectHideFlags: 0
@@ -5812,33 +5839,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1602519406}
-        m_TargetAssemblyTypeName: MainManager, Assembly-CSharp
-        m_MethodName: FollowDot
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1883261436}
         m_TargetAssemblyTypeName: FirebaseManager, Assembly-CSharp
         m_MethodName: SaveData
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1602519405}
-        m_TargetAssemblyTypeName: UdpSocket, Assembly-CSharp
-        m_MethodName: SendPatientData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
