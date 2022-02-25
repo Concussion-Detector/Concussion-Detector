@@ -78,9 +78,4 @@ f = open('./files/eye-coordinatesCSV.csv')
 
 coords = f.read()
 
-test = {
-    "user_id": "001",
-    "test_data": coords
-}
-
-db.SaveToDatabase(option, '001', coords)
+db.SaveToDatabase(option, uuid, coords)

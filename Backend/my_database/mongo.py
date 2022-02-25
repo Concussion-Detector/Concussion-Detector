@@ -18,9 +18,9 @@ class Database(object):
         # Concussion data
         self.colConcussionTests = self.db.concussionTests
     
-    def SaveToDatabase(self, option, id, coords):
+    def SaveToDatabase(self, option, uuid, coords):
         test = {
-            "user_id": id,
+            "uuid": uuid,
             "coords": coords
         }
         
