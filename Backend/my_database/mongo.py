@@ -27,7 +27,7 @@ class Database(object):
         if option == 1:
             self.db.colBaseline.insert_one(test)
         elif option == 2:
-            self.db.colBaseline.insert_one(test)
+            self.db.colConcussionTests.insert_one(test)
 
         
 

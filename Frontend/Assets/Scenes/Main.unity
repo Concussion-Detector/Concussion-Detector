@@ -3654,8 +3654,6 @@ MonoBehaviour:
   txPort: 8001
   leftDot: {fileID: 0}
   rightDot: {fileID: 0}
-  baselineToggle: {fileID: 1785862905}
-  concussionToggle: {fileID: 2129389041}
   cam: {fileID: 0}
 --- !u!114 &1602519406
 MonoBehaviour:
@@ -5842,6 +5840,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1883261436}
         m_TargetAssemblyTypeName: FirebaseManager, Assembly-CSharp
         m_MethodName: SaveData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1602519406}
+        m_TargetAssemblyTypeName: MainManager, Assembly-CSharp
+        m_MethodName: FollowDot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

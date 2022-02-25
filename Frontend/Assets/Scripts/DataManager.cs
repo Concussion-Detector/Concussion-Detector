@@ -27,7 +27,7 @@ public class DataManager : MonoBehaviour
     public void SendPatientData(string uuid)
     {
         string msg = testType + " " + uuid;
-        udpSocket.SendData(msg);
+        udpSocket.SendData("test");
     }
 
     public void GetToggle()

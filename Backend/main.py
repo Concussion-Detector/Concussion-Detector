@@ -16,6 +16,9 @@ cap = cv2.VideoCapture(0)
 xpupil = []
 ypupil = []
 
+option = 0
+uuid = ""
+record = ""
 data = ""
 
 writeToFileCSV = open("./files/eye-coordinatesCSV.csv", "w")
@@ -42,7 +45,7 @@ while True:
 
     
 
-    if left_pupil and right_pupil: #and record == "true":
+    if left_pupil and right_pupil and record == "true":
         x = int((left_pupil[0] + right_pupil[0]) / 2)
         y = int((left_pupil[1] + right_pupil[1]) / 2)
 
@@ -55,16 +58,17 @@ while True:
     data = sock.ReadReceivedData() # read data
 
     if data is not None:
+        print(data)
         if data == "true" or data == "false":
             record = data
         else:
-            tempData = data.split()
-            option = tempData[0]
-            uuid = tempData[1]
+             tempData = data.split()
+             option = tempData[0]
+             uuid = tempData[1]
 
     cv2.imshow("Frame",frame)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'): #or data == "true":
+    if cv2.waitKey(1) & 0xFF == ord('q'): #or record == "false":
         writeToFileCSV.close()
         break
         

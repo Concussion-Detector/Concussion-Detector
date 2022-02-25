@@ -23,7 +23,7 @@ public class MoveDot : MonoBehaviour
     {
         udpSocket = sceneManager.GetComponent<UdpSocket>();
         transform.position = waypoints[waypointIndex].transform.position;
-        //StartCoroutine(StartMovingDot());
+        StartCoroutine(StartMovingDot());
 
     }
 

@@ -74,6 +74,7 @@ public class UdpSocket : MonoBehaviour
         }
         catch (Exception err)
         {
+            Debug.Log("Error");
             print(err.ToString());
         }
     }
@@ -142,9 +143,10 @@ public class UdpSocket : MonoBehaviour
     //Prevent crashes - close clients and threads properly!
     void OnDisable()
     {
+        Debug.Log("Close it");
         if (receiveThread != null)
             receiveThread.Abort();
-
+            
         client.Close();
     }
 }
