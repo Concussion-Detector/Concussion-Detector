@@ -2,6 +2,7 @@
 Idea implemented from Two-way communication between Python 3 and Unity (C#) - Y. T. Elashry
 */
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System;
 using System.Text;
@@ -18,6 +19,9 @@ public class UdpSocket : MonoBehaviour
     [SerializeField] int txPort = 8001; // port to send data to Python on
     [SerializeField] private GameObject leftDot;
     [SerializeField] private GameObject rightDot;
+    [SerializeField] private GameObject baselineToggle;
+    [SerializeField] private GameObject concussionToggle;
+
     public Camera cam;
 
     private float x, y;
@@ -28,6 +32,14 @@ public class UdpSocket : MonoBehaviour
     UdpClient client;
     IPEndPoint remoteEndPoint;
     Thread receiveThread; // Receiving Thread
+
+    ToggleGroup toggleGroup;
+
+
+    void Start()
+    {
+        toggleGroup = GetComponent<ToggleGroup>();
+    }
 
     void Awake()
     {
@@ -50,7 +62,7 @@ public class UdpSocket : MonoBehaviour
 
     void Update()
     {
-        if(leftEyeDetected)
+        /*if(leftEyeDetected)
         {
             Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(x, y, 10f));
             Instantiate(leftDot, worldPos, Quaternion.identity);
@@ -60,7 +72,7 @@ public class UdpSocket : MonoBehaviour
             Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(x, y, 10f));
             Instantiate(rightDot, worldPos, Quaternion.identity);
             rightEyeDetected = false;
-        }
+        }*/
     }
 
     public void SendData(string message) // Use to send data to Python
@@ -89,7 +101,7 @@ public class UdpSocket : MonoBehaviour
                 string text = Encoding.UTF8.GetString(data);
                 print(text);
                 // Split the received text by a comma
-                string[] coords = text.Split(',');
+                /*string[] coords = text.Split(',');
                 string eye = "";
                 // The first string is 'l' or 'r' to distinguish
                 // the left from the right eye
@@ -118,13 +130,13 @@ public class UdpSocket : MonoBehaviour
                 }
                 //print(eye + "=> x:" + x + ", y: " + y);
 
-                ProcessInput(text);
+                ProcessInput(text);*/
             }
             catch (Exception err)
             {
                 print(err.ToString());
             }
-            }
+        }
     }
 
     private void ProcessInput(string input)
@@ -144,5 +156,18 @@ public class UdpSocket : MonoBehaviour
             receiveThread.Abort();
 
         client.Close();
+    }
+
+    public void SendPatientData()
+    {
+        //Toggle toggle = toggleGroup.ActiveToggles().FirstOrDefault();
+        
+        //Debug.Log(toggle.name + " "+toggle.GetComponentInChildren<Text>());
+        //print(baselineToggle.GetComponent<Toggle>());
+        if(baselineToggle.GetComponent<Toggle>().isOn) {
+            SendData("baseline");
+        } else {
+            SendData("concdata");
+        }
     }
 }

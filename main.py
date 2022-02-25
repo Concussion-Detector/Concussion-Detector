@@ -66,6 +66,11 @@ while True:
     if tempData == "true" or tempData == "false":
         data = tempData
 
+    if tempData == "baseline":
+        print("Baseline Test")
+    elif tempData == "concdata":
+        print("Concussion Test")
+
     cv2.imshow("Frame",frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'): #or data == "true":
