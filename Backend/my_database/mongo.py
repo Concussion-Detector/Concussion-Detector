@@ -1,6 +1,5 @@
 from pymongo import MongoClient
 
-
 class Database(object):
 
     """
@@ -8,21 +7,25 @@ class Database(object):
     """
 
     def __init__(self):
-        client = MongoClient(
+        self.client = MongoClient(
             'mongodb+srv://concussion-detector:gmitproject2022@cluster.rure1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
         )
+
         # Root of database
-        db = client.concussionDB
+        self.db = self.client.concussionDB
         # Baseline data
-        colBaseline = db.baseline
+        self.colBaseline = self.db.baseline
         # Concussion data
-        colConcussionTests = db.concussionTests
+        self.colConcussionTests = self.db.concussionTests
     
+    def SaveToDatabase(self, id, coords):
+        test = {
+            "user_id": id,
+            "coords": coords
+        }
+
+        self.db.colBaseline.insert_one(test)
+
     
-
-    #writeToFileCSV = open("./files/eye-coordinatesCSV.csv", "w")
-
-    def save_to_file(x, y, fileName):
-        fileName.write(str(x) + ", " + str(y) + "\n")
 
     
