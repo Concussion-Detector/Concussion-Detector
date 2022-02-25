@@ -4,23 +4,15 @@ import UdpComms as U
 import time
 import logging
 import matplotlib.pyplot as plt
-from pymongo import MongoClient
+from my_database import Database as database
+
 
 # Create UDP socket to use for sending (and receiving)
 sock = U.UdpComms(udpIP="127.0.0.1", portTX=8000, portRX=8001, enableRX=True, suppressWarnings=True)
 
-client = MongoClient(
-    'mongodb+srv://concussion-detector:gmitproject2022@cluster.rure1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-)
 
-# Root of database
-db = client.concussionDB
 
-# Baseline data
-colBaseline = db.baseline
 
-# Concussion data
-colConcussionTests = db.concussionTests
 
 gaze = GazeTracking()
 cap = cv2.VideoCapture(0)
@@ -32,8 +24,8 @@ data = ""
 
 writeToFileCSV = open("./files/eye-coordinatesCSV.csv", "w")
 
-def save_to_file(x, y, fileName):
-    fileName.write(str(x) + ", " + str(y) + "\n")
+# def save_to_file(x, y, fileName):
+#     fileName.write(str(x) + ", " + str(y) + "\n")
 
 while True:
     _, frame = cap.read()
@@ -59,7 +51,7 @@ while True:
         xpupil.append(x)
         ypupil.append(y)
 
-        save_to_file(x, y, writeToFileCSV)
+        database.save_to_file(x, y, writeToFileCSV)
     
 
     tempData = sock.ReadReceivedData() # read data
@@ -92,5 +84,5 @@ test = {
     "test_data": coords
 }
 
-result = db.colBaseline.insert_one(test)
+result = database.db.colBaseline.insert_one(test)
 print(result)
