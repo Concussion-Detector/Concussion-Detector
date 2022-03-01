@@ -23,10 +23,10 @@ class Database(object):
             "uuid": uuid,
             "coords": coords
         }
-        
-        if option == 1:
+
+        if option == "1":
             self.db.colBaseline.insert_one(test)
-        elif option == 2:
+        elif option == "2":
             self.db.colConcussionTests.insert_one(test)
 
         
