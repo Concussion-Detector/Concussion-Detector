@@ -9,6 +9,7 @@ public class MainManager : MonoBehaviour
 
     public void FollowDot()
     {
+        Debug.Log("Load Dot Scene");
         SceneManager.LoadScene("DotFollow");
     }
 

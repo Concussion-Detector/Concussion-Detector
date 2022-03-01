@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour
 {
 
     [SerializeField] 
     private GameObject baselineToggle;
+
+    [SerializeField]
+    private MainManager mainManager;
 
     private UdpSocket udpSocket;
     private int testType = 1;
@@ -27,7 +31,8 @@ public class DataManager : MonoBehaviour
     public void SendPatientData(string uuid)
     {
         string msg = testType + " " + uuid;
-        udpSocket.SendData("test");
+        udpSocket.SendData(msg);
+        mainManager.FollowDot();
     }
 
     public void GetToggle()

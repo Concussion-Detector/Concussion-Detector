@@ -28,6 +28,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void SaveData()
     {
+        Debug.Log("Saving Data to Firebase");
         Patient patient = new Patient();
         patient.uuid = GetUUID();
         patient.firstName = firstName.text;

@@ -67,6 +67,7 @@ public class UdpSocket : MonoBehaviour
 
     public void SendData(string message) // Use to send data to Python
     {
+        Debug.Log("Try to send " + message);
         try
         {
             byte[] data = Encoding.UTF8.GetBytes(message);
@@ -74,7 +75,7 @@ public class UdpSocket : MonoBehaviour
         }
         catch (Exception err)
         {
-            Debug.Log("Error");
+            Debug.Log("Error, message failed to send");
             print(err.ToString());
         }
     }
@@ -143,7 +144,7 @@ public class UdpSocket : MonoBehaviour
     //Prevent crashes - close clients and threads properly!
     void OnDisable()
     {
-        Debug.Log("Close it");
+        Debug.Log("Close UDP socket");
         if (receiveThread != null)
             receiveThread.Abort();
             
