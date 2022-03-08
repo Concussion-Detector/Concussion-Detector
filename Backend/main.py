@@ -75,7 +75,7 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 
-plt.scatter(xpupil, ypupil, zorder=2)
+plt.plot(xpupil, ypupil, '-o')
 plt.show()
 
 f = open('./files/eye-coordinatesCSV.csv')

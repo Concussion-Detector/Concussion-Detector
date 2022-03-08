@@ -67,7 +67,7 @@ public class UdpSocket : MonoBehaviour
 
     public void SendData(string message) // Use to send data to Python
     {
-        Debug.Log("Try to send " + message);
+        //Debug.Log("Try to send " + message);
         try
         {
             byte[] data = Encoding.UTF8.GetBytes(message);
