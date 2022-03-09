@@ -18,6 +18,7 @@ public class MoveDot : MonoBehaviour
 
     private UdpSocket udpSocket;
 
+    
     // Start is called before the first frame update
     void Start()
     {
