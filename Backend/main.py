@@ -28,8 +28,13 @@ def save_to_file(x, y, fileName):
 
 
 
+count = 0
+bad_count =0
+
 while True:
     _, frame = cap.read()
+
+    
 
     # Analyze frame
     gaze.refresh(frame)
@@ -49,9 +54,19 @@ while True:
         x = int((left_pupil[0] + right_pupil[0]) / 2)
         y = int((left_pupil[1] + right_pupil[1]) / 2)
 
+
         xpupil.append(x)
         ypupil.append(y)
 
+
+        if x in range(315,330):
+            count+=1
+            print("in if")
+        elif y in range(160,175):
+            count+=1 
+        else:
+            bad_count+=1
+        
         save_to_file(x, y, writeToFileCSV)
     
 
@@ -81,5 +96,9 @@ plt.show()
 f = open('./files/eye-coordinatesCSV.csv')
 
 coords = f.read()
+
+
+print("good points {count}".format(count=count))
+print("bad counts {bad_count}".format(bad_count=bad_count))
 
 db.SaveToDatabase(option, uuid, coords)
