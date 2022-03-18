@@ -66,6 +66,8 @@ while True:
             count+=1 
         else:
             bad_count+=1
+
+        chance_of_being_concussed = (bad_count / count) * 100
         
         save_to_file(x, y, writeToFileCSV)
     
@@ -100,5 +102,6 @@ coords = f.read()
 
 print("good points {count}".format(count=count))
 print("bad counts {bad_count}".format(bad_count=bad_count))
+print("Chance of being concussed {chance}".format(chance=chance_of_being_concussed))
 
 db.SaveToDatabase(option, uuid, coords)
