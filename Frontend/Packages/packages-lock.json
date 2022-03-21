@@ -114,11 +114,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.mathematics": {
-      "version": "1.1.0",
-      "depth": 1,
-      "source": "registry",
+      "version": "https://github.com/Unity-Technologies/Unity.Mathematics.git?path=src",
+      "depth": 0,
+      "source": "git",
       "dependencies": {},
-      "url": "https://packages.unity.com"
+      "hash": "f476dc88954697f71e5615b5f57462495bc973a7"
     },
     "com.unity.services.core": {
       "version": "1.0.1",
