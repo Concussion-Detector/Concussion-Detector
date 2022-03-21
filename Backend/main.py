@@ -5,6 +5,7 @@ import time
 import logging
 import matplotlib.pyplot as plt
 from my_database import Database
+import ProcessPoints as PP
 
 # Create UDP socket to use for sending (and receiving)
 sock = U.UdpComms(udpIP="127.0.0.1", portTX=8000, portRX=8001, enableRX=True, suppressWarnings=True)
@@ -21,7 +22,7 @@ uuid = ""
 record = ""
 data = ""
 
-writeToFileCSV = open("./files/eye-coordinatesCSV.csv", "w")
+#writeToFileCSV = open("./files/eye-coordinatesCSV.csv", "w")
 
 def save_to_file(x, y, fileName):
      fileName.write(str(x) + ", " + str(y) + "\n")
@@ -59,17 +60,17 @@ while True:
         ypupil.append(y)
 
 
-        if x in range(315,330):
-            count+=1
-            print("in if")
-        elif y in range(160,175):
-            count+=1 
-        else:
-            bad_count+=1
+        # if x in range(315,330):
+        #     count+=1
+        #     print("in if")
+        # elif y in range(160,175):
+        #     count+=1 
+        # else:
+        #     bad_count+=1
 
-        chance_of_being_concussed = (bad_count / count) * 100
+        # chance_of_being_concussed = (bad_count / count) * 100
         
-        save_to_file(x, y, writeToFileCSV)
+        #save_to_file(x, y, writeToFileCSV)
     
 
     data = sock.ReadReceivedData() # read data
@@ -86,7 +87,7 @@ while True:
     cv2.imshow("Frame",frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'): #or record == "false":
-        writeToFileCSV.close()
+        #writeToFileCSV.close()
         break
         
 cap.release()
@@ -97,11 +98,12 @@ plt.show()
 
 f = open('./files/eye-coordinatesCSV.csv')
 
+PP.ProcessPoints()
+
 coords = f.read()
 
-
-print("good points {count}".format(count=count))
-print("bad counts {bad_count}".format(bad_count=bad_count))
-print("Chance of being concussed {chance}".format(chance=chance_of_being_concussed))
+#print("good points {count}".format(count=count))
+#print("bad counts {bad_count}".format(bad_count=bad_count))
+#print("Chance of being concussed {chance}".format(chance=chance_of_being_concussed))
 
 db.SaveToDatabase(option, uuid, coords)
