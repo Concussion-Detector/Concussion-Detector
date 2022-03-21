@@ -62,4 +62,31 @@ public class ScatterPlot : MonoBehaviour
             point.pointObj = obj;
         }
     }
+
+    // Iterates through both the x-axis and the y-axis
+    // instantiating an object with text with an incremental
+    // number to describe the points
+    void DrawAxis(int xAxisCount, int yAxisCount)
+    {
+        int xSpacer = xInc;
+        int ySpacer = yInc;
+
+        for(int i = 0; i <= xAxisCount; i++)
+        {
+            GameObject xObj = Instantiate(xValPrefab);
+
+            xObj.transform.SetParent(XAxis);
+
+            xObj.GetComponentInChildren<Text>().text = (xSpacer * (i + 1)).ToString();
+        }
+
+        for(int i = 0; i <= yAxisCount; i++)
+        {
+            GameObject yObj = Instantiate(yValPrefab);
+
+            yObj.transform.SetParent(YAxis);
+
+            yObj.GetComponentInChildren<Text>().text = (ySpacer * (yAxisCount + 1 - i)).ToString();
+        }
+    }
 }
