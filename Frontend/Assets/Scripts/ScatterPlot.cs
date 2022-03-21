@@ -45,4 +45,21 @@ public class ScatterPlot : MonoBehaviour
         mainWidth = rect.width - 100;
         mainHeight = rect.height - 100;
     }
+
+    // Iterates through the list of points and instantiates
+    // an object at that position which currently is a green 
+    // circle
+    void DrawPoints()
+    {
+        foreach (Point point in points)
+        {
+            GameObject obj = Instantiate(pointPrefab);
+            obj.transform.SetParent(Main);
+            RectTransform rt = obj.GetComponent<RectTransform>();
+            rt.anchorMax = new Vector2(0.0f, 0.0f);
+            rt.anchorMin = new Vector2(0.0f, 0.0f);
+            rt.anchoredPosition3D = new Vector3(point.x, point.y, 0);
+            point.pointObj = obj;
+        }
+    }
 }
