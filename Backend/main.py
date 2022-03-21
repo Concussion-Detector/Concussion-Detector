@@ -58,17 +58,6 @@ while True:
 
         xpupil.append(x)
         ypupil.append(y)
-
-
-        # if x in range(315,330):
-        #     count+=1
-        #     print("in if")
-        # elif y in range(160,175):
-        #     count+=1 
-        # else:
-        #     bad_count+=1
-
-        # chance_of_being_concussed = (bad_count / count) * 100
         
         #save_to_file(x, y, writeToFileCSV)
     
@@ -101,9 +90,5 @@ f = open('./files/eye-coordinatesCSV.csv')
 PP.ProcessPoints()
 
 coords = f.read()
-
-#print("good points {count}".format(count=count))
-#print("bad counts {bad_count}".format(bad_count=bad_count))
-#print("Chance of being concussed {chance}".format(chance=chance_of_being_concussed))
 
 db.SaveToDatabase(option, uuid, coords)
