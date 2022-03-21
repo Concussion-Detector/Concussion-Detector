@@ -22,20 +22,16 @@ uuid = ""
 record = ""
 data = ""
 
-#writeToFileCSV = open("./files/eye-coordinatesCSV.csv", "w")
+writeToFileCSV = open("./files/eye-coordinatesCSV.csv", "w")
 
 def save_to_file(x, y, fileName):
      fileName.write(str(x) + ", " + str(y) + "\n")
-
-
 
 count = 0
 bad_count =0
 
 while True:
     _, frame = cap.read()
-
-    
 
     # Analyze frame
     gaze.refresh(frame)
@@ -49,17 +45,14 @@ while True:
     cv2.putText(frame, "Left pupil:  " + str(left_pupil), (90, 130), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
     cv2.putText(frame, "Right pupil: " + str(right_pupil), (90, 165), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
 
-    
-
     if left_pupil and right_pupil and record == "true":
         x = int((left_pupil[0] + right_pupil[0]) / 2)
         y = int((left_pupil[1] + right_pupil[1]) / 2)
 
-
         xpupil.append(x)
         ypupil.append(y)
         
-        #save_to_file(x, y, writeToFileCSV)
+        save_to_file(x, y, writeToFileCSV)
     
 
     data = sock.ReadReceivedData() # read data
@@ -76,7 +69,7 @@ while True:
     cv2.imshow("Frame",frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'): #or record == "false":
-        #writeToFileCSV.close()
+        writeToFileCSV.close()
         break
         
 cap.release()
