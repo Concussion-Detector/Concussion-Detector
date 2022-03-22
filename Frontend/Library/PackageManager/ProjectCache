@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637814280147489613
+      ticks: 637834976680227846
     m_Hash: 1953156006
   m_LockFileStatus:
     m_FilePath: C:/Users/Wojtek Pogorzelski/Desktop/FourthYearProject/Concussion-Detector/Frontend/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637814280147499616
+      ticks: 637834976680247839
     m_Hash: 2425293117
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}

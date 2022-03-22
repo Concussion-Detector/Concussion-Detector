@@ -1,6 +1,7 @@
 from __future__ import division
 import os
 import cv2
+from cv2.data import haarcascades
 import dlib
 from .eye import Eye
 from .calibration import Calibration
@@ -73,7 +74,7 @@ class GazeTracking(object):
             x = self.eye_right.origin[0] + self.eye_right.pupil.x
             y = self.eye_right.origin[1] + self.eye_right.pupil.y
             return (x, y)
-
+    
     def horizontal_ratio(self):
         """Returns a number between 0.0 and 1.0 that indicates the
         horizontal direction of the gaze. The extreme right is 0.0,
@@ -97,6 +98,13 @@ class GazeTracking(object):
     def draw(self):
         """Returns the main frame and draws coords of the pupils"""
         frame = self.frame.copy()
+
+        face_detector = cv2.CascadeClassifier(haarcascades + "haarcascade_frontalface_default.xml")
+
+        faces = face_detector.detectMultiScale(frame, 1.1, 4)
+
+        for (x, y, w, h) in faces:
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 1)
 
         if self.pupils_located:
             color = (0, 0, 255)
