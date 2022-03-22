@@ -42,3 +42,5 @@ The following objectives where identified to achieve our goals:
 **Save Data** - Various data such as player's info, baseline and post concussion states are securely stored which allows to use each players data for further examination. 
 
 **Report Findings** -  Provides a visual feedback of the results of the assessment. 
+
+![roadmap](https://user-images.githubusercontent.com/55446533/159567244-cf8ebe9a-9aa1-44f5-8bea-8ca526ca15f7.jpg)
