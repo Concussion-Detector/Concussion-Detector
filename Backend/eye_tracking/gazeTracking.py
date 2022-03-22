@@ -1,4 +1,4 @@
-from __future__ import division
+from __future__ import division # True division
 import os
 import cv2
 from cv2.data import haarcascades
@@ -117,9 +117,6 @@ class GazeTracking(object):
         for (x, y, w, h) in faces:
             centre_x = x + w//2
             centre_y = y + y//2
-            #print(type(width_center))
-
-            #print("center x{x} center y {y} width{width} height {height}".format(x=centre_x,y=centre_y,width=width/2,height=height/2))
 
             # Center of a screen
             cv2.putText(frame, ".", (int(width_center), int(height_center)), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
