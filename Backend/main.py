@@ -33,6 +33,11 @@ bad_count =0
 while True:
     _, frame = cap.read()
 
+    width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+    height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+
+    #print(width, height)
+  
     # Analyze frame
     gaze.refresh(frame)
 
@@ -42,8 +47,8 @@ while True:
     right_pupil = gaze.pupil_right_coords()
 
     # print out the pupil coords
-    cv2.putText(frame, "Left pupil:  " + str(left_pupil), (90, 130), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
-    cv2.putText(frame, "Right pupil: " + str(right_pupil), (90, 165), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
+    cv2.putText(frame, "Left pupil:  " + str(left_pupil), (20, 70), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
+    cv2.putText(frame, "Right pupil: " + str(right_pupil), (20, 105), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
 
     if left_pupil and right_pupil and record == "true":
         x = int((left_pupil[0] + right_pupil[0]) / 2)
@@ -85,5 +90,3 @@ PP.ProcessPoints()
 coords = f.read()
 
 db.SaveToDatabase(option, uuid, coords)
-
-sock.SendData(coords)

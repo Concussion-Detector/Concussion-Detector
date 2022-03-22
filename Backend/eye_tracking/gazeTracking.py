@@ -1,6 +1,7 @@
-from __future__ import division
+from __future__ import division # True division
 import os
 import cv2
+from cv2.data import haarcascades
 import dlib
 from .eye import Eye
 from .calibration import Calibration
@@ -73,7 +74,7 @@ class GazeTracking(object):
             x = self.eye_right.origin[0] + self.eye_right.pupil.x
             y = self.eye_right.origin[1] + self.eye_right.pupil.y
             return (x, y)
-
+    
     def horizontal_ratio(self):
         """Returns a number between 0.0 and 1.0 that indicates the
         horizontal direction of the gaze. The extreme right is 0.0,
@@ -95,8 +96,40 @@ class GazeTracking(object):
             return (pupil_left + pupil_right) / 2
 
     def draw(self):
-        """Returns the main frame and draws coords of the pupils"""
+        """Returns the main frame draws coords of the pupils and rectangle on the detected face"""
         frame = self.frame.copy()
+
+        face_detector = cv2.CascadeClassifier(haarcascades + "haarcascade_frontalface_default.xml")
+
+        faces = face_detector.detectMultiScale(frame, 1.1, 4)
+
+        # Shape of the frame
+        height, width, channels = frame.shape
+
+        # Frame center
+        height_center = height//2
+        width_center = width//2
+
+        # Center of the rectangle
+        upper_left = (width // 4, height // 4)
+        bottom_right = (width * 3 // 4, height * 3 // 4)
+
+        for (x, y, w, h) in faces:
+            centre_x = x + w//2
+            centre_y = y + y//2
+
+            # Center of a screen
+            cv2.putText(frame, ".", (int(width_center), int(height_center)), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
+
+            cv2.rectangle(frame, upper_left, bottom_right, (0, 255, 0), thickness=1)
+
+            if centre_x<width_center and centre_y<height_center:
+                cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 0, 255),2)
+
+            elif centre_x in range(width_center-1, width_center+1,1) or centre_y in range(height_center-1,height_center+1,1):
+                print("Centered")
+                cv2.putText(frame, "Face Aligned.", (20, 140), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
         if self.pupils_located:
             color = (0, 0, 255)
