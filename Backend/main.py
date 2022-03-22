@@ -22,7 +22,7 @@ uuid = ""
 record = ""
 data = ""
 
-writeToFileCSV = open("./files/eye-coordinatesCSV.csv", "w")
+#writeToFileCSV = open("./files/eye-coordinatesCSV.csv", "w")
 
 def save_to_file(x, y, fileName):
      fileName.write(str(x) + ", " + str(y) + "\n")
@@ -57,7 +57,7 @@ while True:
         xpupil.append(x)
         ypupil.append(y)
         
-        save_to_file(x, y, writeToFileCSV)
+        #save_to_file(x, y, writeToFileCSV)
     
 
     data = sock.ReadReceivedData() # read data
@@ -74,7 +74,7 @@ while True:
     cv2.imshow("Frame",frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'): #or record == "false":
-        writeToFileCSV.close()
+        #writeToFileCSV.close()
         break
         
 cap.release()
@@ -90,3 +90,5 @@ PP.ProcessPoints()
 coords = f.read()
 
 db.SaveToDatabase(option, uuid, coords)
+
+sock.SendData(coords)
