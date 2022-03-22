@@ -32,6 +32,11 @@ bad_count =0
 
 while True:
     _, frame = cap.read()
+
+    width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+    height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+
+    #print(width, height)
   
     # Analyze frame
     gaze.refresh(frame)

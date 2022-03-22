@@ -103,8 +103,26 @@ class GazeTracking(object):
 
         faces = face_detector.detectMultiScale(frame, 1.1, 4)
 
+        height, width, channels = frame.shape
+
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 1)
+
+            # center of a rectangle
+            centre_x = x + w/2
+            centre_y = y + y/2
+
+            print("center x{x} center y {y} width{width} height {height}".format(x=centre_x,y=centre_y,width=width/2,height=height/2))
+
+            if centre_x<width/2 and centre_y<height/2:
+                print("not centered")
+
+        
+
+
+
+
+            
 
         if self.pupils_located:
             color = (0, 0, 255)
