@@ -108,6 +108,32 @@ public class ScatterPlot : MonoBehaviour
 
        Debug.Log("We need points from 0 to " + xAmt + " on the x-axis");
        Debug.Log("We need points from 0 to " + yAmt + " on the y-axis");
+
+        xInc = 500 / xAmt;
+        yInc = 300 / yAmt;
+
+       foreach (Point pt in points)
+       {
+           if(pt.x == minX)
+           {
+               pt.x = 1 * xInc;
+           } else if(pt.x == maxX)
+           {
+               pt.x = xAmt * xInc;
+           } else {
+               pt.x = (pt.x - minX) * xInc;
+           }
+
+           if(pt.y == minY)
+           {
+               pt.y = 1 * yInc;
+           } else if(pt.y == maxY)
+           {
+               pt.x = yAmt * yInc;
+           } else {
+               pt.y = (pt.y - minY) * yInc;
+           }
+       }
     }
 
     // Iterates through the list of points and instantiates
