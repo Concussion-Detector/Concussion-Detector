@@ -96,18 +96,18 @@ class GazeTracking(object):
             return (pupil_left + pupil_right) / 2
 
     def draw(self):
-        """Returns the main frame and draws coords of the pupils"""
+        """Returns the main frame draws coords of the pupils and rectangle on the detected face"""
         frame = self.frame.copy()
 
         face_detector = cv2.CascadeClassifier(haarcascades + "haarcascade_frontalface_default.xml")
 
         faces = face_detector.detectMultiScale(frame, 1.1, 4)
 
+        # Shape of the frame
         height, width, channels = frame.shape
 
         for (x, y, w, h) in faces:
-            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 1)
-
+            
             # center of a rectangle
             centre_x = x + w/2
             centre_y = y + y/2
@@ -115,14 +115,10 @@ class GazeTracking(object):
             print("center x{x} center y {y} width{width} height {height}".format(x=centre_x,y=centre_y,width=width/2,height=height/2))
 
             if centre_x<width/2 and centre_y<height/2:
-                print("not centered")
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 1)
+            else:
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 1)
 
-        
-
-
-
-
-            
 
         if self.pupils_located:
             color = (0, 0, 255)
