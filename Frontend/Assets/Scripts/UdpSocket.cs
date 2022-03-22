@@ -23,6 +23,7 @@ public class UdpSocket : MonoBehaviour
     public Camera cam;
 
     private float x, y;
+    private string[] points;
     private Boolean leftEyeDetected = false;
     private Boolean rightEyeDetected = false;
 
@@ -47,7 +48,7 @@ public class UdpSocket : MonoBehaviour
 
         // Initialize (seen in comments window)
         print("UDP Comms Initialised");
-        print(Screen.height + " " + Screen.width);
+        //print(Screen.height + " " + Screen.width);
     }
 
     void Update()
@@ -80,6 +81,11 @@ public class UdpSocket : MonoBehaviour
         }
     }
 
+    public string[] GetPoints()
+    {
+        return points;
+    }
+
 
     // Receive data, update packets received
     private void ReceiveData()
@@ -91,10 +97,9 @@ public class UdpSocket : MonoBehaviour
                 IPEndPoint anyIP = new IPEndPoint(IPAddress.Any, 0);
                 byte[] data = client.Receive(ref anyIP);
                 string text = Encoding.UTF8.GetString(data);
-                print(text);
-                // Split the received text by a comma
-                /*string[] coords = text.Split(',');
-                string eye = "";
+                // Split the received text by a newline
+                points = text.Split('\n');
+                /*string eye = "";
                 // The first string is 'l' or 'r' to distinguish
                 // the left from the right eye
                 // The x coord is the second string after split
@@ -120,9 +125,9 @@ public class UdpSocket : MonoBehaviour
                 } else if(eye == "r") {
                     rightEyeDetected = true;
                 }
-                //print(eye + "=> x:" + x + ", y: " + y);
+                //print(eye + "=> x:" + x + ", y: " + y);*/
 
-                ProcessInput(text);*/
+                ProcessInput(text);
             }
             catch (Exception err)
             {

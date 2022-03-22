@@ -32,10 +32,13 @@ public class ScatterPlot : MonoBehaviour
     [SerializeField] private GameObject xValPrefab;
     [SerializeField] private GameObject yValPrefab;
     private UdpSocket udpSocket;
+    private string[] strPoints;
+    private int[] xAndY;
     private float mainWidth;
     private float mainHeight;
 
     private List<Point> points = new List<Point>();
+    private List<string> ts = new List<string>();
 
     // Start is called before the first frame update
     void Start()
@@ -47,19 +50,31 @@ public class ScatterPlot : MonoBehaviour
         // Reduce the width and height by a number to add some padding
         mainWidth = rect.width - 100;
         mainHeight = rect.height - 100;
-
-        GetPoints();
-        // Create 50 random points to display
-        CreateRandomPoints(50);
-        // Draw those points on the graph
-        DrawPoints();
-        // Draw both axis
-        DrawAxis((int)(mainWidth/xInc),(int)(mainHeight/yInc));
     }
 
-    void GetPoints()
+    void Update()
+    {   
+        if(strPoints != null) {
+            return;
+        }
+        else {
+            if(udpSocket.GetPoints() != null)
+            {
+                strPoints = udpSocket.GetPoints();
+                GetPoints();
+                DrawPoints();
+                DrawAxis((int)(mainWidth/xInc),(int)(mainHeight/yInc));
+            }
+        }
+    }
+
+    async void GetPoints()
     {
-        //udpSocket.ReceiveData();
+       for(int i = 0; i < strPoints.Length - 1; i++)
+       {
+            var pts = strPoints[i].Split(',');
+            points.Add(new Point(int.Parse(pts[0]), int.Parse(pts[1])));
+       }
     }
 
     // Iterates through the list of points and instantiates
