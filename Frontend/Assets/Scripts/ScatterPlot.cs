@@ -36,6 +36,7 @@ public class ScatterPlot : MonoBehaviour
     private int x, y;
     private int maxX = 0;
     private int maxY = 0;
+    private int xAmt, yAmt;
     private int minX = int.MaxValue;
     private int minY = int.MaxValue;
     private float mainWidth;
@@ -52,8 +53,8 @@ public class ScatterPlot : MonoBehaviour
         Rect rect = RectTransformUtility.PixelAdjustRect(Main.GetComponent<RectTransform>(), canvas);
 
         // Reduce the width and height by a number to add some padding
-        mainWidth = rect.width - 100;
-        mainHeight = rect.height - 100;
+        mainWidth = rect.width - 50;
+        mainHeight = rect.height - 20;
     }
 
     void Update()
@@ -67,7 +68,8 @@ public class ScatterPlot : MonoBehaviour
                 strPoints = udpSocket.GetPoints();
                 GetPoints();
                 DrawPoints();
-                DrawAxis((int)(mainWidth/xInc),(int)(mainHeight/yInc));
+                Debug.Log("Main Width is " + mainWidth + " and Main Height is "  + mainHeight);
+                DrawAxis(xAmt-1, yAmt-1);
             }
         }
     }
@@ -103,20 +105,20 @@ public class ScatterPlot : MonoBehaviour
        Debug.Log("X ranges from " + minX + " to " + maxX);
        Debug.Log("Y ranges from " + minY + " to " + maxY);
 
-       int xAmt = (maxX - minX) + 1;
-       int yAmt = (maxY - minY) + 1;
+       xAmt = (maxX - minX) + 1;
+       yAmt = (maxY - minY) + 1;
 
        Debug.Log("We need points from 0 to " + xAmt + " on the x-axis");
        Debug.Log("We need points from 0 to " + yAmt + " on the y-axis");
 
-        xInc = 500 / xAmt;
-        yInc = 300 / yAmt;
+        xInc = (int) mainWidth / xAmt;
+        yInc = (int) mainHeight / yAmt;
 
        foreach (Point pt in points)
        {
            if(pt.x == minX)
            {
-               pt.x = 1 * xInc;
+               pt.x = xInc;
            } else if(pt.x == maxX)
            {
                pt.x = xAmt * xInc;
@@ -126,7 +128,7 @@ public class ScatterPlot : MonoBehaviour
 
            if(pt.y == minY)
            {
-               pt.y = 1 * yInc;
+               pt.y = yInc;
            } else if(pt.y == maxY)
            {
                pt.x = yAmt * yInc;
