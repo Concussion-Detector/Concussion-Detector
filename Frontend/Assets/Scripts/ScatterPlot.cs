@@ -33,7 +33,11 @@ public class ScatterPlot : MonoBehaviour
     [SerializeField] private GameObject yValPrefab;
     private UdpSocket udpSocket;
     private string[] strPoints;
-    private int[] xAndY;
+    private int x, y;
+    private int maxX = 0;
+    private int maxY = 0;
+    private int minX = int.MaxValue;
+    private int minY = int.MaxValue;
     private float mainWidth;
     private float mainHeight;
 
@@ -73,8 +77,37 @@ public class ScatterPlot : MonoBehaviour
        for(int i = 0; i < strPoints.Length - 1; i++)
        {
             var pts = strPoints[i].Split(',');
-            points.Add(new Point(int.Parse(pts[0]), int.Parse(pts[1])));
+            x = int.Parse(pts[0]);
+            y = int.Parse(pts[1]);
+            if(x > maxX) {
+                maxX = x;
+            }
+
+            if(y > maxY) {
+                maxY = y;
+            }
+
+            if(x < minX) {
+                minX = x;
+            }
+
+            if(y < minY) {
+                minY = y;
+            }
+            if(x < 5) {
+                Debug.Log(x);
+            }
+            points.Add(new Point(x, y));
        }
+
+       Debug.Log("X ranges from " + minX + " to " + maxX);
+       Debug.Log("Y ranges from " + minY + " to " + maxY);
+
+       int xAmt = (maxX - minX) + 1;
+       int yAmt = (maxY - minY) + 1;
+
+       Debug.Log("We need points from 0 to " + xAmt + " on the x-axis");
+       Debug.Log("We need points from 0 to " + yAmt + " on the y-axis");
     }
 
     // Iterates through the list of points and instantiates
