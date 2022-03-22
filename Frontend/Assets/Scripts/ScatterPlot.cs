@@ -44,6 +44,13 @@ public class ScatterPlot : MonoBehaviour
         // Reduce the width and height by a number to add some padding
         mainWidth = rect.width - 100;
         mainHeight = rect.height - 100;
+
+        // Create 50 random points to display
+        CreateRandomPoints(50);
+        // Draw those points on the graph
+        DrawPoints();
+        // Draw both axis
+        DrawAxis((int)(mainWidth/xInc),(int)(mainHeight/yInc));
     }
 
     // Iterates through the list of points and instantiates
@@ -87,6 +94,16 @@ public class ScatterPlot : MonoBehaviour
             yObj.transform.SetParent(YAxis);
 
             yObj.GetComponentInChildren<Text>().text = (ySpacer * (yAxisCount + 1 - i)).ToString();
+        }
+    }
+
+    // Creates a given number of random points to display
+    // This function won't be needed soon, but it is good for testing
+    void CreateRandomPoints(int Count)
+    {
+        for(int i = 0; i < Count; i++)
+        {
+            points.Add(new Point(Random.Range(1, 500), Random.Range(1, 300)));
         }
     }
 }
