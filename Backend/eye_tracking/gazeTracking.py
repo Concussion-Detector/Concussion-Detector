@@ -106,18 +106,35 @@ class GazeTracking(object):
         # Shape of the frame
         height, width, channels = frame.shape
 
+        # frame center
+        height_center = height/2
+        width_center = width/2
+
+        # Center of the rectangle
+        upper_left = (width // 4, height // 4)
+        bottom_right = (width * 3 // 4, height * 3 // 4)
+
         for (x, y, w, h) in faces:
-            
             # center of a rectangle
             centre_x = x + w/2
             centre_y = y + y/2
+            #print(type(centre_x))
 
-            print("center x{x} center y {y} width{width} height {height}".format(x=centre_x,y=centre_y,width=width/2,height=height/2))
+            #print("center x{x} center y {y} width{width} height {height}".format(x=centre_x,y=centre_y,width=width/2,height=height/2))
 
-            if centre_x<width/2 and centre_y<height/2:
-                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 1)
-            else:
-                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 1)
+            # Center of a screen
+            cv2.putText(frame, ".", (int(width_center), int(height_center)), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
+
+            cv2.rectangle(frame, upper_left, bottom_right, (0, 255, 0), thickness=1)
+
+
+
+            # if centre_x<width/2 and centre_y<height/2:
+            #     #cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255),1)
+
+            # elif centre_x==width/2 or centre_y==height/2:
+            #     print("Centered")
+            #     #cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 1)
 
 
         if self.pupils_located:
