@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MoveDot : MonoBehaviour
 {
@@ -44,6 +45,12 @@ public class MoveDot : MonoBehaviour
         dotMoving = true;
     }
 
+    private IEnumerator StopMovingDot()
+    {
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(3);
+    }
+
     private void Move()
     {
         if(waypointIndex <= waypoints.Length - 1)
@@ -61,6 +68,7 @@ public class MoveDot : MonoBehaviour
         {
             // Stop reading data from python
             udpSocket.SendData("false");
+            StartCoroutine(StopMovingDot());
         }
     }
 }

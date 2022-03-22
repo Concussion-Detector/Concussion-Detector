@@ -19,6 +19,7 @@ public class ScatterPlot : MonoBehaviour
     }
 
     // Private variables
+    [SerializeField]private GameObject sceneManager;
     [SerializeField] private Canvas canvas;
     [SerializeField] private Transform XAxis;
     [SerializeField] private Transform YAxis;
@@ -30,6 +31,7 @@ public class ScatterPlot : MonoBehaviour
     [SerializeField] private GameObject pointPrefab;
     [SerializeField] private GameObject xValPrefab;
     [SerializeField] private GameObject yValPrefab;
+    private UdpSocket udpSocket;
     private float mainWidth;
     private float mainHeight;
 
@@ -38,6 +40,7 @@ public class ScatterPlot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        udpSocket = sceneManager.GetComponent<UdpSocket>();
         // Used to get rectangle which we can get the width and height of
         Rect rect = RectTransformUtility.PixelAdjustRect(Main.GetComponent<RectTransform>(), canvas);
 
@@ -45,12 +48,18 @@ public class ScatterPlot : MonoBehaviour
         mainWidth = rect.width - 100;
         mainHeight = rect.height - 100;
 
+        GetPoints();
         // Create 50 random points to display
         CreateRandomPoints(50);
         // Draw those points on the graph
         DrawPoints();
         // Draw both axis
         DrawAxis((int)(mainWidth/xInc),(int)(mainHeight/yInc));
+    }
+
+    void GetPoints()
+    {
+        //udpSocket.ReceiveData();
     }
 
     // Iterates through the list of points and instantiates
