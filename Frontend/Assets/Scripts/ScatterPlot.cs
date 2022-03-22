@@ -84,7 +84,8 @@ public class ScatterPlot : MonoBehaviour
 
             xObj.transform.SetParent(XAxis);
 
-            xObj.GetComponentInChildren<Text>().text = (xSpacer * (i + 1)).ToString();
+            //xObj.GetComponentInChildren<Text>().text = (xSpacer * (i + 1)).ToString();
+            xObj.GetComponentInChildren<Text>().text = (i + 1).ToString();
         }
 
         for(int i = 0; i <= yAxisCount; i++)
@@ -93,7 +94,8 @@ public class ScatterPlot : MonoBehaviour
 
             yObj.transform.SetParent(YAxis);
 
-            yObj.GetComponentInChildren<Text>().text = (ySpacer * (yAxisCount + 1 - i)).ToString();
+            //yObj.GetComponentInChildren<Text>().text = (ySpacer * (yAxisCount + 1 - i)).ToString();
+            yObj.GetComponentInChildren<Text>().text = (yAxisCount + 1 - i).ToString();
         }
     }
 
