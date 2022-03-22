@@ -24,8 +24,6 @@ public class UdpSocket : MonoBehaviour
 
     private float x, y;
     private string[] points;
-    private Boolean leftEyeDetected = false;
-    private Boolean rightEyeDetected = false;
 
     // Create necessary UdpClient objects
     UdpClient client;
@@ -49,21 +47,6 @@ public class UdpSocket : MonoBehaviour
         // Initialize (seen in comments window)
         print("UDP Comms Initialised");
         //print(Screen.height + " " + Screen.width);
-    }
-
-    void Update()
-    {
-        /*if(leftEyeDetected)
-        {
-            Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(x, y, 10f));
-            Instantiate(leftDot, worldPos, Quaternion.identity);
-            leftEyeDetected = false;
-        } else if (rightEyeDetected)
-        {
-            Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(x, y, 10f));
-            Instantiate(rightDot, worldPos, Quaternion.identity);
-            rightEyeDetected = false;
-        }*/
     }
 
     public void SendData(string message) // Use to send data to Python
@@ -99,34 +82,7 @@ public class UdpSocket : MonoBehaviour
                 string text = Encoding.UTF8.GetString(data);
                 // Split the received text by a newline
                 points = text.Split('\n');
-                /*string eye = "";
-                // The first string is 'l' or 'r' to distinguish
-                // the left from the right eye
-                // The x coord is the second string after split
-                // y coord is third. Parse both of these to floats
-                if(coords[0] == "l")
-                {
-                    eye = "l";
-                } else if(coords[0] == "r")
-                {
-                    eye = "r";
-                }
-                x = float.Parse(coords[1]);
-                y = float.Parse(coords[2]);
-        //         //print(eye + "=> x:" + x + ", y: " + y);
-                x = x / 640;
-                y = y / 480;
-
-                x *= Screen.width;
-                y *= Screen.height;
-                if(eye == "l")
-                {
-                    leftEyeDetected = true;
-                } else if(eye == "r") {
-                    rightEyeDetected = true;
-                }
-                //print(eye + "=> x:" + x + ", y: " + y);*/
-
+                
                 ProcessInput(text);
             }
             catch (Exception err)
