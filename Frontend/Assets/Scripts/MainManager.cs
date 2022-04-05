@@ -13,16 +13,13 @@ public class MainManager : MonoBehaviour
         //Debug.Log("Load Dot Scene");
         //SceneManager.LoadSceneAsync("DotFollow");
         StartCoroutine(StartDelay());
-
     }
-
 
     IEnumerator StartDelay()
     {
         yield return new WaitForSeconds(0.2f);
 
         SceneManager.LoadScene("DotFollow");
-
     }
 
     public void showPatientDetails()
