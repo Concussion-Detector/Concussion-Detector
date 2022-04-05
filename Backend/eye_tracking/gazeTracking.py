@@ -102,6 +102,7 @@ class GazeTracking(object):
         face_detector = cv2.CascadeClassifier(haarcascades + "haarcascade_frontalface_default.xml")
 
         faces = face_detector.detectMultiScale(frame, 1.1, 4)
+        #faces = self._detector(frame)
 
         # Shape of the frame
         height, width, channels = frame.shape
@@ -132,13 +133,13 @@ class GazeTracking(object):
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
         if self.pupils_located:
-            color = (0, 0, 255)
+            color = (255, 0, 0)
             x_left, y_left = self.pupil_left_coords()
             x_right, y_right = self.pupil_right_coords()
-            cv2.line(frame, (x_left - 5, y_left), (x_left + 5, y_left), color)
-            cv2.line(frame, (x_left, y_left - 5), (x_left, y_left + 5), color)
-            cv2.line(frame, (x_right - 5, y_right), (x_right + 5, y_right), color)
-            cv2.line(frame, (x_right, y_right - 5), (x_right, y_right + 5), color)
+
+            # Draw Circles around the eyes
+            cv2.circle(frame, (x_left, y_left), 4, (0, 0, 255), 1)
+            cv2.circle(frame, (x_right, y_right), 4, (0, 0, 255), 1)
 
         return frame
     
