@@ -10,6 +10,7 @@ class Eye(object):
     initiates the pupil detection.
     """
 
+    # Arrays of left and right eyes based on dlib 68 landmarks
     LEFT_EYE_POINTS = [36, 37, 38, 39, 40, 41]
     RIGHT_EYE_POINTS = [42, 43, 44, 45, 46, 47]
 
@@ -30,7 +31,7 @@ class Eye(object):
         return (x, y)
 
     def _isolate(self, frame, landmarks, points):
-        """Isolate an eye, to have a frame without other part of the face."""
+        """Isolate an eye, to have a black frame without other part of the face."""
         region = np.array([(landmarks.part(point).x, landmarks.part(point).y) for point in points])
         region = region.astype(np.int32)
         self.landmark_points = region

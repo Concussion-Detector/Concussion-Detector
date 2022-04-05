@@ -96,7 +96,8 @@ class GazeTracking(object):
             return (pupil_left + pupil_right) / 2
 
     def draw(self):
-        """Returns the main frame draws coords of the pupils and rectangle on the detected face"""
+        """Returns the main frame draws coords of the pupils and 
+        rectangle on the detected face to help with proper face alignment."""
         frame = self.frame.copy()
 
         face_detector = cv2.CascadeClassifier(haarcascades + "haarcascade_frontalface_default.xml")
@@ -120,16 +121,14 @@ class GazeTracking(object):
             centre_y = y + y//2
 
             # Center of a screen
-            cv2.putText(frame, ".", (int(width_center), int(height_center)), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
+            #cv2.putText(frame, ".", (int(width_center), int(height_center)), cv2.FONT_HERSHEY_DUPLEX, 0.9, (255, 255, 0), 1)
+            cv2.circle(frame, (int(width_center), int(height_center)), 2, (255, 255, 0), 1)
 
             cv2.rectangle(frame, upper_left, bottom_right, (0, 255, 0), thickness=1)
 
-            if centre_x<width_center and centre_y<height_center:
-                cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 0, 255),2)
-
-            elif centre_x in range(width_center-1, width_center+1,1) or centre_y in range(height_center-1,height_center+1,1):
+            if centre_x in range(width_center-5, width_center+5,1) or centre_y in range(height_center-5,height_center+5,1):
                 print("Centered")
-                cv2.putText(frame, "Face Aligned.", (20, 140), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
+                cv2.putText(frame, "Face Aligned.", (20, 30), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
         if self.pupils_located:

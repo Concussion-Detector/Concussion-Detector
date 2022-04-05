@@ -35,7 +35,6 @@ class Pupil(object):
         iris_frame = self.iris_frame.copy()
         cv2.rectangle(iris_frame,(384,0),(510,128),(0,255,0),3)
 
-
         contours, _ = cv2.findContours(self.iris_frame, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)[-2:]
         contours = sorted(contours, key=cv2.contourArea)
 
