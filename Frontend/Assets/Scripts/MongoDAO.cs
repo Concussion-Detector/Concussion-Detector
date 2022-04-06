@@ -33,8 +33,8 @@ public class MongoDAO : MonoBehaviour
         foreach(var patientData in dataAwaited.ToList())
         {
             allData.Add(Deserialize(patientData.ToString()));
-            Debug.Log(Deserialize(patientData.ToString()).uuid);
-            Debug.Log(Deserialize(patientData.ToString()).date);
+            //Debug.Log(Deserialize(patientData.ToString()).uuid);
+            //Debug.Log(Deserialize(patientData.ToString()).date);
 
         }
 
@@ -57,11 +57,21 @@ public class MongoDAO : MonoBehaviour
 
         // 3054703f-08a5-4e87-ad8a-61a513182297
         var uuid = stringWithoutID.Substring(10,stringWithoutID.IndexOf("coords")-14);
-        //Debug.Log(uuid);
+        Debug.Log(uuid);
 
         // 286, 218\n284, 217\n285, 217
         var coords = stringWithoutID.Substring(stringWithoutID.IndexOf("coords")+11,stringWithoutID.IndexOf("date")-67);
-        //Debug.Log(coords);
+        // Split coords by the letter n (unable to split by \n)
+        var points = coords.Split('n');
+    
+        // Iterate through each point and remove the \
+        // The last point doesn't have a \ so we skip it
+        for(int i = 0; i < points.Length; i++) {
+            if(i != points.Length - 1) {
+                points[i] = points[i].Substring(0,points[i].Length-1);
+            }
+            Debug.Log(points[i]);
+        }
 
         // 22/03/2022 19:25
         var date = stringWithoutID.Substring(stringWithoutID.IndexOf("date")+9);

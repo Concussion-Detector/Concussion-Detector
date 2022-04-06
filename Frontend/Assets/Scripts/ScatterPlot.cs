@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class ScatterPlot : MonoBehaviour
 {
-    public class Point
-    {
-        public int x;
-        public int y;
-        public GameObject pointObj;
+    // public class Point
+    // {
+    //     public int x;
+    //     public int y;
+    //     public GameObject pointObj;
 
-        public Point(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-    }
+    //     public Point(int x, int y)
+    //     {
+    //         this.x = x;
+    //         this.y = y;
+    //     }
+    // }
 
     // Private variables
     [SerializeField]private GameObject sceneManager;
