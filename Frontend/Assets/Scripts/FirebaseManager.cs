@@ -15,10 +15,17 @@ public class FirebaseManager : MonoBehaviour
     [Header("Patient")]
     public TMP_InputField firstName;
     public TMP_InputField lastName;
+    
+    [Header("Search Patient")]
+    public TMP_InputField searchFirstName;
+    public TMP_InputField searchLastName;
 
     public GameObject sceneManager;
 
     private DataManager dataManager;
+    Patient patient = new Patient();
+
+    public string uuid;
 
     void Start()
     {
@@ -29,7 +36,7 @@ public class FirebaseManager : MonoBehaviour
     public void SaveData()
     {
         Debug.Log("Saving Data to Firebase");
-        Patient patient = new Patient();
+        
         patient.uuid = GetUUID();
         patient.firstName = firstName.text;
         patient.lastName = lastName.text;
@@ -46,6 +53,41 @@ public class FirebaseManager : MonoBehaviour
             {
                 Debug.Log("Not successfull");
             }
+        });
+    }
+
+    // Retrieves first and last name
+    public void GetPatientData()
+    {
+        string fullName = searchFirstName.text + " " + searchLastName.text;
+        reference.Child("Patients").GetValueAsync().ContinueWith(task => 
+        {
+            if(task.IsCompleted)
+            {
+                Debug.Log("Succesful");
+                DataSnapshot snapshot = task.Result;
+                IEnumerable <DataSnapshot> children = snapshot.Children;
+
+                // Loop over the child elements of a snapshot
+                foreach(var c in children)
+                {
+                    //Debug.Log(c.Key + ", " + fullName);
+                    if(c.Key == fullName)
+                    {
+                        Debug.Log("Found!");
+                        //Debug.Log(c.Children.Value.ToString());
+                        foreach(var child in c.Children)
+                        {
+                            if(child.Key == uuid)
+                            {
+                                uuid = child.Value;
+                                Debug.Log(uuid);
+                            }
+                        }
+                    }     
+                }       
+            }
+            else{Debug.Log("Could not find patient");}
         });
 
     }
