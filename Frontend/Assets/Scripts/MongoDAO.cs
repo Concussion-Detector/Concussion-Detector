@@ -20,7 +20,7 @@ public class MongoDAO : MonoBehaviour
         database = client.GetDatabase("concussionDB");
         collection = database.GetCollection<BsonDocument>("colBaseline");
 
-        FindByUUID();
+        //FindByUUID();
         //GetData();    
     }
 
@@ -80,18 +80,24 @@ public class MongoDAO : MonoBehaviour
         //Debug.Log(date);
 
         dataToRetrieve.uuid = uuid;
-        dataToRetrieve.coords = coords;
+        dataToRetrieve.coords = points;
         dataToRetrieve.date = date;
 
         return dataToRetrieve;
     }
 
-    private async void FindByUUID() {
-        var uuid = "8adc0643-b737-46e7-8b48-a962d3133a59";
+    public async void FindByUUID(string uuid) {
+        //var uuid = "8adc0643-b737-46e7-8b48-a962d3133a59";
 
         var filter = Builders<BsonDocument>.Filter.Eq("uuid", uuid);
-        var patient = collection.Find(filter).FirstOrDefault();
-        Debug.Log(patient.ToString());
+        var patientData = collection.Find(filter).FirstOrDefault();
+        PatientData patient  = Deserialize(patientData.ToString());
+        Debug.Log(patient.uuid);
+        foreach (string p in patient.coords)
+        {
+            Debug.Log(p);
+        }
+        Debug.Log(patient.date);
     }
 }
 
@@ -99,7 +105,6 @@ public class MongoDAO : MonoBehaviour
 public class PatientData
 {
     public string uuid {get; set; }
-    public string coords {get; set; }
+    public string[] coords {get; set; }
     public string date {get; set; }
-
 }
