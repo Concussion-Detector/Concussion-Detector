@@ -20,7 +20,7 @@ public class MongoDAO : MonoBehaviour
         database = client.GetDatabase("concussionDB");
         collection = database.GetCollection<BsonDocument>("colBaseline");
 
-        //GetData();    
+        GetData();    
     }
 
     public async Task<List<PatientData>> GetData()
@@ -33,10 +33,12 @@ public class MongoDAO : MonoBehaviour
         foreach(var patientData in dataAwaited.ToList())
         {
             allData.Add(Deserialize(patientData.ToString()));
+            //Debug.Log(Deserialize(patientData.ToString()));
+            //Debug.Log(Deserialize(patientData.ToString()).uuid);
 
         }
 
-        Debug.Log(allData.ToString());
+        //Debug.Log(allData.ToString());
 
         return allData;
     }
@@ -44,17 +46,34 @@ public class MongoDAO : MonoBehaviour
 
     private PatientData Deserialize(string rawJson)
     {
+        // Raw JSON
+        // { "_id" : ObjectId("623a22b58145646f3baf3185"), "uuid" : "3054703f-08a5-4e87-ad8a-61a513182297", "coords" : "286, 218\n284, 217\n285, 217\n", "date" : "22/03/2022 19:25" }
         var dataToRetrieve = new PatientData();
 
         // Extracts the uuid from id
-        var stringWithoutID = rawJson.Substring(rawJson.IndexOf("),")+4);
-        var uuid = stringWithoutID.Substring(0,stringWithoutID.IndexOf(":")-2);
-        var coords = stringWithoutID.Substring(stringWithoutID.IndexOf(":")+2,stringWithoutID.IndexOf("}")-stringWithoutID.IndexOf(":")-3);
+        // "uuid" : "3054703f-08a5-4e87-ad8a-61a513182297", "coords" : "286, 218\n284, 217\n285, 217\n", "date" : "22/03/2022 19:25" }
+        var stringWithoutID = rawJson.Substring(rawJson.IndexOf("),")+3);
+        Debug.Log(stringWithoutID);
+
+        // 3054703f-08a5-4e87-ad8a-61a513182297
+        var uuid = stringWithoutID.Substring(10,stringWithoutID.IndexOf("coords")-14);
+        Debug.Log(uuid);
+
+        var start = stringWithoutID.IndexOf("coords");
+        var end = stringWithoutID.IndexOf("date");
+        //stringWithoutID.ind
+        Debug.Log("Get substring between " + start + " and " + end);
+        //var coords = stringWithoutID.Substring(5,300);
+        var coords = stringWithoutID.Substring(start,end);
+        //var coords = stringWithoutID.Substring(stringWithoutID.IndexOf("coords")+11);
+        //var coords = stringWithoutID.Substring(stringWithoutID.IndexOf("coords")+11,stringWithoutID.IndexOf("date")-16);
+        //var coords = stringWithoutID.Substring(0,stringWithoutID.IndexOf("date")-16);
+        //var coords = stringWithoutID.Substring(stringWithoutID.IndexOf("coords"),stringWithoutID.IndexOf("}")-stringWithoutID.IndexOf(":")-3);
+        //Debug.Log(coords);
 
         dataToRetrieve.uuid = uuid;
-        dataToRetrieve.coords = coords;
+        //dataToRetrieve.coords = coords;
         //dataToRetrieve.date = date;
-
 
         return dataToRetrieve;
     }
