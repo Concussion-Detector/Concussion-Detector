@@ -20,7 +20,8 @@ public class MongoDAO : MonoBehaviour
         database = client.GetDatabase("concussionDB");
         collection = database.GetCollection<BsonDocument>("colBaseline");
 
-        GetData();    
+        FindByUUID();
+        //GetData();    
     }
 
     public async Task<List<PatientData>> GetData()
@@ -70,7 +71,7 @@ public class MongoDAO : MonoBehaviour
             if(i != points.Length - 1) {
                 points[i] = points[i].Substring(0,points[i].Length-1);
             }
-            Debug.Log(points[i]);
+            //Debug.Log(points[i]);
         }
 
         // 22/03/2022 19:25
@@ -83,6 +84,14 @@ public class MongoDAO : MonoBehaviour
         dataToRetrieve.date = date;
 
         return dataToRetrieve;
+    }
+
+    private async void FindByUUID() {
+        var uuid = "8adc0643-b737-46e7-8b48-a962d3133a59";
+
+        var filter = Builders<BsonDocument>.Filter.Eq("uuid", uuid);
+        var patient = collection.Find(filter).FirstOrDefault();
+        Debug.Log(patient.ToString());
     }
 }
 
