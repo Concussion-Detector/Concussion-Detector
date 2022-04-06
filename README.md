@@ -44,3 +44,37 @@ The following objectives where identified to achieve our goals:
 **Report Findings** -  Provides a visual feedback of the results of the assessment. 
 
 ![roadmap](https://user-images.githubusercontent.com/55446533/159567244-cf8ebe9a-9aa1-44f5-8bea-8ca526ca15f7.jpg)
+
+***
+
+# Technologies
+
+* ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) - version:
+* ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) - version:
+* ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
+* ![Unity](https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white) - version: 
+* ![OpenCV](https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white) - version:
+* ![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white) - version:
+* ![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
+* ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
+* ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+
+***
+
+# How To Run
+
+
+***
+
+# User Guide
+
+
+***
+
+# Video Presentation
+
+![YouTube](https://img.shields.io/badge/ConcussionDetector-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)
+
+
+
+
