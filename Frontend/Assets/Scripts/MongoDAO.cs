@@ -33,8 +33,8 @@ public class MongoDAO : MonoBehaviour
         foreach(var patientData in dataAwaited.ToList())
         {
             allData.Add(Deserialize(patientData.ToString()));
-            //Debug.Log(Deserialize(patientData.ToString()));
-            //Debug.Log(Deserialize(patientData.ToString()).uuid);
+            Debug.Log(Deserialize(patientData.ToString()).uuid);
+            Debug.Log(Deserialize(patientData.ToString()).date);
 
         }
 
@@ -53,27 +53,24 @@ public class MongoDAO : MonoBehaviour
         // Extracts the uuid from id
         // "uuid" : "3054703f-08a5-4e87-ad8a-61a513182297", "coords" : "286, 218\n284, 217\n285, 217\n", "date" : "22/03/2022 19:25" }
         var stringWithoutID = rawJson.Substring(rawJson.IndexOf("),")+3);
-        Debug.Log(stringWithoutID);
+        //Debug.Log(stringWithoutID);
 
         // 3054703f-08a5-4e87-ad8a-61a513182297
         var uuid = stringWithoutID.Substring(10,stringWithoutID.IndexOf("coords")-14);
-        Debug.Log(uuid);
+        //Debug.Log(uuid);
 
-        var start = stringWithoutID.IndexOf("coords");
-        var end = stringWithoutID.IndexOf("date");
-        //stringWithoutID.ind
-        Debug.Log("Get substring between " + start + " and " + end);
-        //var coords = stringWithoutID.Substring(5,300);
-        var coords = stringWithoutID.Substring(start,end);
-        //var coords = stringWithoutID.Substring(stringWithoutID.IndexOf("coords")+11);
-        //var coords = stringWithoutID.Substring(stringWithoutID.IndexOf("coords")+11,stringWithoutID.IndexOf("date")-16);
-        //var coords = stringWithoutID.Substring(0,stringWithoutID.IndexOf("date")-16);
-        //var coords = stringWithoutID.Substring(stringWithoutID.IndexOf("coords"),stringWithoutID.IndexOf("}")-stringWithoutID.IndexOf(":")-3);
+        // 286, 218\n284, 217\n285, 217
+        var coords = stringWithoutID.Substring(stringWithoutID.IndexOf("coords")+11,stringWithoutID.IndexOf("date")-67);
         //Debug.Log(coords);
 
+        // 22/03/2022 19:25
+        var date = stringWithoutID.Substring(stringWithoutID.IndexOf("date")+9);
+        date = date.Substring(0, date.Length-3);
+        //Debug.Log(date);
+
         dataToRetrieve.uuid = uuid;
-        //dataToRetrieve.coords = coords;
-        //dataToRetrieve.date = date;
+        dataToRetrieve.coords = coords;
+        dataToRetrieve.date = date;
 
         return dataToRetrieve;
     }
