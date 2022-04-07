@@ -12,15 +12,21 @@ public class MongoDAO : MonoBehaviour
     // Connection string to access the mongo db
     private MongoClient client = new MongoClient("mongodb+srv://concussion-detector:gmitproject2022@cluster.rure1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
     IMongoDatabase database;
-    IMongoCollection<BsonDocument> collection;
+    // Baseline data
+    IMongoCollection<BsonDocument> collectionBaseline;
+    // Post concussion data
+    IMongoCollection<BsonDocument> collectionConcussed;
 
     private string uuid;
     private PatientData patient;
+    private PatientData patientConcussedData;
 
     void Start()
     {
         database = client.GetDatabase("concussionDB");
-        collection = database.GetCollection<BsonDocument>("colBaseline");
+        collectionBaseline = database.GetCollection<BsonDocument>("colBaseline");
+        collectionConcussed = database.GetCollection<BsonDocument>("colConcussionTests");
+
         //uuid = PlayerPrefs.GetString("patientid");
         uuid = UUID.uuid;
 
@@ -31,7 +37,7 @@ public class MongoDAO : MonoBehaviour
 
     public async Task<List<PatientData>> GetData()
     {
-        var data = collection.FindAsync(new BsonDocument());
+        var data = collectionBaseline.FindAsync(new BsonDocument());
         var dataAwaited = await data;
 
         List<PatientData> allData = new List<PatientData>();
@@ -95,8 +101,16 @@ public class MongoDAO : MonoBehaviour
         //var uuid = "8adc0643-b737-46e7-8b48-a962d3133a59";
 
         var filter = Builders<BsonDocument>.Filter.Eq("uuid", uuid);
-        var patientData = collection.Find(filter).FirstOrDefault();
+        // Baseline Data
+        var patientData = collectionBaseline.Find(filter).FirstOrDefault();
         patient  = Deserialize(patientData.ToString());
+
+        // Post Concussed Data
+        //var patientConcussed = collectionConcussed.Find(filter).FirstOrDefault();
+        //patientConcussedData = Deserialize(patientConcussed.ToString());
+
+        //Debug.Log("Patient Concussed "+patientConcussedData.date);
+
         Debug.Log(patient.uuid);
         foreach (string p in patient.coords)
         {
