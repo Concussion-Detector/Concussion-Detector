@@ -28,6 +28,11 @@ public class DataManager : MonoBehaviour
         
     }
 
+    public int GetTestType()
+    {
+        return testType;
+    }
+
     public void SendPatientData(string uuid)
     {
         string msg = testType + " " + uuid;

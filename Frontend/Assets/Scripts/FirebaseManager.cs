@@ -22,11 +22,10 @@ public class FirebaseManager : MonoBehaviour
     public TMP_InputField searchLastName;
 
     public GameObject sceneManager;
+    private bool savingData = false;
 
     private DataManager dataManager;
     Patient patient = new Patient();
-
-    
 
     void Start()
     {
@@ -36,32 +35,61 @@ public class FirebaseManager : MonoBehaviour
 
     public void SaveData()
     {
+        string fullName = " ";
+        string json = " ";
         Debug.Log("Saving Data to Firebase");
-        
-        patient.uuid = GetUUID();
-        patient.firstName = firstName.text;
-        patient.lastName = lastName.text;
-        string fullName = firstName.text + " " + lastName.text;
-        string json = JsonUtility.ToJson(patient);
+        // Baseline data
+        if(dataManager.GetTestType() == 1)
+        {
+            savingData = true;
+            GetPatientData();
+            if(UUID.uuid == null)
+            {
+                patient.uuid = GetUUID();
+            } else {
+                patient.uuid = UUID.uuid;
+            }
+            
+            patient.firstName = firstName.text;
+            patient.lastName = lastName.text;
+            fullName = firstName.text + " " + lastName.text;
+            json = JsonUtility.ToJson(patient);
 
-        reference.Child("Patients").Child(fullName).SetRawJsonValueAsync(json).ContinueWith(task => {
-            if(task.IsCompleted)
-            {
-                Debug.Log("Successfully added to firebase");
-                dataManager.SendPatientData(patient.uuid);
-            }
-            else
-            {
-                Debug.Log("Not successfull");
-            }
-        });
+            reference.Child("Patients").Child(fullName).SetRawJsonValueAsync(json).ContinueWith(task => {
+                if(task.IsCompleted)
+                {
+                    Debug.Log("Successfully added to firebase");
+                    dataManager.SendPatientData(patient.uuid);
+                }
+                else
+                {
+                    Debug.Log("Not successfull");
+                }
+            });
+        } else if(dataManager.GetTestType() == 2)
+        {
+            savingData = true;
+            GetPatientData();
+            patient.uuid = UUID.uuid;
+            patient.firstName = firstName.text;
+            patient.lastName = lastName.text;
+            dataManager.SendPatientData(patient.uuid);
+        }
     }
 
     // Retrieves first and last name
     public void GetPatientData()
     {
         var uuid = "";
-        string fullName = searchFirstName.text + " " + searchLastName.text;
+        string fullName;
+
+        if(savingData == true) 
+        {
+            fullName = patient.firstName + " " + patient.lastName;
+        } else {
+            fullName = searchFirstName.text + " " + searchLastName.text;
+        }
+
         reference.Child("Patients").GetValueAsync().ContinueWith(task => 
         {
             if(task.IsCompleted)
