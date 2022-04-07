@@ -25,7 +25,7 @@ public class FirebaseManager : MonoBehaviour
     private DataManager dataManager;
     Patient patient = new Patient();
 
-    public string uuid;
+    
 
     void Start()
     {
@@ -59,6 +59,7 @@ public class FirebaseManager : MonoBehaviour
     // Retrieves first and last name
     public void GetPatientData()
     {
+        var uuid = "";
         string fullName = searchFirstName.text + " " + searchLastName.text;
         reference.Child("Patients").GetValueAsync().ContinueWith(task => 
         {
@@ -75,12 +76,12 @@ public class FirebaseManager : MonoBehaviour
                     if(c.Key == fullName)
                     {
                         Debug.Log("Found!");
-                        //Debug.Log(c.Children.Value.ToString());
                         foreach(var child in c.Children)
                         {
-                            if(child.Key == uuid)
+                            if(child.Key == "uuid")
                             {
-                                uuid = child.Value;
+                                // Patients uuid
+                                uuid = child.Value as string;
                                 Debug.Log(uuid);
                             }
                         }
@@ -89,6 +90,8 @@ public class FirebaseManager : MonoBehaviour
             }
             else{Debug.Log("Could not find patient");}
         });
+
+        Debug.Log("uuid is"+uuid);
 
     }
 
