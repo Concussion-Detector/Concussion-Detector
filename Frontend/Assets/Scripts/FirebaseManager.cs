@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Firebase;
 using Firebase.Database;
@@ -23,6 +24,7 @@ public class FirebaseManager : MonoBehaviour
 
     public GameObject sceneManager;
     private bool savingData = false;
+    private bool uuidReceived = false;
 
     private DataManager dataManager;
     Patient patient = new Patient();
@@ -35,21 +37,37 @@ public class FirebaseManager : MonoBehaviour
 
     public void SaveData()
     {
-        string fullName = " ";
-        string json = " ";
         Debug.Log("Saving Data to Firebase");
         // Baseline data
         if(dataManager.GetTestType() == 1)
         {
             savingData = true;
             GetPatientData();
-            if(UUID.uuid == null)
-            {
+            StartCoroutine(Wait(1));
+        } 
+        else if(dataManager.GetTestType() == 2)
+        {
+            Debug.Log("Concussion");
+            savingData = true;
+            GetPatientData();
+            StartCoroutine(Wait(2));
+        }
+    }
+
+    IEnumerator Wait(int num)
+    {
+        yield return new WaitUntil(UUIDReceived);
+
+        if(num == 1) {
+            string fullName = " ";
+            string json = " ";
+
+            if(UUID.uuid == null) {
                 patient.uuid = GetUUID();
             } else {
                 patient.uuid = UUID.uuid;
             }
-            
+
             patient.firstName = firstName.text;
             patient.lastName = lastName.text;
             fullName = firstName.text + " " + lastName.text;
@@ -66,26 +84,30 @@ public class FirebaseManager : MonoBehaviour
                     Debug.Log("Not successfull");
                 }
             });
-        } else if(dataManager.GetTestType() == 2)
+        } 
+        else 
         {
-            savingData = true;
-            GetPatientData();
             patient.uuid = UUID.uuid;
-            patient.firstName = firstName.text;
-            patient.lastName = lastName.text;
+            Debug.Log(patient.uuid);
             dataManager.SendPatientData(patient.uuid);
+            UUID.uuid = null;
         }
+    }
+
+    bool UUIDReceived()
+    {
+        return uuidReceived;
     }
 
     // Retrieves first and last name
     public void GetPatientData()
     {
         var uuid = "";
-        string fullName;
+        string fullName = "";
 
         if(savingData == true) 
         {
-            fullName = patient.firstName + " " + patient.lastName;
+            fullName = firstName.text + " " + lastName.text;
         } else {
             fullName = searchFirstName.text + " " + searchLastName.text;
         }
@@ -114,11 +136,15 @@ public class FirebaseManager : MonoBehaviour
                                 Debug.Log("The UUID for fb is " + uuid);
                                 //SetUUID("codes", uuid);
                                 UUID.uuid = uuid;
+                                uuidReceived = true;
+                                return;
                             }
                         }
                     }     
                 }  
-                //Debug.Log("Could not find " + fullName); 
+                Debug.Log("Could not find " + fullName);
+                UUID.uuid = null;
+                uuidReceived = true;
             }
             //else{Debug.Log("Could not find patient");}
         });

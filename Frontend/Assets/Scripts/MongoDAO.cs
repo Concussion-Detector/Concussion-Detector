@@ -19,7 +19,7 @@ public class MongoDAO : MonoBehaviour
 
     private string uuid;
     private PatientData patient;
-    private PatientData patientConcussedData;
+    private PatientData patientConcussed;
 
     void Start()
     {
@@ -106,17 +106,20 @@ public class MongoDAO : MonoBehaviour
         patient  = Deserialize(patientData.ToString());
 
         // Post Concussed Data
-        //var patientConcussed = collectionConcussed.Find(filter).FirstOrDefault();
-        //patientConcussedData = Deserialize(patientConcussed.ToString());
+        var patientConcussedData = collectionConcussed.Find(filter).FirstOrDefault();
+        patientConcussed = Deserialize(patientConcussedData.ToString());
 
         //Debug.Log("Patient Concussed "+patientConcussedData.date);
-
+        Debug.Log("Baseline Data");
         Debug.Log(patient.uuid);
-        foreach (string p in patient.coords)
+        /*foreach (string p in patient.coords)
         {
             //Debug.Log(p);
-        }
+        }*/
         Debug.Log(patient.date);
+        Debug.Log("Concussion Data");
+        Debug.Log(patientConcussed.uuid);
+        Debug.Log(patientConcussed.date);
     }
 
     public string[] GetPatientCoords()
