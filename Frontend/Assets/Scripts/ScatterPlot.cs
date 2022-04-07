@@ -31,7 +31,9 @@ public class ScatterPlot : MonoBehaviour
     [SerializeField] private GameObject pointPrefab;
     [SerializeField] private GameObject xValPrefab;
     [SerializeField] private GameObject yValPrefab;
+    [SerializeField] private GameObject mongoObj;
     private UdpSocket udpSocket;
+    private MongoDAO mongo;
     private string[] strPoints;
     private int x, y;
     private int maxX = 0;
@@ -45,16 +47,25 @@ public class ScatterPlot : MonoBehaviour
     private List<Point> points = new List<Point>();
     private List<string> ts = new List<string>();
 
+
     // Start is called before the first frame update
     void Start()
     {
         //udpSocket = sceneManager.GetComponent<UdpSocket>();
+        mongo = mongoObj.GetComponent<MongoDAO>();
         // Used to get rectangle which we can get the width and height of
         Rect rect = RectTransformUtility.PixelAdjustRect(Main.GetComponent<RectTransform>(), canvas);
 
         // Reduce the width and height by a number to add some padding
         mainWidth = rect.width - 50;
         mainHeight = rect.height - 20;
+
+        //StartCoroutine(GetCoords());
+        strPoints = mongo.GetPatientCoords();
+        GetPoints();
+        DrawPoints();
+        Debug.Log("Main Width is " + mainWidth + " and Main Height is "  + mainHeight);
+        DrawAxis(xAmt-1, yAmt-1);
     }
 
     /*void Update()

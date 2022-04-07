@@ -15,6 +15,7 @@ public class MongoDAO : MonoBehaviour
     IMongoCollection<BsonDocument> collection;
 
     private string uuid;
+    private PatientData patient;
 
     void Start()
     {
@@ -95,13 +96,19 @@ public class MongoDAO : MonoBehaviour
 
         var filter = Builders<BsonDocument>.Filter.Eq("uuid", uuid);
         var patientData = collection.Find(filter).FirstOrDefault();
-        PatientData patient  = Deserialize(patientData.ToString());
+        patient  = Deserialize(patientData.ToString());
         Debug.Log(patient.uuid);
         foreach (string p in patient.coords)
         {
-            Debug.Log(p);
+            //Debug.Log(p);
         }
         Debug.Log(patient.date);
+    }
+
+    public string[] GetPatientCoords()
+    {
+        Debug.Log("Getting coords of length " + patient.coords.Length);
+        return patient.coords;
     }
 }
 
