@@ -85,7 +85,7 @@ public class FirebaseManager : MonoBehaviour
                                 uuid = child.Value as string;
                                 Debug.Log("The UUID for fb is " + uuid);
                                 //SetUUID("codes", uuid);
-                                PlayerPrefs.SetString("patientid", uuid);
+                                UUID.uuid = uuid;
                             }
                         }
                     }     
