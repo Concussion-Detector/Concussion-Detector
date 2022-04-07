@@ -48,7 +48,7 @@ public class ScatterPlot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        udpSocket = sceneManager.GetComponent<UdpSocket>();
+        //udpSocket = sceneManager.GetComponent<UdpSocket>();
         // Used to get rectangle which we can get the width and height of
         Rect rect = RectTransformUtility.PixelAdjustRect(Main.GetComponent<RectTransform>(), canvas);
 
@@ -57,7 +57,7 @@ public class ScatterPlot : MonoBehaviour
         mainHeight = rect.height - 20;
     }
 
-    void Update()
+    /*void Update()
     {   
         if(strPoints != null) {
             return;
@@ -72,7 +72,7 @@ public class ScatterPlot : MonoBehaviour
                 DrawAxis(xAmt-1, yAmt-1);
             }
         }
-    }
+    }*/
 
     async void GetPoints()
     {

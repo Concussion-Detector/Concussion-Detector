@@ -5,6 +5,7 @@ using UnityEngine;
 using Firebase;
 using Firebase.Database;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class FirebaseManager : MonoBehaviour
@@ -82,16 +83,19 @@ public class FirebaseManager : MonoBehaviour
                             {
                                 // Patients uuid
                                 uuid = child.Value as string;
-                                Debug.Log(uuid);
+                                Debug.Log("The UUID for fb is " + uuid);
+                                //SetUUID("codes", uuid);
+                                PlayerPrefs.SetString("patientid", uuid);
                             }
                         }
                     }     
-                }       
+                }  
+                //Debug.Log("Could not find " + fullName); 
             }
-            else{Debug.Log("Could not find patient");}
+            //else{Debug.Log("Could not find patient");}
         });
 
-        Debug.Log("uuid is"+uuid);
+        //Debug.Log("uuid is" +uuid);
 
     }
 

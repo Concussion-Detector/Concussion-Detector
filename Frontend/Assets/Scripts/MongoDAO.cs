@@ -14,15 +14,19 @@ public class MongoDAO : MonoBehaviour
     IMongoDatabase database;
     IMongoCollection<BsonDocument> collection;
 
+    private int uuid;
 
     void Start()
     {
         database = client.GetDatabase("concussionDB");
         collection = database.GetCollection<BsonDocument>("colBaseline");
+        uuid = PlayerPrefs.GetString("patientid");
+        Debug.Log("Found the uuid of " + uuid);
 
-        //FindByUUID();
+        //FindByUUID(uuid);
         //GetData();    
     }
+
 
     public async Task<List<PatientData>> GetData()
     {

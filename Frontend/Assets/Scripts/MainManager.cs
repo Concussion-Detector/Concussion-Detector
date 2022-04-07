@@ -9,17 +9,19 @@ public class MainManager : MonoBehaviour
 
     public void FollowDot()
     {
-       
-        //Debug.Log("Load Dot Scene");
-        //SceneManager.LoadSceneAsync("DotFollow");
-        StartCoroutine(StartDelay());
+        StartCoroutine(StartDelay("DotFollow"));
     }
 
-    IEnumerator StartDelay()
+     public void GoToReports()
+    {
+        StartCoroutine(StartDelay("Report"));
+    }
+    
+    IEnumerator StartDelay(string scene)
     {
         yield return new WaitForSeconds(0.2f);
 
-        SceneManager.LoadScene("DotFollow");
+        SceneManager.LoadScene(scene);
     }
 
     public void showPatientDetails()
