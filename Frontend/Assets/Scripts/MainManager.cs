@@ -16,6 +16,11 @@ public class MainManager : MonoBehaviour
     {
         StartCoroutine(StartDelay("Report"));
     }
+
+    public void GoToMain()
+    {
+        SceneManager.LoadScene("Main");
+    }
     
     IEnumerator StartDelay(string scene)
     {
