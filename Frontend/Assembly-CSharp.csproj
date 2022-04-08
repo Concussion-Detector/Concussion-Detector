@@ -50,7 +50,7 @@
      <Compile Include="Assets\Scripts\ScatterPlot.cs" />
      <Compile Include="Assets\Scripts\MoveDot.cs" />
      <Compile Include="Assets\Scripts\Point.cs" />
-     <Compile Include="Assets\Scripts\uuid.cs" />
+     <Compile Include="Assets\Scripts\Data.cs" />
      <Compile Include="Assets\Scripts\DataManager.cs" />
      <Compile Include="Assets\Scripts\FirebaseManager.cs" />
      <Compile Include="Assets\Scripts\MongoDAO.cs" />

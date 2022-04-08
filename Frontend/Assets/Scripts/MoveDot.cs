@@ -51,6 +51,7 @@ public class MoveDot : MonoBehaviour
         if(Data.test == 1) {
             SceneManager.LoadScene("Main");
         } else {
+            yield return new WaitForSeconds(2);
             SceneManager.LoadScene("Report");
         }
     }
