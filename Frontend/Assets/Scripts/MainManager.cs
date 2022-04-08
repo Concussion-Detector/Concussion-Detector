@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MainManager : MonoBehaviour
 {
     public GameObject patientDetails;
+    public bool patientNotFound = false;
 
     public void FollowDot()
     {
@@ -25,8 +26,10 @@ public class MainManager : MonoBehaviour
     IEnumerator StartDelay(string scene)
     {
         yield return new WaitForSeconds(0.2f);
-
-        SceneManager.LoadScene(scene);
+        Debug.Log("Player is not found " + patientNotFound);
+        if(patientNotFound == false) {
+            SceneManager.LoadScene(scene);
+        }
     }
 
     public void showPatientDetails()

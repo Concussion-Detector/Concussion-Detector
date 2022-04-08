@@ -58,6 +58,7 @@ public class FirebaseManager : MonoBehaviour
     {
         yield return new WaitUntil(UUIDReceived);
 
+        // Baseline
         if(num == 1) {
             string fullName = " ";
             string json = " ";
@@ -68,6 +69,7 @@ public class FirebaseManager : MonoBehaviour
                 patient.uuid = UUID.uuid;
             }
 
+            dataManager.PatientNotFoundGUI(false);
             patient.firstName = firstName.text;
             patient.lastName = lastName.text;
             fullName = firstName.text + " " + lastName.text;
@@ -85,12 +87,17 @@ public class FirebaseManager : MonoBehaviour
                 }
             });
         } 
+        // Concussion
         else 
         {
-            patient.uuid = UUID.uuid;
-            Debug.Log(patient.uuid);
-            dataManager.SendPatientData(patient.uuid);
-            UUID.uuid = null;
+            if(UUID.uuid != null) {
+                patient.uuid = UUID.uuid;
+                Debug.Log(patient.uuid);
+                dataManager.SendPatientData(patient.uuid);
+                //UUID.uuid = null;
+            } else {
+                dataManager.PatientNotFoundGUI(true);
+            }
         }
     }
 

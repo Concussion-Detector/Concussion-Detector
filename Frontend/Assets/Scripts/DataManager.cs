@@ -9,6 +9,8 @@ public class DataManager : MonoBehaviour
 
     [SerializeField] 
     private GameObject baselineToggle;
+    [SerializeField]
+    private GameObject playerNotFound;
 
     [SerializeField]
     private MainManager mainManager;
@@ -38,6 +40,13 @@ public class DataManager : MonoBehaviour
         string msg = testType + " " + uuid;
         udpSocket.SendData(msg);
         mainManager.FollowDot();
+    }
+
+    public void PatientNotFoundGUI(bool notFound)
+    {
+        mainManager.patientNotFound = notFound;
+        playerNotFound.SetActive(notFound);
+        baselineToggle.GetComponent<Toggle>().isOn = notFound;
     }
 
     public void GetToggle()
