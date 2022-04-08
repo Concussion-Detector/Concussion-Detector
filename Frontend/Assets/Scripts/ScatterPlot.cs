@@ -149,9 +149,9 @@ public class ScatterPlot : MonoBehaviour
        Debug.Log("We need points from 0 to " + xAmt + " on the x-axis");
        Debug.Log("We need points from 0 to " + yAmt + " on the y-axis");
 
-        Debug.Log("Main width is " + mainWidth);
         xInc = (int) mainWidth / xAmt;
         yInc = (int) mainHeight / yAmt;
+        Debug.Log(mainWidth + " divided by " + xAmt + " = " + xInc);
 
        foreach (Point pt in points)
        {
