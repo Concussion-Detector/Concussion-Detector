@@ -65,6 +65,7 @@ public class FirebaseManager : MonoBehaviour
 
             if(Data.uuid == null) {
                 patient.uuid = GetUUID();
+                Data.uuid = patient.uuid;
             } else {
                 patient.uuid = Data.uuid;
             }

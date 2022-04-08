@@ -49,7 +49,7 @@ public class MoveDot : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         if(Data.test == 1) {
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene("BaselineReport");
         } else {
             yield return new WaitForSeconds(2);
             SceneManager.LoadScene("Report");
