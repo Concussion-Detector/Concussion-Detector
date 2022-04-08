@@ -6,19 +6,6 @@ using TMPro;
 
 public class ScatterPlot : MonoBehaviour
 {
-    // public class Point
-    // {
-    //     public int x;
-    //     public int y;
-    //     public GameObject pointObj;
-
-    //     public Point(int x, int y)
-    //     {
-    //         this.x = x;
-    //         this.y = y;
-    //     }
-    // }
-
     // Private variables
     [SerializeField]private GameObject sceneManager;
     [SerializeField] private Canvas canvas;
@@ -62,15 +49,9 @@ public class ScatterPlot : MonoBehaviour
         mongo = mongoObj.GetComponent<MongoDAO>();
         // Used to get rectangle which we can get the width and height of
         Rect rect = RectTransformUtility.PixelAdjustRect(Main.GetComponent<RectTransform>(), canvas);
-        // Reduce the width and height by a number to add some padding
+        // Get width and height of rectangle
         mainWidth = rect.width;
         mainHeight = rect.height;
-
-        //StartCoroutine(GetCoords());
-        //strPoints = mongo.GetPatientCoords();
-        
-        //DrawPoints();
-        Debug.Log("Main Width is " + mainWidth + " and Main Height is "  + mainHeight);
 
         results = mongo.FindByUUID(Data.uuid);
 
@@ -91,26 +72,7 @@ public class ScatterPlot : MonoBehaviour
             DrawPoints();
 
         }
-        
-        //DrawAxis(xAmt-1, yAmt-1);
     }
-
-    /*void Update()
-    {   
-        if(strPoints != null) {
-            return;
-        }
-        else {
-            if(udpSocket.GetPoints() != null)
-            {
-                strPoints = udpSocket.GetPoints();
-                GetPoints();
-                DrawPoints();
-                Debug.Log("Main Width is " + mainWidth + " and Main Height is "  + mainHeight);
-                DrawAxis(xAmt-1, yAmt-1);
-            }
-        }
-    }*/
 
     async void GetPoints()
     {
@@ -155,21 +117,17 @@ public class ScatterPlot : MonoBehaviour
 
        foreach (Point pt in points)
        {
-           if(pt.x == minX)
-           {
+           if(pt.x == minX) {
                pt.x = xInc;
-           } else if(pt.x == maxX)
-           {
+           } else if(pt.x == maxX) {
                pt.x = xAmt * xInc;
            } else {
                pt.x = (pt.x - minX) * xInc;
            }
 
-           if(pt.y == minY)
-           {
+           if(pt.y == minY) {
                pt.y = yInc;
-           } else if(pt.y == maxY)
-           {
+           } else if(pt.y == maxY) {
                pt.x = yAmt * yInc;
            } else {
                pt.y = (pt.y - minY) * yInc;
@@ -194,35 +152,6 @@ public class ScatterPlot : MonoBehaviour
         }
     }
 
-    // Iterates through both the x-axis and the y-axis
-    // instantiating an object with text with an incremental
-    // number to describe the points
-    // void DrawAxis(int xAxisCount, int yAxisCount)
-    // {
-    //     int xSpacer = xInc;
-    //     int ySpacer = yInc;
-
-    //     for(int i = 0; i <= xAxisCount; i++)
-    //     {
-    //         GameObject xObj = Instantiate(xValPrefab);
-
-    //         xObj.transform.SetParent(XAxis);
-
-    //         //xObj.GetComponentInChildren<Text>().text = (xSpacer * (i + 1)).ToString();
-    //         xObj.GetComponentInChildren<Text>().text = (i + 1).ToString();
-    //     }
-
-    //     for(int i = 0; i <= yAxisCount; i++)
-    //     {
-    //         GameObject yObj = Instantiate(yValPrefab);
-
-    //         yObj.transform.SetParent(YAxis);
-
-    //         //yObj.GetComponentInChildren<Text>().text = (ySpacer * (yAxisCount + 1 - i)).ToString();
-    //         yObj.GetComponentInChildren<Text>().text = (yAxisCount + 1 - i).ToString();
-    //     }
-    // }
-
     // Creates a given number of random points to display
     // This function won't be needed soon, but it is good for testing
     void CreateRandomPoints(int Count)
@@ -231,12 +160,5 @@ public class ScatterPlot : MonoBehaviour
         {
             points.Add(new Point(Random.Range(1, 500), Random.Range(1, 300)));
         }
-    }
-
-
-    void GetData()
-    {
-        //md.FindByUUID();
-
     }
 }

@@ -46,7 +46,6 @@ public class UdpSocket : MonoBehaviour
 
         // Initialize (seen in comments window)
         print("UDP Comms Initialised");
-        //print(Screen.height + " " + Screen.width);
     }
 
     public void SendData(string message) // Use to send data to Python
@@ -63,12 +62,6 @@ public class UdpSocket : MonoBehaviour
             print(err.ToString());
         }
     }
-
-    public string[] GetPoints()
-    {
-        return points;
-    }
-
 
     // Receive data, update packets received
     private void ReceiveData()

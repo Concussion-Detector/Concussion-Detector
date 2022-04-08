@@ -90,5 +90,3 @@ PP.ProcessPoints()
 coords = f.read()
 
 db.SaveToDatabase(option, uuid, coords)
-
-sock.SendData(coords)
