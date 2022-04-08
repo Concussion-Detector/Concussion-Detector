@@ -97,17 +97,23 @@ public class MongoDAO : MonoBehaviour
         return dataToRetrieve;
     }
 
-    public async void FindByUUID(string uuid) {
+    public List<PatientData> FindByUUID(string uuid) {
         //var uuid = "8adc0643-b737-46e7-8b48-a962d3133a59";
+         List<PatientData> patientsResults = new List<PatientData>();
+        
 
         var filter = Builders<BsonDocument>.Filter.Eq("uuid", uuid);
         // Baseline Data
         var patientData = collectionBaseline.Find(filter).FirstOrDefault();
-        patient  = Deserialize(patientData.ToString());
+        patient = Deserialize(patientData.ToString());
+
+        patientsResults.Add(patient);
 
         // Post Concussed Data
         var patientConcussedData = collectionConcussed.Find(filter).FirstOrDefault();
         patientConcussed = Deserialize(patientConcussedData.ToString());
+
+        patientsResults.Add(patientConcussed);
 
         //Debug.Log("Patient Concussed "+patientConcussedData.date);
         Debug.Log("Baseline Data");
@@ -120,12 +126,24 @@ public class MongoDAO : MonoBehaviour
         Debug.Log("Concussion Data");
         Debug.Log(patientConcussed.uuid);
         Debug.Log(patientConcussed.date);
+
+        Debug.Log("Length of patient: "+patientsResults.Count);
+
+        
+
+        return patientsResults;
     }
 
     public string[] GetPatientCoords()
     {
         Debug.Log("Getting coords of length " + patient.coords.Length);
         return patient.coords;
+    }
+
+
+    public List<PatientData> GetPatientData()
+    {
+        return null;
     }
 }
 

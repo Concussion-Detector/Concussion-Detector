@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ScatterPlot : MonoBehaviour
 {
@@ -32,6 +33,11 @@ public class ScatterPlot : MonoBehaviour
     [SerializeField] private GameObject xValPrefab;
     [SerializeField] private GameObject yValPrefab;
     [SerializeField] private GameObject mongoObj;
+
+    [SerializeField] private bool isBaseline = false;
+
+    [SerializeField] private TextMeshProUGUI date;
+    [SerializeField] private TextMeshProUGUI name;
     private UdpSocket udpSocket;
     private MongoDAO mongo;
     private string[] strPoints;
@@ -47,6 +53,7 @@ public class ScatterPlot : MonoBehaviour
     private List<Point> points = new List<Point>();
     private List<string> ts = new List<string>();
 
+    private List<PatientData> results = new List<PatientData>();
 
     // Start is called before the first frame update
     void Start()
@@ -55,17 +62,37 @@ public class ScatterPlot : MonoBehaviour
         mongo = mongoObj.GetComponent<MongoDAO>();
         // Used to get rectangle which we can get the width and height of
         Rect rect = RectTransformUtility.PixelAdjustRect(Main.GetComponent<RectTransform>(), canvas);
-
         // Reduce the width and height by a number to add some padding
         mainWidth = rect.width - 50;
         mainHeight = rect.height - 20;
 
         //StartCoroutine(GetCoords());
-        strPoints = mongo.GetPatientCoords();
-        GetPoints();
-        DrawPoints();
+        //strPoints = mongo.GetPatientCoords();
+        
+        //DrawPoints();
         Debug.Log("Main Width is " + mainWidth + " and Main Height is "  + mainHeight);
-        DrawAxis(xAmt-1, yAmt-1);
+
+        results = mongo.FindByUUID(UUID.uuid);
+
+        if(isBaseline)
+        {
+            strPoints = results[0].coords;
+            Debug.Log("coords "+strPoints);
+            date.text = "Date "+ results[0].date;
+            name.text = "ID: "+results[0].uuid;
+            GetPoints();
+            DrawPoints();
+        }
+        else{
+            strPoints = results[1].coords;
+            Debug.Log("coords "+strPoints);
+            date.text = "Date "+ results[1].date;
+            GetPoints();
+            DrawPoints();
+
+        }
+        
+        //DrawAxis(xAmt-1, yAmt-1);
     }
 
     /*void Update()
@@ -169,31 +196,31 @@ public class ScatterPlot : MonoBehaviour
     // Iterates through both the x-axis and the y-axis
     // instantiating an object with text with an incremental
     // number to describe the points
-    void DrawAxis(int xAxisCount, int yAxisCount)
-    {
-        int xSpacer = xInc;
-        int ySpacer = yInc;
+    // void DrawAxis(int xAxisCount, int yAxisCount)
+    // {
+    //     int xSpacer = xInc;
+    //     int ySpacer = yInc;
 
-        for(int i = 0; i <= xAxisCount; i++)
-        {
-            GameObject xObj = Instantiate(xValPrefab);
+    //     for(int i = 0; i <= xAxisCount; i++)
+    //     {
+    //         GameObject xObj = Instantiate(xValPrefab);
 
-            xObj.transform.SetParent(XAxis);
+    //         xObj.transform.SetParent(XAxis);
 
-            //xObj.GetComponentInChildren<Text>().text = (xSpacer * (i + 1)).ToString();
-            xObj.GetComponentInChildren<Text>().text = (i + 1).ToString();
-        }
+    //         //xObj.GetComponentInChildren<Text>().text = (xSpacer * (i + 1)).ToString();
+    //         xObj.GetComponentInChildren<Text>().text = (i + 1).ToString();
+    //     }
 
-        for(int i = 0; i <= yAxisCount; i++)
-        {
-            GameObject yObj = Instantiate(yValPrefab);
+    //     for(int i = 0; i <= yAxisCount; i++)
+    //     {
+    //         GameObject yObj = Instantiate(yValPrefab);
 
-            yObj.transform.SetParent(YAxis);
+    //         yObj.transform.SetParent(YAxis);
 
-            //yObj.GetComponentInChildren<Text>().text = (ySpacer * (yAxisCount + 1 - i)).ToString();
-            yObj.GetComponentInChildren<Text>().text = (yAxisCount + 1 - i).ToString();
-        }
-    }
+    //         //yObj.GetComponentInChildren<Text>().text = (ySpacer * (yAxisCount + 1 - i)).ToString();
+    //         yObj.GetComponentInChildren<Text>().text = (yAxisCount + 1 - i).ToString();
+    //     }
+    // }
 
     // Creates a given number of random points to display
     // This function won't be needed soon, but it is good for testing
@@ -203,5 +230,12 @@ public class ScatterPlot : MonoBehaviour
         {
             points.Add(new Point(Random.Range(1, 500), Random.Range(1, 300)));
         }
+    }
+
+
+    void GetData()
+    {
+        //md.FindByUUID();
+
     }
 }
