@@ -26,7 +26,6 @@ public class MoveDot : MonoBehaviour
         udpSocket = sceneManager.GetComponent<UdpSocket>();
         transform.position = waypoints[waypointIndex].transform.position;
         StartCoroutine(StartMovingDot());
-
     }
 
     // Update is called once per frame
@@ -48,7 +47,12 @@ public class MoveDot : MonoBehaviour
     private IEnumerator StopMovingDot()
     {
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(3);
+
+        if(Data.test == 1) {
+            SceneManager.LoadScene("Main");
+        } else {
+            SceneManager.LoadScene("Report");
+        }
     }
 
     private void Move()

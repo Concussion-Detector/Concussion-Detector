@@ -72,7 +72,7 @@ public class ScatterPlot : MonoBehaviour
         //DrawPoints();
         Debug.Log("Main Width is " + mainWidth + " and Main Height is "  + mainHeight);
 
-        results = mongo.FindByUUID(UUID.uuid);
+        results = mongo.FindByUUID(Data.uuid);
 
         if(isBaseline)
         {

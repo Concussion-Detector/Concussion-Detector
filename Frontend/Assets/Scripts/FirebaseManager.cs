@@ -63,10 +63,10 @@ public class FirebaseManager : MonoBehaviour
             string fullName = " ";
             string json = " ";
 
-            if(UUID.uuid == null) {
+            if(Data.uuid == null) {
                 patient.uuid = GetUUID();
             } else {
-                patient.uuid = UUID.uuid;
+                patient.uuid = Data.uuid;
             }
 
             dataManager.PatientNotFoundGUI(false);
@@ -90,8 +90,8 @@ public class FirebaseManager : MonoBehaviour
         // Concussion
         else 
         {
-            if(UUID.uuid != null) {
-                patient.uuid = UUID.uuid;
+            if(Data.uuid != null) {
+                patient.uuid = Data.uuid;
                 Debug.Log(patient.uuid);
                 dataManager.SendPatientData(patient.uuid);
                 //UUID.uuid = null;
@@ -142,7 +142,7 @@ public class FirebaseManager : MonoBehaviour
                                 uuid = child.Value as string;
                                 Debug.Log("The UUID for fb is " + uuid);
                                 //SetUUID("codes", uuid);
-                                UUID.uuid = uuid;
+                                Data.uuid = uuid;
                                 uuidReceived = true;
                                 return;
                             }
@@ -150,7 +150,7 @@ public class FirebaseManager : MonoBehaviour
                     }     
                 }  
                 Debug.Log("Could not find " + fullName);
-                UUID.uuid = null;
+                Data.uuid = null;
                 uuidReceived = true;
             }
             //else{Debug.Log("Could not find patient");}

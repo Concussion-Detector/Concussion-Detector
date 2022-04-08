@@ -38,6 +38,7 @@ public class DataManager : MonoBehaviour
     public void SendPatientData(string uuid)
     {
         string msg = testType + " " + uuid;
+        Data.test = testType;
         udpSocket.SendData(msg);
         mainManager.FollowDot();
     }

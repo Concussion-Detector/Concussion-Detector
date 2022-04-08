@@ -28,7 +28,7 @@ public class MongoDAO : MonoBehaviour
         collectionConcussed = database.GetCollection<BsonDocument>("colConcussionTests");
 
         //uuid = PlayerPrefs.GetString("patientid");
-        uuid = UUID.uuid;
+        uuid = Data.uuid;
 
         FindByUUID(uuid);
         //GetData();    
