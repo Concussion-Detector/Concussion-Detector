@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Report.unity
     guid: 925c980d720761a4c8d2b112a51cbec2
+  - enabled: 1
+    path: Assets/Scenes/BaselineReport.unity
+    guid: cd6dc153b9cd16f439c6cc6abc6ab63f
   m_configObjects: {}

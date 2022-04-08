@@ -100,7 +100,6 @@ public class MongoDAO : MonoBehaviour
     public List<PatientData> FindByUUID(string uuid) {
         //var uuid = "8adc0643-b737-46e7-8b48-a962d3133a59";
          List<PatientData> patientsResults = new List<PatientData>();
-        
 
         var filter = Builders<BsonDocument>.Filter.Eq("uuid", uuid);
         // Baseline Data
@@ -117,15 +116,17 @@ public class MongoDAO : MonoBehaviour
 
         //Debug.Log("Patient Concussed "+patientConcussedData.date);
         Debug.Log("Baseline Data");
-        Debug.Log(patient.uuid);
+        Debug.Log(patient);
+        //Debug.Log(patient.uuid);
         /*foreach (string p in patient.coords)
         {
             //Debug.Log(p);
         }*/
-        Debug.Log(patient.date);
+        //Debug.Log(patient.date);
         Debug.Log("Concussion Data");
-        Debug.Log(patientConcussed.uuid);
-        Debug.Log(patientConcussed.date);
+        Debug.Log(patientConcussed);
+        //Debug.Log(patientConcussed.uuid);
+        //Debug.Log(patientConcussed.date);
 
         Debug.Log("Length of patient: "+patientsResults.Count);
 
