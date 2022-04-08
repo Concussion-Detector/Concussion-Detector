@@ -6,6 +6,12 @@ cap = cv2.VideoCapture(0)
 gaze = GazeTracking()
 app = Flask(__name__)
 
+xpupil = []
+ypupil = []
+
+def save_to_file(x, y, fileName):
+     fileName.write(str(x) + ", " + str(y) + "\n")
+
 @app.route('/')
 
 def index():
@@ -26,14 +32,14 @@ def face_detection():
         cv2.putText(frame, "Left pupil:  " + str(left_pupil), (20, 70), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
         cv2.putText(frame, "Right pupil: " + str(right_pupil), (20, 105), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
 
-        # if left_pupil and right_pupil and record == "true":
-        #     x = int((left_pupil[0] + right_pupil[0]) / 2)
-        #     y = int((left_pupil[1] + right_pupil[1]) / 2)
+        if left_pupil and right_pupil:
+            x = int((left_pupil[0] + right_pupil[0]) / 2)
+            y = int((left_pupil[1] + right_pupil[1]) / 2)
 
-        #     xpupil.append(x)
-        #     ypupil.append(y)
+            xpupil.append(x)
+            ypupil.append(y)
             
-        #     save_to_file(x, y, writeToFileCSV)
+            save_to_file(x, y, writeToFileCSV)
         
 
         #data = sock.ReadReceivedData() # read data
@@ -49,10 +55,14 @@ def face_detection():
 
         #cv2.imshow("Frame",frame)
 
+        
+
+
         ret, buffer = cv2.imencode('.jpg',frame)
         frame = buffer.tobytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n'+frame+ b'\r\n')
+        
         
 @app.route('/track')
 
