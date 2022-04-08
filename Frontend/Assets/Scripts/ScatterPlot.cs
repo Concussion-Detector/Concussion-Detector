@@ -63,8 +63,8 @@ public class ScatterPlot : MonoBehaviour
         // Used to get rectangle which we can get the width and height of
         Rect rect = RectTransformUtility.PixelAdjustRect(Main.GetComponent<RectTransform>(), canvas);
         // Reduce the width and height by a number to add some padding
-        mainWidth = rect.width - 50;
-        mainHeight = rect.height - 20;
+        mainWidth = rect.width;
+        mainHeight = rect.height;
 
         //StartCoroutine(GetCoords());
         //strPoints = mongo.GetPatientCoords();
@@ -79,7 +79,7 @@ public class ScatterPlot : MonoBehaviour
             strPoints = results[0].coords;
             Debug.Log("coords "+strPoints);
             date.text = "Date "+ results[0].date;
-            name.text = "ID: "+results[0].uuid;
+            //name.text = "ID: "+results[0].uuid;
             GetPoints();
             DrawPoints();
         }
@@ -149,6 +149,7 @@ public class ScatterPlot : MonoBehaviour
        Debug.Log("We need points from 0 to " + xAmt + " on the x-axis");
        Debug.Log("We need points from 0 to " + yAmt + " on the y-axis");
 
+        Debug.Log("Main width is " + mainWidth);
         xInc = (int) mainWidth / xAmt;
         yInc = (int) mainHeight / yAmt;
 
