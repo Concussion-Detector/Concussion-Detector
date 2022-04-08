@@ -49,18 +49,11 @@ def face_detection():
 
         #cv2.imshow("Frame",frame)
 
-        # if cv2.waitKey(1) & 0xFF == ord('q'): #or record == "false":
-        #     writeToFileCSV.close()
-        #     break
-
         ret, buffer = cv2.imencode('.jpg',frame)
         frame = buffer.tobytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n'+frame+ b'\r\n')
         
-# cap.release()
-# cv2.destroyAllWindows()
-
 @app.route('/track')
 
 def track():
