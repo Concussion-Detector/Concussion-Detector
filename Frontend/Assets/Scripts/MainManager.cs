@@ -8,6 +8,8 @@ public class MainManager : MonoBehaviour
     public GameObject patientDetails;
     public bool patientNotFound = false;
 
+    public static bool valid = false;
+
     public void FollowDot()
     {
         StartCoroutine(StartDelay("DotFollow"));
@@ -15,6 +17,8 @@ public class MainManager : MonoBehaviour
 
      public void GoToReports()
     {
+        Debug.Log("Going to reports!");
+
         StartCoroutine(StartDelay("Report"));
     }
 
@@ -26,10 +30,11 @@ public class MainManager : MonoBehaviour
     IEnumerator StartDelay(string scene)
     {
         yield return new WaitForSeconds(0.2f);
-        Debug.Log("Player is not found " + patientNotFound);
-        if(patientNotFound == false) {
-            SceneManager.LoadScene(scene);
-        }
+        Debug.Log("Player is not found " + valid);
+        // if(valid == false) {
+            
+        // }
+        SceneManager.LoadScene(scene);
     }
 
     public void showPatientDetails()

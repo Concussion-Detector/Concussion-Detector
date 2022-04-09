@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 using Firebase;
 using Firebase.Database;
 using UnityEngine.UI;
@@ -28,6 +29,8 @@ public class FirebaseManager : MonoBehaviour
 
     private DataManager dataManager;
     Patient patient = new Patient();
+
+    public UnityEvent foundPatient;
 
     void Start()
     {
@@ -108,8 +111,9 @@ public class FirebaseManager : MonoBehaviour
     }
 
     // Retrieves first and last name
-    public void GetPatientData()
+    public async void GetPatientData()
     {
+        
         var uuid = "";
         string fullName = String.Empty;
 
@@ -120,51 +124,71 @@ public class FirebaseManager : MonoBehaviour
             fullName = searchFirstName.text + " " + searchLastName.text;
         }
 
+        var allPatients = await reference.Child("Patients").GetValueAsync();
 
-        // if(fullName <=1)
-        // {
-        //     Debug.Log("Cannot be empty");
-        // }
-        // else{
-        //     // Proceed with the code
-        // }
-
-        reference.Child("Patients").GetValueAsync().ContinueWith(task => 
+        foreach(var patient in allPatients.Children)
         {
-            if(task.IsCompleted)
-            {
-                Debug.Log("Succesful");
-                DataSnapshot snapshot = task.Result;
-                IEnumerable <DataSnapshot> children = snapshot.Children;
+            Debug.Log($"Patient: {patient.Key}");
 
-                // Loop over the child elements of a snapshot
-                foreach(var c in children)
-                {
-                    //Debug.Log(c.Key + ", " + fullName);
-                    if(c.Key == fullName)
-                    {
-                        Debug.Log("Found!");
-                        foreach(var child in c.Children)
-                        {
-                            if(child.Key == "uuid")
-                            {
-                                // Patients uuid
-                                uuid = child.Value as string;
-                                Debug.Log("The UUID for fb is " + uuid);
-                                //SetUUID("codes", uuid);
-                                Data.uuid = uuid;
-                                uuidReceived = true;
-                                return;
-                            }
-                        }
-                    }     
-                }  
-                Debug.Log("Could not find " + fullName);
-                Data.uuid = null;
-                uuidReceived = true;
-            }
-            //else{Debug.Log("Could not find patient");}
-        });
+            if(patient.Key != fullName)
+                continue;
+
+            Debug.Log("Found Desired Patient!");
+
+            uuid = patient.Child("uuid").Value as string;
+            Debug.Log("uuid" +uuid);
+            Data.uuid = uuid;
+            uuidReceived = true;
+
+            foundPatient.Invoke();
+            break;
+        }
+
+
+        //.ContinueWith(task => 
+        // {
+        //     if(task.IsCompleted)
+        //     {
+        //         Debug.Log("Succesful");
+        //         DataSnapshot snapshot = task.Result;
+        //         IEnumerable <DataSnapshot> children = snapshot.Children;
+
+        //         // Loop over the child elements of a snapshot
+        //         foreach(var c in children)
+        //         {
+        //             //Debug.Log(c.Key + ", " + fullName);
+        //             if(c.Key == fullName)
+        //             {
+        //                 Debug.Log("Found!");
+
+        //                 uuid = c.Child("uuid").Value as string;
+        //                 Data.uuid = uuid;
+        //                 uuidReceived = true;
+
+        //                 Debug.Log("Invoked found patient event!");
+                        
+        //                 // foreach(var child in c.Children)
+        //                 // {
+        //                 //     if(child.Key == "uuid")
+        //                 //     {
+        //                 //         // Patients uuid
+        //                 //         uuid = child.Value as string;
+        //                 //         foundPatient.Invoke(uuid);
+        //                 //         Debug.Log("The UUID for fb is " + uuid);
+        //                 //         //SetUUID("codes", uuid);
+        //                 //         Data.uuid = uuid;
+        //                 //         uuidReceived = true;
+        //                 //         return;
+        //                 //     }
+        //                 // }
+        //             }     
+        //         }  
+        //         Debug.Log("Could not find " + fullName);
+        //         Data.uuid = null;
+        //         uuidReceived = true;
+        //     }
+        //     //else{Debug.Log("Could not find patient");}
+        // });
 
         //Debug.Log("uuid is" +uuid);
 
