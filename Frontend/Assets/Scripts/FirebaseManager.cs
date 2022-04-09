@@ -114,7 +114,6 @@ public class FirebaseManager : MonoBehaviour
     // Retrieves first and last name
     public async void GetPatientData()
     {
-        
         var uuid = "";
         string fullName = String.Empty;
 
@@ -127,20 +126,23 @@ public class FirebaseManager : MonoBehaviour
 
         var allPatients = await reference.Child("Patients").GetValueAsync();
 
+        // Loop over the collection
         foreach(var patient in allPatients.Children)
         {
-            Debug.Log($"Patient: {patient.Key}");
+            Debug.Log("Patients:"+ patient.Key);
 
+            // Continue if desired patient not found.
             if(patient.Key != fullName)
+                //dataManager.PatientNotFoundGUI(true);
                 continue;
 
             Debug.Log("Found Desired Patient!");
-
+            //dataManager.PatientNotFoundGUI(false);
             uuid = patient.Child("uuid").Value as string;
             Debug.Log("uuid" +uuid);
             Data.uuid = uuid;
             uuidReceived = true;
-
+            // Invoke redirection to different scene
             foundPatient.Invoke();
             break;
         }

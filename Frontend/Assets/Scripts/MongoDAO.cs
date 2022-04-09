@@ -98,8 +98,7 @@ public class MongoDAO : MonoBehaviour
     }
 
     public List<PatientData> FindByUUID(string uuid) {
-        //var uuid = "8adc0643-b737-46e7-8b48-a962d3133a59";
-         List<PatientData> patientsResults = new List<PatientData>();
+        List<PatientData> patientsResults = new List<PatientData>();
 
         var filter = Builders<BsonDocument>.Filter.Eq("uuid", uuid);
         // Baseline Data
@@ -125,13 +124,10 @@ public class MongoDAO : MonoBehaviour
         }*/
         //Debug.Log(patient.date);
         Debug.Log("Concussion Data");
-        Debug.Log(patientConcussed);
-        //Debug.Log(patientConcussed.uuid);
-        //Debug.Log(patientConcussed.date);
+        // Returns null for some reason :(
+        Debug.Log("Patient concussed data" +patientConcussed);
 
         Debug.Log("Length of patient: "+patientsResults.Count);
-
-        
 
         return patientsResults;
     }
