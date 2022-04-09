@@ -30,6 +30,7 @@ public class FirebaseManager : MonoBehaviour
     private DataManager dataManager;
     Patient patient = new Patient();
 
+    // Event which invokes redirecto to Reports page
     public UnityEvent foundPatient;
 
     void Start()
@@ -143,55 +144,6 @@ public class FirebaseManager : MonoBehaviour
             foundPatient.Invoke();
             break;
         }
-
-
-        //.ContinueWith(task => 
-        // {
-        //     if(task.IsCompleted)
-        //     {
-        //         Debug.Log("Succesful");
-        //         DataSnapshot snapshot = task.Result;
-        //         IEnumerable <DataSnapshot> children = snapshot.Children;
-
-        //         // Loop over the child elements of a snapshot
-        //         foreach(var c in children)
-        //         {
-        //             //Debug.Log(c.Key + ", " + fullName);
-        //             if(c.Key == fullName)
-        //             {
-        //                 Debug.Log("Found!");
-
-        //                 uuid = c.Child("uuid").Value as string;
-        //                 Data.uuid = uuid;
-        //                 uuidReceived = true;
-
-        //                 Debug.Log("Invoked found patient event!");
-                        
-        //                 // foreach(var child in c.Children)
-        //                 // {
-        //                 //     if(child.Key == "uuid")
-        //                 //     {
-        //                 //         // Patients uuid
-        //                 //         uuid = child.Value as string;
-        //                 //         foundPatient.Invoke(uuid);
-        //                 //         Debug.Log("The UUID for fb is " + uuid);
-        //                 //         //SetUUID("codes", uuid);
-        //                 //         Data.uuid = uuid;
-        //                 //         uuidReceived = true;
-        //                 //         return;
-        //                 //     }
-        //                 // }
-        //             }     
-        //         }  
-        //         Debug.Log("Could not find " + fullName);
-        //         Data.uuid = null;
-        //         uuidReceived = true;
-        //     }
-        //     //else{Debug.Log("Could not find patient");}
-        // });
-
-        //Debug.Log("uuid is" +uuid);
-
     }
 
     private string GetUUID()
