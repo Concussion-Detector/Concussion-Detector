@@ -428,6 +428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patientDetails: {fileID: 0}
+  patientNotFound: 0
 --- !u!1 &199450033
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,16 +455,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 199450033}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1362157994}
-  m_RootOrder: 1
+  m_Father: {fileID: 368897446}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -22, y: -18}
+  m_AnchoredPosition: {x: -22, y: -18.00003}
   m_SizeDelta: {x: 60.71469, y: 50.614105}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &199450035
@@ -877,6 +878,7 @@ RectTransform:
   - {fileID: 965669031}
   - {fileID: 795653716}
   - {fileID: 47060532}
+  - {fileID: 199450034}
   m_Father: {fileID: 1362157994}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1964,7 +1966,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1362157994
 RectTransform:
@@ -1978,7 +1980,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 368897446}
-  - {fileID: 199450034}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

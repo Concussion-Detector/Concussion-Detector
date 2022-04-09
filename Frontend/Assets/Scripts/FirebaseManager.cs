@@ -111,7 +111,7 @@ public class FirebaseManager : MonoBehaviour
     public void GetPatientData()
     {
         var uuid = "";
-        string fullName = "";
+        string fullName = String.Empty;
 
         if(savingData == true) 
         {
@@ -119,6 +119,15 @@ public class FirebaseManager : MonoBehaviour
         } else {
             fullName = searchFirstName.text + " " + searchLastName.text;
         }
+
+
+        // if(fullName <=1)
+        // {
+        //     Debug.Log("Cannot be empty");
+        // }
+        // else{
+        //     // Proceed with the code
+        // }
 
         reference.Child("Patients").GetValueAsync().ContinueWith(task => 
         {
