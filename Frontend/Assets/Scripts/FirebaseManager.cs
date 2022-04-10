@@ -146,6 +146,8 @@ public class FirebaseManager : MonoBehaviour
             foundPatient.Invoke();
             break;
         }
+
+        dataManager.ErrorMessage("Please fill in all fields");
     }
 
     private string GetUUID()

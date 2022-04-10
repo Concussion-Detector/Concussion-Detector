@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class DataManager : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class DataManager : MonoBehaviour
     private GameObject baselineToggle;
     [SerializeField]
     private GameObject playerNotFound;
+    [SerializeField]
+    private GameObject error;
+    [SerializeField]
+    private TextMeshProUGUI errorMessage;
 
     [SerializeField]
     private MainManager mainManager;
@@ -48,6 +53,12 @@ public class DataManager : MonoBehaviour
         mainManager.patientNotFound = notFound;
         playerNotFound.SetActive(notFound);
         baselineToggle.GetComponent<Toggle>().isOn = notFound;
+    }
+
+    public void ErrorMessage(string errorMsg)
+    {
+        errorMessage.text = errorMsg;
+        error.SetActive(true);
     }
 
     public void GetToggle()
