@@ -109,7 +109,7 @@ public class MongoDAO : MonoBehaviour
 
         // Post Concussed Data
         var patientConcussedData = collectionConcussed.Find(filter).FirstOrDefault();
-        if(patientConcussed != null) {
+        if(patientConcussedData != null) {
             patientConcussed = Deserialize(patientConcussedData.ToString());
             patientsResults.Add(patientConcussed);
         }
