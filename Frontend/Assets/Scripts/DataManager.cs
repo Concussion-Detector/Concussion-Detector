@@ -52,11 +52,12 @@ public class DataManager : MonoBehaviour
     {
         string msg = testType + " " + uuid;
         Data.test = testType;
+        Debug.Log("uuid from send patient is "+uuid);
         //udpSocket.SendData(msg);
         //mainManager.FollowDot();
-        Debug.Log("Invoke");
+        Debug.Log("Invoke dot follow.");
         followDot.Invoke();
-        return;
+        //return;
     }
 
     public void PatientNotFoundGUI(bool notFound)

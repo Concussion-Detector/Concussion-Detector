@@ -81,17 +81,12 @@ public class FirebaseManager : MonoBehaviour
             fullName = firstName.text + " " + lastName.text;
             json = JsonUtility.ToJson(patient);
 
-            reference.Child("Patients").Child(fullName).SetRawJsonValueAsync(json).ContinueWith(task => {
-                if(task.IsCompleted)
-                {
-                    Debug.Log("Successfully added to firebase");
-                    dataManager.SendPatientData(patient.uuid);
-                }
-                else
-                {
-                    Debug.Log("Not successfull");
-                }
-            });
+            // Removed a callback function from here which was causing an issue with method not being invoked.
+            reference.Child("Patients").Child(fullName).SetRawJsonValueAsync(json);
+  
+            Debug.Log("Successfully added to firebase");
+            dataManager.SendPatientData(patient.uuid);
+                
         } 
         // Concussion
         else 
