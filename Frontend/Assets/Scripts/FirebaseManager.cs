@@ -143,7 +143,7 @@ public class FirebaseManager : MonoBehaviour
         // Loop over the collection
         foreach(var patient in allPatients.Children)
         {
-            Debug.Log("Patients:"+ patient.Key);
+            //Debug.Log("Patients:"+ patient.Key);
 
             // Continue if desired patient not found.
             if(patient.Key != fullName)

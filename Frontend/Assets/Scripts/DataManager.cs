@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -24,6 +25,8 @@ public class DataManager : MonoBehaviour
 
     [SerializeField]
     private MainManager mainManager;
+
+    public UnityEvent followDot;
 
     private UdpSocket udpSocket;
     private int testType = 1;
@@ -49,8 +52,11 @@ public class DataManager : MonoBehaviour
     {
         string msg = testType + " " + uuid;
         Data.test = testType;
-        udpSocket.SendData(msg);
-        mainManager.FollowDot();
+        //udpSocket.SendData(msg);
+        //mainManager.FollowDot();
+        Debug.Log("Invoke");
+        followDot.Invoke();
+        return;
     }
 
     public void PatientNotFoundGUI(bool notFound)

@@ -12,6 +12,7 @@ public class MainManager : MonoBehaviour
 
     public void FollowDot()
     {
+        Debug.Log("Follow dot");
         StartCoroutine(StartDelay("DotFollow"));
     }
 
@@ -29,11 +30,13 @@ public class MainManager : MonoBehaviour
     
     IEnumerator StartDelay(string scene)
     {
+        Debug.Log("Wait ");
         yield return new WaitForSeconds(0.2f);
-        Debug.Log("Player is not found " + valid);
+        //Debug.Log("Player is not found " + valid);
         // if(valid == false) {
             
         // }
+        Debug.Log("Load " + scene);
         SceneManager.LoadScene(scene);
     }
 
