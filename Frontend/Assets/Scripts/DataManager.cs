@@ -13,9 +13,14 @@ public class DataManager : MonoBehaviour
     [SerializeField]
     private GameObject playerNotFound;
     [SerializeField]
-    private GameObject error;
+    private GameObject searchError;
     [SerializeField]
-    private TextMeshProUGUI errorMessage;
+    private GameObject detailsError;
+    [SerializeField]
+    private TextMeshProUGUI searchErrorMessage;
+
+    [SerializeField]
+    private TextMeshProUGUI detailsErrorMessage;
 
     [SerializeField]
     private MainManager mainManager;
@@ -55,10 +60,16 @@ public class DataManager : MonoBehaviour
         baselineToggle.GetComponent<Toggle>().isOn = notFound;
     }
 
-    public void ErrorMessage(string errorMsg)
+    public void SearchErrorMessage(string errorMsg)
     {
-        errorMessage.text = errorMsg;
-        error.SetActive(true);
+        searchErrorMessage.text = errorMsg;
+        searchError.SetActive(true);
+    }
+
+     public void DetailsErrorMessage(string errorMsg)
+    {
+        detailsErrorMessage.text = errorMsg;
+        detailsError.SetActive(true);
     }
 
     public void GetToggle()

@@ -61,9 +61,10 @@ public class FirebaseManager : MonoBehaviour
     IEnumerator Wait(int num)
     {
         yield return new WaitUntil(UUIDReceived);
-
+        Debug.Log("UUID received");
         // Baseline
         if(num == 1) {
+            Debug.Log("In baseline");
             string fullName = " ";
             string json = " ";
 
@@ -117,9 +118,16 @@ public class FirebaseManager : MonoBehaviour
         var uuid = "";
         string fullName = String.Empty;
 
-        if(searchFirstName.text == String.Empty || searchLastName.text == String.Empty)
+        Debug.Log(savingData);
+
+        if((searchFirstName.text == String.Empty || searchLastName.text == String.Empty) && savingData != true)
         {
-            dataManager.ErrorMessage("Please fill in all fields");
+            dataManager.SearchErrorMessage("Please fill in all fields");
+            return;
+        } 
+        else if ((firstName.text == String.Empty || lastName.text == String.Empty) && savingData == true) 
+        {
+            dataManager.DetailsErrorMessage("Please fill in all fields");
             return;
         }
 
@@ -152,7 +160,17 @@ public class FirebaseManager : MonoBehaviour
             foundPatient.Invoke();
             break;
         }
-        dataManager.ErrorMessage("Could not find " + fullName);
+        // If no patient is found but it is baseline data to be recorded,
+        // set the uuidReceived to true to allow the wait method to complete
+        if(dataManager.GetTestType() == 1) {
+            uuidReceived = true;
+        }
+
+        if((searchFirstName.text == String.Empty || searchLastName.text == String.Empty) && savingData != true)
+        {
+            dataManager.SearchErrorMessage("Could not find " + fullName);
+            return;
+        } 
     }
 
     private string GetUUID()
