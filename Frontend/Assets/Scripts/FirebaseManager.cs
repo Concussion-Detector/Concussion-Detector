@@ -117,6 +117,12 @@ public class FirebaseManager : MonoBehaviour
         var uuid = "";
         string fullName = String.Empty;
 
+        if(searchFirstName.text == String.Empty || searchLastName.text == String.Empty)
+        {
+            dataManager.ErrorMessage("Please fill in all fields");
+            return;
+        }
+
         if(savingData == true) 
         {
             fullName = firstName.text + " " + lastName.text;
@@ -146,8 +152,7 @@ public class FirebaseManager : MonoBehaviour
             foundPatient.Invoke();
             break;
         }
-
-        dataManager.ErrorMessage("Please fill in all fields");
+        dataManager.ErrorMessage("Could not find " + fullName);
     }
 
     private string GetUUID()
