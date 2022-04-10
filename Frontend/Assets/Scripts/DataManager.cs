@@ -8,7 +8,6 @@ using TMPro;
 
 public class DataManager : MonoBehaviour
 {
-
     [SerializeField] 
     private GameObject baselineToggle;
     [SerializeField]
@@ -37,12 +36,6 @@ public class DataManager : MonoBehaviour
         udpSocket = gameObject.GetComponent<UdpSocket>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public int GetTestType()
     {
         return testType;
@@ -56,8 +49,8 @@ public class DataManager : MonoBehaviour
         //udpSocket.SendData(msg);
         //mainManager.FollowDot();
         Debug.Log("Invoke dot follow.");
+        // Invokes redirection to Dot Follow Scene
         followDot.Invoke();
-        //return;
     }
 
     public void PatientNotFoundGUI(bool notFound)
