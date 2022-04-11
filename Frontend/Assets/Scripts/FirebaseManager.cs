@@ -51,7 +51,7 @@ public class FirebaseManager : MonoBehaviour
         } 
         else if(dataManager.GetTestType() == 2)
         {
-            Debug.Log("Concussion");
+            //Debug.Log("Concussion");
             savingData = true;
             GetPatientData();
             StartCoroutine(Wait(2));
@@ -64,7 +64,6 @@ public class FirebaseManager : MonoBehaviour
         Debug.Log("UUID received");
         // Baseline
         if(num == 1) {
-            Debug.Log("In baseline");
             string fullName = " ";
             string json = " ";
 
@@ -91,6 +90,7 @@ public class FirebaseManager : MonoBehaviour
         // Concussion
         else 
         {
+            Debug.Log("Concussion");
             if(Data.uuid != null) {
                 patient.uuid = Data.uuid;
                 Debug.Log(patient.uuid);
@@ -113,7 +113,7 @@ public class FirebaseManager : MonoBehaviour
         var uuid = "";
         string fullName = String.Empty;
 
-        Debug.Log(savingData);
+        //Debug.Log(savingData);
 
         if((searchFirstName.text == String.Empty || searchLastName.text == String.Empty) && savingData != true)
         {
@@ -151,8 +151,11 @@ public class FirebaseManager : MonoBehaviour
             Debug.Log("uuid" +uuid);
             Data.uuid = uuid;
             uuidReceived = true;
-            // Invoke redirection to different scene
-            foundPatient.Invoke();
+            if(savingData != true)
+            {
+                // Invoke redirection to different scene
+                foundPatient.Invoke();
+            }
             break;
         }
         // If no patient is found but it is baseline data to be recorded,
@@ -160,6 +163,10 @@ public class FirebaseManager : MonoBehaviour
         if(dataManager.GetTestType() == 1) {
             uuidReceived = true;
         }
+
+        /*if(dataManager.GetTestType() == 2) {
+            data
+        }*/
 
         if((searchFirstName.text == String.Empty || searchLastName.text == String.Empty) && savingData != true)
         {
