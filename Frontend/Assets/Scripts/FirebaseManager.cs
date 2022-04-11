@@ -98,6 +98,7 @@ public class FirebaseManager : MonoBehaviour
                 //UUID.uuid = null;
             } else {
                 dataManager.PatientNotFoundGUI(true);
+                uuidReceived = false;
             }
         }
     }
@@ -123,6 +124,7 @@ public class FirebaseManager : MonoBehaviour
         else if ((firstName.text == String.Empty || lastName.text == String.Empty) && savingData == true) 
         {
             dataManager.DetailsErrorMessage("Please fill in all fields");
+            uuidReceived = false;
             return;
         }
 
@@ -160,19 +162,18 @@ public class FirebaseManager : MonoBehaviour
         }
         // If no patient is found but it is baseline data to be recorded,
         // set the uuidReceived to true to allow the wait method to complete
-        if(dataManager.GetTestType() == 1) {
+        if(dataManager.GetTestType() == 1 || dataManager.GetTestType() == 2) {
             uuidReceived = true;
         }
 
-        /*if(dataManager.GetTestType() == 2) {
-            data
-        }*/
-
-        if((searchFirstName.text == String.Empty || searchLastName.text == String.Empty) && savingData != true)
-        {
+        if(savingData != true) {
+            if((searchFirstName.text == String.Empty || searchLastName.text == String.Empty) && savingData != true)
+            {
+                dataManager.SearchErrorMessage("Could not find " + fullName);
+                return;
+            }
             dataManager.SearchErrorMessage("Could not find " + fullName);
-            return;
-        } 
+        }
     }
 
     private string GetUUID()

@@ -11,8 +11,6 @@ public class DataManager : MonoBehaviour
     [SerializeField] 
     private GameObject baselineToggle;
     [SerializeField]
-    private GameObject playerNotFound;
-    [SerializeField]
     private GameObject searchError;
     [SerializeField]
     private GameObject detailsError;
@@ -56,7 +54,7 @@ public class DataManager : MonoBehaviour
     public void PatientNotFoundGUI(bool notFound)
     {
         mainManager.patientNotFound = notFound;
-        playerNotFound.SetActive(notFound);
+        DetailsErrorMessage("Patient has no Baseline Data");
         baselineToggle.GetComponent<Toggle>().isOn = notFound;
     }
 
