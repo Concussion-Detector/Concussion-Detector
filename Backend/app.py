@@ -12,7 +12,6 @@ ypupil = []
 @app.route('/')
 
 
-# TODO
 # save coords in csv file
 
 def index():
