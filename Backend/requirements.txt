@@ -1,12 +1,8 @@
 click
 cmake
 enum-compat==0.0.2
-enum34==1.1.6
-eventlet==0.31.0
 Flask
 Flask-SocketIO==2.9.1
-gevent==1.5.0
-gevent-websocket==0.10.1
 greenlet
 gunicorn==19.7.1
 numpy
@@ -14,11 +10,7 @@ Dlib==19.21.1
 itsdangerous
 Jinja2
 opencv-python
-MarkupSafe
-Pillow==9.0.0
 imutils
-python-engineio==3.8.2.post1
-python-socketio==1.7.7
 redis==2.10.5
 six==1.10.0
 werkzeug==2.0.3
