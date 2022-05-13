@@ -63,9 +63,11 @@ while True:
     data = sock.ReadReceivedData() # read data
 
     if data is not None:
-        print(data)
         if data == "true" or data == "false":
             record = data
+        elif data == "q":
+            writeToFileCSV.close()
+            break
         else:
              tempData = data.split()
              option = tempData[0]
@@ -80,8 +82,8 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 
-plt.plot(xpupil, ypupil, '-o')
-plt.show()
+#plt.plot(xpupil, ypupil, '-o')
+#plt.show()
 
 f = open('./files/eye-coordinatesCSV.csv')
 

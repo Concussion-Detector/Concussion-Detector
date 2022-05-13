@@ -20,7 +20,6 @@ class Database(object):
         self.colConcussionTests = self.db.concussionTests
     
     def SaveToDatabase(self, option, uuid, coords):
-
         # Create a string with today's date
         today = datetime.now()
         todays_date = today.strftime("%d/%m/%Y %H:%M")
