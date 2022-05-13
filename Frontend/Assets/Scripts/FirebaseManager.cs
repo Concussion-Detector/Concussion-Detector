@@ -61,7 +61,7 @@ public class FirebaseManager : MonoBehaviour
     IEnumerator Wait(int num)
     {
         yield return new WaitUntil(UUIDReceived);
-        Debug.Log("UUID received");
+        //Debug.Log("UUID received");
         // Baseline
         if(num == 1) {
             string fullName = " ";
@@ -90,7 +90,7 @@ public class FirebaseManager : MonoBehaviour
         // Concussion
         else 
         {
-            Debug.Log("Concussion");
+            //Debug.Log("Concussion");
             if(Data.uuid != null) {
                 patient.uuid = Data.uuid;
                 Debug.Log(patient.uuid);
@@ -98,6 +98,7 @@ public class FirebaseManager : MonoBehaviour
                 //UUID.uuid = null;
             } else {
                 dataManager.PatientNotFoundGUI(true);
+                savingData = false;
                 uuidReceived = false;
             }
         }
@@ -110,7 +111,8 @@ public class FirebaseManager : MonoBehaviour
 
     // Retrieves first and last name
     public async void GetPatientData()
-    {
+    {   
+        Debug.Log("Saving is " + savingData);
         var uuid = "";
         string fullName = String.Empty;
 
@@ -124,6 +126,7 @@ public class FirebaseManager : MonoBehaviour
         else if ((firstName.text == String.Empty || lastName.text == String.Empty) && savingData == true) 
         {
             dataManager.DetailsErrorMessage("Please fill in all fields");
+            savingData = false;
             uuidReceived = false;
             return;
         }
@@ -157,6 +160,7 @@ public class FirebaseManager : MonoBehaviour
             {
                 // Invoke redirection to different scene
                 foundPatient.Invoke();
+                return;
             }
             break;
         }
@@ -167,11 +171,11 @@ public class FirebaseManager : MonoBehaviour
         }
 
         if(savingData != true) {
-            if((searchFirstName.text == String.Empty || searchLastName.text == String.Empty) && savingData != true)
+            /*if((searchFirstName.text == String.Empty || searchLastName.text == String.Empty))
             {
                 dataManager.SearchErrorMessage("Could not find " + fullName);
                 return;
-            }
+            }*/
             dataManager.SearchErrorMessage("Could not find " + fullName);
         }
     }

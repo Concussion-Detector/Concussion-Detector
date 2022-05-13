@@ -11,15 +11,18 @@ public class MainManager : MonoBehaviour
 
     public static bool valid = false;
 
+    [SerializeField]
+    private DataManager dataManager;
+
     public void FollowDot()
     {
-        Debug.Log("Follow dot");
+        //Debug.Log("Follow dot");
         StartCoroutine(StartDelay("DotFollow"));
     }
 
      public void GoToReports()
     {
-        Debug.Log("Going to reports!");
+        //Debug.Log("Going to reports!");
 
         StartCoroutine(StartDelay("Report"));
     }
@@ -31,13 +34,13 @@ public class MainManager : MonoBehaviour
     
     IEnumerator StartDelay(string scene)
     {
-        Debug.Log("Wait ");
+        //Debug.Log("Wait ");
         yield return new WaitForSeconds(0.2f);
         //Debug.Log("Player is not found " + valid);
         // if(valid == false) {
             
         // }
-        Debug.Log("Load " + scene);
+        //Debug.Log("Load " + scene);
         SceneManager.LoadScene(scene);
     }
 
@@ -49,10 +52,12 @@ public class MainManager : MonoBehaviour
     public void hidePatientDetails()
     {
         patientDetails.SetActive(false);
+        dataManager.HideDetailsErrorMessage();
     }
 
     public void hideSearchPatientDetails()
     {
         patientSearchDetails.SetActive(false);
+        dataManager.HideSearchErrorMessage();
     }
 }

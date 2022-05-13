@@ -54,7 +54,9 @@ public class DataManager : MonoBehaviour
     public void PatientNotFoundGUI(bool notFound)
     {
         mainManager.patientNotFound = notFound;
-        DetailsErrorMessage("Patient has no Baseline Data");
+        if(notFound) {
+            DetailsErrorMessage("Patient has no Baseline Data");
+        }
         baselineToggle.GetComponent<Toggle>().isOn = notFound;
     }
 
@@ -68,6 +70,17 @@ public class DataManager : MonoBehaviour
     {
         detailsErrorMessage.text = errorMsg;
         detailsError.SetActive(true);
+        Debug.Log("Error message");
+    }
+
+    public void HideSearchErrorMessage()
+    {
+        searchError.SetActive(false);
+    }
+
+    public void HideDetailsErrorMessage()
+    {
+        detailsError.SetActive(false);
     }
 
     public void GetToggle()
