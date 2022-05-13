@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MainManager : MonoBehaviour
 {
     public GameObject patientDetails;
+    public GameObject patientSearchDetails;
     public bool patientNotFound = false;
 
     public static bool valid = false;
@@ -43,5 +44,15 @@ public class MainManager : MonoBehaviour
     public void showPatientDetails()
     {
         patientDetails.SetActive(true);
+    }
+
+    public void hidePatientDetails()
+    {
+        patientDetails.SetActive(false);
+    }
+
+    public void hideSearchPatientDetails()
+    {
+        patientSearchDetails.SetActive(false);
     }
 }
