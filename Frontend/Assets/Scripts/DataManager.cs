@@ -43,10 +43,9 @@ public class DataManager : MonoBehaviour
     {
         string msg = testType + " " + uuid;
         Data.test = testType;
-        Debug.Log("uuid from send patient is "+uuid);
-        //udpSocket.SendData(msg);
+        udpSocket.SendData(msg);
         //mainManager.FollowDot();
-        Debug.Log("Invoke dot follow.");
+        //Debug.Log("Invoke dot follow.");
         // Invokes redirection to Dot Follow Scene
         followDot.Invoke();
     }

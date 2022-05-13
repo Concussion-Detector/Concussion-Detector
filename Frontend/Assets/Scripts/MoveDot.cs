@@ -46,8 +46,9 @@ public class MoveDot : MonoBehaviour
 
     private IEnumerator StopMovingDot()
     {
-        yield return new WaitForSeconds(2);
-
+        yield return new WaitForSeconds(1);
+        udpSocket.SendData("q");
+        yield return new WaitForSeconds(1);
         if(Data.test == 1) {
             SceneManager.LoadScene("BaselineReport");
         } else {

@@ -112,7 +112,6 @@ public class FirebaseManager : MonoBehaviour
     // Retrieves first and last name
     public async void GetPatientData()
     {   
-        Debug.Log("Saving is " + savingData);
         var uuid = "";
         string fullName = String.Empty;
 
