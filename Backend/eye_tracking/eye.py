@@ -56,7 +56,6 @@ class Eye(object):
 
     """Detects and isolates the eye in a new frame, sends data to the calibration
         and initializes Pupil object."""
-
     def _analyze(self, original_frame, landmarks, side, calibration):
         
         if side == 0:

@@ -53,29 +53,31 @@ class GazeTracking(object):
             self.eye_left = None
             self.eye_right = None
 
+    """Refreshes the frame and analyzes it."""
     def refresh(self, frame):
-        """Refreshes the frame and analyzes it."""
-        
         self.frame = frame
         self._analyze()
 
+    """Returns the coordinates of the left pupil"""
     def pupil_left_coords(self):
-        """Returns the coordinates of the left pupil"""
         if self.pupils_located:
             x = self.eye_left.origin[0] + self.eye_left.pupil.x
             y = self.eye_left.origin[1] + self.eye_left.pupil.y
             return (x, y)
 
+    """Returns the coordinates of the right pupil"""
     def pupil_right_coords(self):
-        """Returns the coordinates of the right pupil"""
+        
         if self.pupils_located:
             x = self.eye_right.origin[0] + self.eye_right.pupil.x
             y = self.eye_right.origin[1] + self.eye_right.pupil.y
             return (x, y)
     
-    def draw(self):
-        """Returns the main frame draws coords of the pupils and 
+
+    """Returns the main frame draws coords of the pupils and 
         rectangle on the detected face to help with proper face alignment."""
+    def draw(self):
+        
         frame = self.frame.copy()
 
         face_detector = cv2.CascadeClassifier(haarcascades + "haarcascade_frontalface_default.xml")
