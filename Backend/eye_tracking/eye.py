@@ -3,13 +3,10 @@ import numpy as np
 import cv2
 from .pupil import Pupil
 
-
+"""This class creates a new frame to isolate the eye and
+    initiates the pupil detection."""
 class Eye(object):
-    """
-    This class creates a new frame to isolate the eye and
-    initiates the pupil detection.
-    """
-
+    
     # Arrays of left and right eyes based on dlib 68 landmarks
     LEFT_EYE_POINTS = [36, 37, 38, 39, 40, 41]
     RIGHT_EYE_POINTS = [42, 43, 44, 45, 46, 47]
@@ -23,15 +20,15 @@ class Eye(object):
 
         self._analyze(original_frame, landmarks, side, calibration)
 
+    """Returns the middle point (x,y) between two points"""
     @staticmethod
     def _middle_point(p1, p2):
-        """Returns the middle point (x,y) between two points"""
         x = int((p1.x + p2.x) / 2)
         y = int((p1.y + p2.y) / 2)
         return (x, y)
 
+    """Isolate an eye, to have a black frame without other part of the face."""
     def _isolate(self, frame, landmarks, points):
-        """Isolate an eye, to have a black frame without other part of the face."""
         region = np.array([(landmarks.part(point).x, landmarks.part(point).y) for point in points])
         region = region.astype(np.int32)
         self.landmark_points = region
@@ -56,10 +53,11 @@ class Eye(object):
         height, width = self.frame.shape[:2]
         self.center = (width / 2, height / 2)
 
-    def _analyze(self, original_frame, landmarks, side, calibration):
-        """Detects and isolates the eye in a new frame, sends data to the calibration
+
+    """Detects and isolates the eye in a new frame, sends data to the calibration
         and initializes Pupil object."""
 
+    def _analyze(self, original_frame, landmarks, side, calibration):
         
         if side == 0:
             points = self.LEFT_EYE_POINTS

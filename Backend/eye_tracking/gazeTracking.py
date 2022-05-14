@@ -6,7 +6,6 @@ import dlib
 from .eye import Eye
 from .calibration import Calibration
 
-
 class GazeTracking(object):
     """
     This class tracks the user's gaze.
@@ -26,7 +25,6 @@ class GazeTracking(object):
         # _predictor is used to get facial landmarks of a given face
         self._predictor = dlib.shape_predictor(model_path)
 
-    
     @property
     def pupils_located(self):
         """Check that the pupils have been located"""
