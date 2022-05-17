@@ -82,8 +82,51 @@ The following objectives where identified to achieve our goals:
 1. After setting up the application, make sure you are properly alligned and get into comfortable position. 
 2. Optimal distance away from the camera is 40cm (16inches). 
 3. The viewing angle has to be consistent as well. The user should be looking directly at the camera.
-4. 
 
+
+When the application launches, you will be presented with the following screen:
+
+![image](https://user-images.githubusercontent.com/48318312/168925218-8afac4de-5aa8-4aa4-bcf5-05cacdcc4e50.png)
+
+You can start off by clicking the start button which will allow you to record a test or you can click the settings
+icon in the top right to view reports for a specified patient or exit the application.
+
+### Start
+
+By default you will record baseline data when a full name is entered, however you may select the post-concussion checkbox to 
+record post-concussion data but that patient needs to have baseline data in the database.
+
+![image](https://user-images.githubusercontent.com/48318312/168926067-d3b7a9fc-e338-442d-b1a8-b040133aed7c.png)
+
+Click 'Go' to begin.
+
+### Follow the Dot
+
+Assuming the patient is alligned and in a comfortable position, they may begin following the dot around the scnree.
+
+![image](https://user-images.githubusercontent.com/48318312/168927297-242308f7-76e5-4fa5-8354-8b899d5a8d5d.png)
+
+Once complete, you will be redirected to the reports page. If you recorded a baseline tests, there will only be one chart but if you
+recorded a post-concussion test, then there will be two charts to allow for comparison.
+
+### Reports
+
+If a baseline tests was recorded, there will only be one chart on dislay.
+If a post-concussion test was recorded, you will be presented with two charts to allow for comparison.
+
+![image](https://user-images.githubusercontent.com/48318312/168927564-07e4d30f-88fa-46ad-a487-0c840152cfb5.png)
+
+You can exit back to the main screen at any point by clicking the back icon in the top right.
+
+### Search
+
+When at the main screen, click the settings icon in the top right. This will open a dropdown in which you can select
+"Search Patient". Once this option is selected, a popup will appear in which you can enter the first and last name
+of the patient you wish to search. 
+
+![image](https://user-images.githubusercontent.com/48318312/168928017-76c4b749-4d3a-4422-adb3-f51294c2c9fc.png)
+
+If data was found, you will be redirected to the reports page where you can view the data.
 
 ***
 
