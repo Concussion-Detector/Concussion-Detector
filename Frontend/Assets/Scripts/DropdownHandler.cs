@@ -24,4 +24,9 @@ public class DropdownHandler : MonoBehaviour
         patientDetails.SetActive(true);
         menu.SetActive(false);
     }
+
+    public void exit()
+    {
+        Application.Quit();
+    }
 }

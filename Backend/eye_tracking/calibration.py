@@ -36,7 +36,7 @@ class Calibration(object):
     """Calculates the optimal threshold to binarize the
         frame for the given eye."""
     @staticmethod
-    def find_optimal_threshold(eye_frame)
+    def find_optimal_threshold(eye_frame):
         average_iris_size = 0.48
         trials = {}
 
