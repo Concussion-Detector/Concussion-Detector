@@ -49,13 +49,12 @@ The following objectives where identified to achieve our goals:
 
 # Technologies
 
-* ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) - version:
-* ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) - version:
+* ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) - *version: 3.8.8*
+* ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) - *version: 4.0.1*
+* ![Unity](https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white) - *version: 2020.3.29f1*
+* ![OpenCV](https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white) - *version: 4.3.3*
+* ![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white) - *version: 1.20.1*
 * ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
-* ![Unity](https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white) - version: 
-* ![OpenCV](https://img.shields.io/badge/opencv-%23white.svg?style=for-the-badge&logo=opencv&logoColor=white) - version:
-* ![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white) - version:
-* ![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
 * ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
 * ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 
@@ -63,10 +62,27 @@ The following objectives where identified to achieve our goals:
 
 # How To Run
 
+### Backend
+
+1. Make sure you have a **Python** installed. Run `python --version` in your command prompt to verify. If not then click [here](https://www.python.org/downloads/)
+2. Run `pip install -r requirements.txt` - this will install all required libraries. *Note - you may need to use `pip3` instead of `pip`*
+3. Run `python main.py` 
+4. Your eye detector is now up and running.
+
+### Frontend
+
+1. Simply run `ConcussionDetector.exe` file.
+2. Your application is now up and running.
+
 
 ***
 
 # User Guide
+
+1. After setting up the application, make sure you are properly alligned and get into comfortable position. 
+2. Optimal distance away from the camera is 40cm (16inches). 
+3. The viewing angle has to be consistent as well. The user should be looking directly at the camera.
+4. 
 
 
 ***
