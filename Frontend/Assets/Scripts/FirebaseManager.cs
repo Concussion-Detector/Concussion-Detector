@@ -131,7 +131,7 @@ public class FirebaseManager : MonoBehaviour
             dataManager.SearchErrorMessage("Please fill in all fields");
             return;
         } 
-        else if ((firstName.text == String.Empty || lastName.text == String.Empty) && savingData == true) 
+        else if ((firstName.text == String.Empty || lastName.text == String.Empty || day.value == 0 || month.value == 0 || year.value == 0) && savingData == true) 
         {
             dataManager.DetailsErrorMessage("Please fill in all fields");
             savingData = false;
