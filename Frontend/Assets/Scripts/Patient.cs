@@ -7,6 +7,7 @@ public class Patient
     public string uuid;
     public string firstName;
     public string lastName;
+    public string dob;
 
 
     // Converts to a Json String
