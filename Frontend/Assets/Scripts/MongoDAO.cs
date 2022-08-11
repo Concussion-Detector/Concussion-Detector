@@ -65,11 +65,9 @@ public class MongoDAO : MonoBehaviour
         // Extracts the uuid from id
         // "uuid" : "3054703f-08a5-4e87-ad8a-61a513182297", "coords" : "286, 218\n284, 217\n285, 217\n", "date" : "22/03/2022 19:25" }
         var stringWithoutID = rawJson.Substring(rawJson.IndexOf("),")+3);
-        //Debug.Log(stringWithoutID);
 
         // 3054703f-08a5-4e87-ad8a-61a513182297
         var uuid = stringWithoutID.Substring(10,stringWithoutID.IndexOf("coords")-14);
-        Debug.Log(uuid);
 
         // 286, 218\n284, 217\n285, 217
         var coords = stringWithoutID.Substring(stringWithoutID.IndexOf("coords")+11,stringWithoutID.IndexOf("date")-67);
@@ -82,7 +80,6 @@ public class MongoDAO : MonoBehaviour
             if(i != points.Length - 1) {
                 points[i] = points[i].Substring(0,points[i].Length-1);
             }
-            //Debug.Log(points[i]);
         }
 
         // 22/03/2022 19:25
@@ -97,39 +94,30 @@ public class MongoDAO : MonoBehaviour
         return dataToRetrieve;
     }
 
-    public List<PatientData> FindByUUID(string uuid) {
-        List<PatientData> patientsResults = new List<PatientData>();
+    public List<List<PatientData>> FindByUUID(string uuid) {
+        List<PatientData> patientBaselineResults = new List<PatientData>();
+        List<PatientData> patientConcussionResults = new List<PatientData>();
 
         var filter = Builders<BsonDocument>.Filter.Eq("uuid", uuid);
         // Baseline Data
-        var patientData = collectionBaseline.Find(filter).FirstOrDefault();
-        patient = Deserialize(patientData.ToString());
-
-        patientsResults.Add(patient);
-
-        // Post Concussed Data
-        var patientConcussedData = collectionConcussed.Find(filter).FirstOrDefault();
-        if(patientConcussedData != null) {
-            patientConcussed = Deserialize(patientConcussedData.ToString());
-            patientsResults.Add(patientConcussed);
+        var patientBaselineData = collectionBaseline.Find(filter).ToList();
+        foreach (var data in patientBaselineData)
+        {
+            patient = Deserialize(patientBaselineData.ToString());
+            patientBaselineResults.Add(patient);
         }
 
-        //Debug.Log("Patient Concussed "+patientConcussedData.date);
-        Debug.Log("Baseline Data");
-        Debug.Log(patient);
-        //Debug.Log(patient.uuid);
-        /*foreach (string p in patient.coords)
-        {
-            //Debug.Log(p);
-        }*/
-        //Debug.Log(patient.date);
-        Debug.Log("Concussion Data");
-        // Returns null for some reason :(
-        Debug.Log("Patient concussed data" +patientConcussed);
+        // Post Concussed Data
+        var patientConcussedData = collectionConcussed.Find(filter).ToList();
+        if(patientConcussedData != null) {
+            foreach (var data in patientConcussedData)
+            {
+                patientConcussed = Deserialize(data.ToString());
+                patientConcussionResults.Add(patientConcussed);
+            }
+        }
 
-        Debug.Log("Length of patient: "+patientsResults.Count);
-
-        return patientsResults;
+        return new List<List<PatientData>> { patientBaselineResults, patientConcussionResults };
     }
 
     public string[] GetPatientCoords()

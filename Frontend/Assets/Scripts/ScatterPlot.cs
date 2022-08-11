@@ -40,7 +40,9 @@ public class ScatterPlot : MonoBehaviour
     private List<Point> points = new List<Point>();
     private List<string> ts = new List<string>();
 
-    private List<PatientData> results = new List<PatientData>();
+    private List<List<PatientData>> results = new List<List<PatientData>>();
+    private List<PatientData> baselineResults = new List<PatientData>();
+    private List<PatientData> concussionResults = new List<PatientData>();
 
     // Start is called before the first frame update
     void Start()
@@ -54,20 +56,23 @@ public class ScatterPlot : MonoBehaviour
         mainHeight = rect.height;
 
         results = mongo.FindByUUID(Data.uuid);
-
+        baselineResults = results[0];
+        concussionResults = results[1];
+        
         if(isBaseline)
         {
-            strPoints = results[0].coords;
+            int mostRecentBaselineResult = baselineResults.Count - 1;
+            strPoints = baselineResults[mostRecentBaselineResult].coords;
             Debug.Log("coords "+strPoints);
-            date.text = "Date "+ results[0].date;
-            //name.text = "ID: "+results[0].uuid;
+            date.text = "Date "+ baselineResults[mostRecentBaselineResult].date;
             GetPoints();
             DrawPoints();
         }
         else{
-            strPoints = results[1].coords;
+            int mostRecentConcResult = concussionResults.Count - 1;
+            strPoints = concussionResults[mostRecentConcResult].coords;
             Debug.Log("coords "+strPoints);
-            date.text = "Date "+ results[1].date;
+            date.text = "Date "+ concussionResults[mostRecentConcResult].date;
             GetPoints();
             DrawPoints();
 
