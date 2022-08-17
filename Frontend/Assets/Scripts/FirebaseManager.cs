@@ -67,10 +67,9 @@ public class FirebaseManager : MonoBehaviour
     IEnumerator Wait(int num)
     {
         yield return new WaitUntil(UUIDReceived);
-        //Debug.Log("UUID received");
         // Baseline
         if(num == 1) {
-            string fullName = " ";
+            string uuid = " ";
             string dob = " ";
             string json = " ";
 
@@ -87,14 +86,11 @@ public class FirebaseManager : MonoBehaviour
             patient.dob = GetDOB();
             json = JsonUtility.ToJson(patient);
 
-            fullName = firstName.text + " " + lastName.text;
-
             // Removed a callback function from here which was causing an issue with method not being invoked.
-            reference.Child("Patients").Child(fullName).SetRawJsonValueAsync(json);
+            reference.Child("Players").Child(patient.uuid).SetRawJsonValueAsync(json);
   
             Debug.Log("Successfully added to firebase");
             dataManager.SendPatientData(patient.uuid);
-                
         } 
         // Concussion
         else 
@@ -124,8 +120,6 @@ public class FirebaseManager : MonoBehaviour
         var uuid = "";
         string fullName = String.Empty;
 
-        //Debug.Log(savingData);
-
         if((searchFirstName.text == String.Empty || searchLastName.text == String.Empty) && savingData != true)
         {
             dataManager.SearchErrorMessage("Please fill in all fields");
@@ -146,20 +140,41 @@ public class FirebaseManager : MonoBehaviour
             fullName = searchFirstName.text + " " + searchLastName.text;
         }
 
-        var allPatients = await reference.Child("Patients").GetValueAsync();
-
+        var allPatients = await reference.Child("Players").GetValueAsync();
+        
         // Loop over the collection
         foreach(var patient in allPatients.Children)
         {
-            //Debug.Log("Patients:"+ patient.Key);
-
             // Continue if desired patient not found.
-            if(patient.Key != fullName)
-                //dataManager.PatientNotFoundGUI(true);
-                continue;
 
-            Debug.Log("Found Desired Patient!");
-            //dataManager.PatientNotFoundGUI(false);
+            var firstName = patient.Child("firstName").Value as string;
+            var lastName = patient.Child("lastName").Value as string;
+            var fullNameFound = firstName + " " + lastName;
+            if(fullNameFound != fullName) {
+                Debug.Log(patient.Key + " is not " + fullName);
+                continue;
+            } else {
+                // Found patient with same name, check if they have same dob
+                var dob = patient.Child("dob").Value as string;
+                if(dob != GetDOB()) {
+                    Debug.Log(patient.Key + " has a different dob");
+                    Debug.Log(dob + " != " + GetDOB());
+                    continue;
+                } else {
+                    Debug.Log("Found patient");
+                    uuid = patient.Child("uuid").Value as string;
+                    Data.uuid = uuid;
+                    uuidReceived = true;
+                    if(savingData != true)
+                    {
+                        // Invoke redirection to different scene
+                        foundPatient.Invoke();
+                        return;
+                    }
+                }
+            }
+
+            /*Debug.Log("Found Desired Patient!"); 
             uuid = patient.Child("uuid").Value as string;
             Debug.Log("uuid" +uuid);
             Data.uuid = uuid;
@@ -169,9 +184,10 @@ public class FirebaseManager : MonoBehaviour
                 // Invoke redirection to different scene
                 foundPatient.Invoke();
                 return;
-            }
-            break;
+            }*/
+            //break;
         }
+
         // If no patient is found but it is baseline data to be recorded,
         // set the uuidReceived to true to allow the wait method to complete
         if(dataManager.GetTestType() == 1 || dataManager.GetTestType() == 2) {
