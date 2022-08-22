@@ -25,6 +25,9 @@ public class FirebaseManager : MonoBehaviour
     [Header("Search Patient")]
     public TMP_InputField searchFirstName;
     public TMP_InputField searchLastName;
+    public Dropdown searchDay;
+    public Dropdown searchMonth;
+    public Dropdown searchYear;
 
     public GameObject sceneManager;
     private bool savingData = false;
@@ -117,14 +120,15 @@ public class FirebaseManager : MonoBehaviour
     // Retrieves first and last name
     public async void GetPatientData()
     {   
+        Debug.Log("SavingData = " + savingData);
         var uuid = "";
         string fullName = String.Empty;
 
-        if((searchFirstName.text == String.Empty || searchLastName.text == String.Empty) && savingData != true)
-        {
+        if((searchFirstName.text == String.Empty || searchLastName.text == String.Empty || searchDay.value == 0 || searchMonth.value == 0 || searchYear.value == 0) && savingData != true)
+        { 
             dataManager.SearchErrorMessage("Please fill in all fields");
             return;
-        } 
+        }
         else if ((firstName.text == String.Empty || lastName.text == String.Empty || day.value == 0 || month.value == 0 || year.value == 0) && savingData == true) 
         {
             dataManager.DetailsErrorMessage("Please fill in all fields");
@@ -146,7 +150,6 @@ public class FirebaseManager : MonoBehaviour
         foreach(var patient in allPatients.Children)
         {
             // Continue if desired patient not found.
-
             var firstName = patient.Child("firstName").Value as string;
             var lastName = patient.Child("lastName").Value as string;
             var fullNameFound = firstName + " " + lastName;
@@ -173,19 +176,6 @@ public class FirebaseManager : MonoBehaviour
                     }
                 }
             }
-
-            /*Debug.Log("Found Desired Patient!"); 
-            uuid = patient.Child("uuid").Value as string;
-            Debug.Log("uuid" +uuid);
-            Data.uuid = uuid;
-            uuidReceived = true;
-            if(savingData != true)
-            {
-                // Invoke redirection to different scene
-                foundPatient.Invoke();
-                return;
-            }*/
-            //break;
         }
 
         // If no patient is found but it is baseline data to be recorded,
@@ -214,6 +204,12 @@ public class FirebaseManager : MonoBehaviour
 
     private string GetDOB()
     {
+        if(savingData != true) {
+            day = searchDay;
+            month = searchMonth;
+            year = searchYear;
+        }
+
         if(day.value < 10) {
             dayStr = '0' + day.value.ToString();
         } else {

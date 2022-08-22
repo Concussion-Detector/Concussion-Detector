@@ -74,6 +74,7 @@ public class DataManager : MonoBehaviour
 
     public void HideSearchErrorMessage()
     {
+        Debug.Log("Hiding error message");
         searchError.SetActive(false);
     }
 

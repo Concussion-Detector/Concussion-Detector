@@ -28,9 +28,9 @@ public class MongoDAO : MonoBehaviour
         collectionConcussed = database.GetCollection<BsonDocument>("colConcussionTests");
 
         //uuid = PlayerPrefs.GetString("patientid");
-        uuid = Data.uuid;
+        //uuid = Data.uuid;
 
-        FindByUUID(uuid);
+        //FindByUUID(uuid);
         //GetData();    
     }
 
@@ -45,8 +45,8 @@ public class MongoDAO : MonoBehaviour
         foreach(var patientData in dataAwaited.ToList())
         {
             allData.Add(Deserialize(patientData.ToString()));
-            //Debug.Log(Deserialize(patientData.ToString()).uuid);
-            //Debug.Log(Deserialize(patientData.ToString()).date);
+            Debug.Log(Deserialize(patientData.ToString()).uuid);
+            Debug.Log(Deserialize(patientData.ToString()).date);
 
         }
 
@@ -103,7 +103,7 @@ public class MongoDAO : MonoBehaviour
         var patientBaselineData = collectionBaseline.Find(filter).ToList();
         foreach (var data in patientBaselineData)
         {
-            patient = Deserialize(patientBaselineData.ToString());
+            patient = Deserialize(data.ToString());
             patientBaselineResults.Add(patient);
         }
 
