@@ -19,6 +19,7 @@ ypupil = []
 
 option = 0
 uuid = ""
+previousConcussion = ""
 record = ""
 data = ""
 

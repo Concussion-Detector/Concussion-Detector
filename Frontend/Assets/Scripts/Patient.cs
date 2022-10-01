@@ -8,6 +8,7 @@ public class Patient
     public string firstName;
     public string lastName;
     public string dob;
+    public bool previousConcussion;
 
 
     // Converts to a Json String

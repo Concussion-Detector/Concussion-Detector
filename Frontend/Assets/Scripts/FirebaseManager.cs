@@ -87,6 +87,7 @@ public class FirebaseManager : MonoBehaviour
             patient.firstName = firstName.text;
             patient.lastName = lastName.text;
             patient.dob = GetDOB();
+            patient.previousConcussion = dataManager.GetPreviousConcussion();
             json = JsonUtility.ToJson(patient);
 
             // Removed a callback function from here which was causing an issue with method not being invoked.

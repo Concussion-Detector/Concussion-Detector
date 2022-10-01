@@ -11,14 +11,18 @@ public class DataManager : MonoBehaviour
     [SerializeField] 
     private GameObject baselineToggle;
     [SerializeField]
+    private GameObject previousConcussionToggle;
+    [SerializeField]
     private GameObject searchError;
     [SerializeField]
     private GameObject detailsError;
+
     [SerializeField]
     private TextMeshProUGUI searchErrorMessage;
 
     [SerializeField]
     private TextMeshProUGUI detailsErrorMessage;
+    
 
     [SerializeField]
     private MainManager mainManager;
@@ -27,6 +31,7 @@ public class DataManager : MonoBehaviour
 
     private UdpSocket udpSocket;
     private int testType = 1;
+    private bool previousConcussion = false;
 
     // Start is called before the first frame update
     void Start()
@@ -39,13 +44,16 @@ public class DataManager : MonoBehaviour
         return testType;
     }
 
+    public bool GetPreviousConcussion() 
+    {
+        return previousConcussion;
+    }
+
     public void SendPatientData(string uuid)
     {
         string msg = testType + " " + uuid;
         Data.test = testType;
         udpSocket.SendData(msg);
-        //mainManager.FollowDot();
-        //Debug.Log("Invoke dot follow.");
         // Invokes redirection to Dot Follow Scene
         followDot.Invoke();
     }
@@ -83,12 +91,33 @@ public class DataManager : MonoBehaviour
         detailsError.SetActive(false);
     }
 
+    public void HidePreviousConcussion()
+    {
+        previousConcussionToggle.SetActive(false);
+    }
+
+    public void ShowPreviousConcussion()
+    {
+        previousConcussionToggle.SetActive(true);
+    }
+
     public void GetToggle()
     {
         if(baselineToggle.GetComponent<Toggle>().isOn) {
             testType = 1;
+            ShowPreviousConcussion();
         } else {
             testType = 2;
+            HidePreviousConcussion();
+        }
+    }
+
+    public void GetPreviousConcussionToggle()
+    {
+        if(previousConcussionToggle.GetComponent<Toggle>().isOn) {
+            previousConcussion = true;
+        } else {
+            previousConcussion = false;
         }
     }
 }
