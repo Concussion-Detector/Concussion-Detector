@@ -58,19 +58,27 @@ public class MongoDAO : MonoBehaviour
 
     private PatientData Deserialize(string rawJson)
     {
+        Debug.Log(rawJson);
         // Raw JSON
-        // { "_id" : ObjectId("623a22b58145646f3baf3185"), "uuid" : "3054703f-08a5-4e87-ad8a-61a513182297", "coords" : "286, 218\n284, 217\n285, 217\n", "date" : "22/03/2022 19:25" }
+        // { "_id" : ObjectId("623a22b58145646f3baf3185"), "uuid" : "3054703f-08a5-4e87-ad8a-61a513182297", "good-points-percent" : 20.63, "coords" : "286, 218\n284, 217\n285, 217\n", "date" : "22/03/2022 19:25" }
         var dataToRetrieve = new PatientData();
 
         // Extracts the uuid from id
         // "uuid" : "3054703f-08a5-4e87-ad8a-61a513182297", "coords" : "286, 218\n284, 217\n285, 217\n", "date" : "22/03/2022 19:25" }
         var stringWithoutID = rawJson.Substring(rawJson.IndexOf("),")+3);
+        Debug.Log(stringWithoutID);
 
         // 3054703f-08a5-4e87-ad8a-61a513182297
-        var uuid = stringWithoutID.Substring(10,stringWithoutID.IndexOf("coords")-14);
+        var uuid = stringWithoutID.Substring(10,stringWithoutID.IndexOf("good-points-percent")-14);
+        Debug.Log(uuid);
+
+        // 20.63
+        var accuracy = stringWithoutID.Substring(stringWithoutID.IndexOf("good-points-percent")+22, stringWithoutID.IndexOf("good-points-percent")-44);
+        Debug.Log(accuracy);
 
         // 286, 218\n284, 217\n285, 217
-        var coords = stringWithoutID.Substring(stringWithoutID.IndexOf("coords")+11,stringWithoutID.IndexOf("date")-67);
+        var coords = stringWithoutID.Substring(stringWithoutID.IndexOf("coords")+11, stringWithoutID.IndexOf("date")-109);
+        Debug.Log(coords);
         // Split coords by the letter n (unable to split by \n)
         var points = coords.Split('n');
     
@@ -85,9 +93,10 @@ public class MongoDAO : MonoBehaviour
         // 22/03/2022 19:25
         var date = stringWithoutID.Substring(stringWithoutID.IndexOf("date")+9);
         date = date.Substring(0, date.Length-3);
-        //Debug.Log(date);
+        Debug.Log(date);
 
         dataToRetrieve.uuid = uuid;
+        dataToRetrieve.accuracy = accuracy;
         dataToRetrieve.coords = points;
         dataToRetrieve.date = date;
 
@@ -137,6 +146,7 @@ public class MongoDAO : MonoBehaviour
 public class PatientData
 {
     public string uuid {get; set; }
+    public string accuracy {get; set; }
     public string[] coords {get; set; }
     public string date {get; set; }
 }

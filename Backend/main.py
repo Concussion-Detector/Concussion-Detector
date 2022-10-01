@@ -90,6 +90,8 @@ f = open('./files/eye-coordinatesCSV.csv')
 
 PP.ProcessPoints()
 
+badPointsPercent = PP.ProcessPoints().GetAccuracyPercent()
+
 coords = f.read()
 
-db.SaveToDatabase(option, uuid, coords)
+db.SaveToDatabase(option, uuid, badPointsPercent, coords)

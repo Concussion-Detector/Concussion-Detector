@@ -11,6 +11,8 @@ public class DataManager : MonoBehaviour
     [SerializeField] 
     private GameObject baselineToggle;
     [SerializeField]
+    private GameObject previousConcussionContainer;
+    [SerializeField]
     private GameObject previousConcussionToggle;
     [SerializeField]
     private GameObject searchError;
@@ -93,12 +95,12 @@ public class DataManager : MonoBehaviour
 
     public void HidePreviousConcussion()
     {
-        previousConcussionToggle.SetActive(false);
+        previousConcussionContainer.SetActive(false);
     }
 
     public void ShowPreviousConcussion()
     {
-        previousConcussionToggle.SetActive(true);
+        previousConcussionContainer.SetActive(true);
     }
 
     public void GetToggle()

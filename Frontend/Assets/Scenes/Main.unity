@@ -925,7 +925,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 
+  m_Text: Tom
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -9797,9 +9797,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baselineToggle: {fileID: 1785862905}
+  previousConcussionContainer: {fileID: 601054602}
+  previousConcussionToggle: {fileID: 1819239657}
   searchError: {fileID: 626687501}
   detailsError: {fileID: 1979234020}
-  previousConcussion: {fileID: 601054602}
   searchErrorMessage: {fileID: 1231219843}
   detailsErrorMessage: {fileID: 370711904}
   mainManager: {fileID: 1602519406}
@@ -11598,7 +11599,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1602519407}
+        m_TargetAssemblyTypeName: DataManager, Assembly-CSharp
+        m_MethodName: GetPreviousConcussionToggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &1826324234
 GameObject:
@@ -12089,7 +12102,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 
+  m_Text: Brady
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0

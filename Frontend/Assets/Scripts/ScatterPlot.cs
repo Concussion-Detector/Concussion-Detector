@@ -24,6 +24,7 @@ public class ScatterPlot : MonoBehaviour
     [SerializeField] private bool isBaseline = false;
 
     [SerializeField] private TextMeshProUGUI date;
+    [SerializeField] private TextMeshProUGUI accuracy;
     [SerializeField] private TextMeshProUGUI name;
     private UdpSocket udpSocket;
     private MongoDAO mongo;
@@ -36,6 +37,8 @@ public class ScatterPlot : MonoBehaviour
     private int minY = int.MaxValue;
     private float mainWidth;
     private float mainHeight;
+    int mostRecentBaselineResult;
+    int mostRecentConcResult;
 
     private List<Point> points = new List<Point>();
     private List<string> ts = new List<string>();
@@ -58,24 +61,26 @@ public class ScatterPlot : MonoBehaviour
         results = mongo.FindByUUID(Data.uuid);
         baselineResults = results[0];
         concussionResults = results[1];
-        
+
         if(isBaseline)
         {
-            int mostRecentBaselineResult = baselineResults.Count - 1;
+            mostRecentBaselineResult = baselineResults.Count - 1;
             strPoints = baselineResults[mostRecentBaselineResult].coords;
-            Debug.Log("coords "+strPoints);
-            date.text = "Date "+ baselineResults[mostRecentBaselineResult].date;
+            date.text = "Date: "+ baselineResults[mostRecentBaselineResult].date;
+            accuracy.text = baselineResults[mostRecentBaselineResult].accuracy + "%";
             GetPoints();
             DrawPoints();
         }
         else{
-            int mostRecentConcResult = concussionResults.Count - 1;
-            strPoints = concussionResults[mostRecentConcResult].coords;
-            Debug.Log("coords "+strPoints);
-            date.text = "Date "+ concussionResults[mostRecentConcResult].date;
-            GetPoints();
-            DrawPoints();
-
+            if(concussionResults.Count > 0) {
+                mostRecentConcResult = concussionResults.Count - 1;
+                strPoints = concussionResults[mostRecentConcResult].coords;
+                date.text = "Date: "+ concussionResults[mostRecentConcResult].date;
+                accuracy.text = concussionResults[mostRecentConcResult].accuracy + "%";
+                GetPoints();
+                DrawPoints();
+            }
+        
         }
     }
 
@@ -166,4 +171,51 @@ public class ScatterPlot : MonoBehaviour
             points.Add(new Point(Random.Range(1, 500), Random.Range(1, 300)));
         }
     }
+
+    public void PreviousBaselineTest() {
+        if(mostRecentBaselineResult > 0) {
+            mostRecentBaselineResult--;
+            strPoints = baselineResults[mostRecentBaselineResult].coords;
+            date.text = "Date: "+ baselineResults[mostRecentBaselineResult].date;
+            accuracy.text = baselineResults[mostRecentBaselineResult].accuracy + "%";
+            GetPoints();
+            DrawPoints();
+        }
+    }
+
+    public void NextBaselineTest() {
+        if(mostRecentBaselineResult < baselineResults.Count-1) {
+            mostRecentBaselineResult++;
+            strPoints = baselineResults[mostRecentBaselineResult].coords;
+            date.text = "Date: "+ baselineResults[mostRecentBaselineResult].date;
+            accuracy.text = baselineResults[mostRecentBaselineResult].accuracy + "%";
+            GetPoints();
+            DrawPoints();
+        }
+    }
+
+    public void PreviousConcussionTest() {
+        if(mostRecentConcResult > 0) {
+            mostRecentConcResult--;
+            mostRecentConcResult = concussionResults.Count - 1;
+            strPoints = concussionResults[mostRecentConcResult].coords;
+            date.text = "Date: "+ concussionResults[mostRecentConcResult].date;
+            accuracy.text = concussionResults[mostRecentConcResult].accuracy + "%";
+            GetPoints();
+            DrawPoints();
+        }
+    }
+
+    public void NextConcussionTest() {
+        if(mostRecentConcResult < concussionResults.Count-1) {
+            mostRecentConcResult++;
+            mostRecentConcResult = concussionResults.Count - 1;
+            strPoints = concussionResults[mostRecentConcResult].coords;
+            date.text = "Date: "+ concussionResults[mostRecentConcResult].date;
+            accuracy.text = concussionResults[mostRecentConcResult].accuracy + "%";
+            GetPoints();
+            DrawPoints();
+        }
+    }
+
 }

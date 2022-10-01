@@ -2,10 +2,15 @@ import csv
 
 class ProcessPoints():
 
+    inaccuratePoints = 0
+
     def __init__(self):
         self.ReadCSV()
         self.AnalysePoints()
     
+    def GetAccuracyPercent(self):
+        return self.accuratePoints
+
     def ReadCSV(self):
         x = []
         y = []
@@ -55,11 +60,11 @@ class ProcessPoints():
         
         print("Good points: {goodPoints}".format(goodPoints=goodPoints))
         print("Bad counts: {badPoints}".format(badPoints=badPoints))
-
+ 
         allPoints = goodPoints + badPoints
 
-        concussionChance = round((badPoints / allPoints) * 100, 2)
+        self.accuratePoints = round((goodPoints / allPoints) * 100, 2)
 
-        print("Chance of being concussed is {chance}%".format(chance=concussionChance))
+        print("{chance}% of the points were good points".format(chance=self.accuratePoints))
             
 
