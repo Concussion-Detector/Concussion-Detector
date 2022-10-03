@@ -23,7 +23,7 @@ previousConcussion = ""
 record = ""
 data = ""
 
-writeToFileCSV = open("./files/eye-coordinatesCSV.csv", "w")
+writeToFileCSV = open("./Backend/files/eye-coordinatesCSV.csv", "w")
 
 def save_to_file(x, y, fileName):
      fileName.write(str(x) + ", " + str(y) + "\n")
