@@ -1063,9 +1063,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneManager: {fileID: 116829046}
   canvas: {fileID: 1362157993}
-  XAxis: {fileID: 212134372}
-  YAxis: {fileID: 0}
-  Main: {fileID: 2040197581}
+  xAxis: {fileID: 0}
+  yAxis: {fileID: 0}
+  main: {fileID: 2040197581}
   xInc: 25
   yInc: 25
   pointPrefab: {fileID: 1224652538883364921, guid: 8d5b64b4689f4d343bf60c20def7318e, type: 3}

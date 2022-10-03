@@ -9,9 +9,9 @@ public class ScatterPlot : MonoBehaviour
     // Private variables
     [SerializeField]private GameObject sceneManager;
     [SerializeField] private Canvas canvas;
-    [SerializeField] private Transform XAxis;
-    [SerializeField] private Transform YAxis;
-    [SerializeField] private Transform Main;
+    [SerializeField] private Transform xAxis;
+    [SerializeField] private Transform yAxis;
+    [SerializeField] private Transform main;
 
     [SerializeField] private int xInc = 100;
     [SerializeField] private int yInc = 100;
@@ -53,7 +53,7 @@ public class ScatterPlot : MonoBehaviour
         //udpSocket = sceneManager.GetComponent<UdpSocket>();
         mongo = mongoObj.GetComponent<MongoDAO>();
         // Used to get rectangle which we can get the width and height of
-        Rect rect = RectTransformUtility.PixelAdjustRect(Main.GetComponent<RectTransform>(), canvas);
+        Rect rect = RectTransformUtility.PixelAdjustRect(main.GetComponent<RectTransform>(), canvas);
         // Get width and height of rectangle
         mainWidth = rect.width;
         mainHeight = rect.height;
@@ -86,6 +86,11 @@ public class ScatterPlot : MonoBehaviour
 
     async void GetPoints()
     {
+        maxX = 0;
+        maxY = 0;
+        minX = int.MaxValue;
+        minY = int.MaxValue;
+        
        for(int i = 0; i < strPoints.Length - 1; i++)
        {
             var pts = strPoints[i].Split(',');
@@ -112,18 +117,11 @@ public class ScatterPlot : MonoBehaviour
             points.Add(new Point(x, y));
        }
 
-       Debug.Log("X ranges from " + minX + " to " + maxX);
-       Debug.Log("Y ranges from " + minY + " to " + maxY);
-
        xAmt = (maxX - minX) + 1;
        yAmt = (maxY - minY) + 1;
 
-       Debug.Log("We need points from 0 to " + xAmt + " on the x-axis");
-       Debug.Log("We need points from 0 to " + yAmt + " on the y-axis");
-
         xInc = (int) mainWidth / xAmt;
         yInc = (int) mainHeight / yAmt;
-        Debug.Log(mainWidth + " divided by " + xAmt + " = " + xInc);
 
        foreach (Point pt in points)
        {
@@ -153,7 +151,7 @@ public class ScatterPlot : MonoBehaviour
         foreach (Point point in points)
         {
             GameObject obj = Instantiate(pointPrefab);
-            obj.transform.SetParent(Main);
+            obj.transform.SetParent(main);
             RectTransform rt = obj.GetComponent<RectTransform>();
             rt.anchorMax = new Vector2(0.0f, 0.0f);
             rt.anchorMin = new Vector2(0.0f, 0.0f);
@@ -162,60 +160,61 @@ public class ScatterPlot : MonoBehaviour
         }
     }
 
-    // Creates a given number of random points to display
-    // This function won't be needed soon, but it is good for testing
-    void CreateRandomPoints(int Count)
+    void ClearPoints()
     {
-        for(int i = 0; i < Count; i++)
+        for(int i = main.transform.childCount - 1; i >= 0; i--)
         {
-            points.Add(new Point(Random.Range(1, 500), Random.Range(1, 300)));
+            Object.Destroy(main.transform.GetChild(i).gameObject);
         }
     }
 
     public void PreviousBaselineTest() {
         if(mostRecentBaselineResult > 0) {
-            mostRecentBaselineResult--;
-            strPoints = baselineResults[mostRecentBaselineResult].coords;
-            date.text = "Date: "+ baselineResults[mostRecentBaselineResult].date;
-            accuracy.text = baselineResults[mostRecentBaselineResult].accuracy + "%";
-            GetPoints();
-            DrawPoints();
+            ChangeBaselineTest(-1);
         }
     }
 
     public void NextBaselineTest() {
         if(mostRecentBaselineResult < baselineResults.Count-1) {
-            mostRecentBaselineResult++;
-            strPoints = baselineResults[mostRecentBaselineResult].coords;
-            date.text = "Date: "+ baselineResults[mostRecentBaselineResult].date;
-            accuracy.text = baselineResults[mostRecentBaselineResult].accuracy + "%";
-            GetPoints();
-            DrawPoints();
+            ChangeBaselineTest(1);
         }
     }
 
     public void PreviousConcussionTest() {
         if(mostRecentConcResult > 0) {
-            mostRecentConcResult--;
-            mostRecentConcResult = concussionResults.Count - 1;
-            strPoints = concussionResults[mostRecentConcResult].coords;
-            date.text = "Date: "+ concussionResults[mostRecentConcResult].date;
-            accuracy.text = concussionResults[mostRecentConcResult].accuracy + "%";
-            GetPoints();
-            DrawPoints();
+            Debug.Log("Prev");
+            ChangeConcussionTest(-1);
         }
     }
 
     public void NextConcussionTest() {
         if(mostRecentConcResult < concussionResults.Count-1) {
-            mostRecentConcResult++;
-            mostRecentConcResult = concussionResults.Count - 1;
-            strPoints = concussionResults[mostRecentConcResult].coords;
-            date.text = "Date: "+ concussionResults[mostRecentConcResult].date;
-            accuracy.text = concussionResults[mostRecentConcResult].accuracy + "%";
-            GetPoints();
-            DrawPoints();
+            ChangeConcussionTest(1);
         }
+    }
+
+    void ChangeBaselineTest(int valueChange)
+    {
+        ClearPoints();
+        points = new List<Point>();
+        mostRecentBaselineResult += valueChange;
+        strPoints = baselineResults[mostRecentBaselineResult].coords;
+        date.text = "Date: "+ baselineResults[mostRecentBaselineResult].date;
+        accuracy.text = baselineResults[mostRecentBaselineResult].accuracy + "%";
+        GetPoints();
+        DrawPoints();
+    }
+
+    void ChangeConcussionTest(int valueChange)
+    {
+        ClearPoints();
+        points = new List<Point>();
+        mostRecentConcResult += valueChange;
+        strPoints = concussionResults[mostRecentConcResult].coords;
+        date.text = "Date: "+ concussionResults[mostRecentConcResult].date;
+        accuracy.text = concussionResults[mostRecentConcResult].accuracy + "%";
+        GetPoints();
+        DrawPoints();
     }
 
 }
